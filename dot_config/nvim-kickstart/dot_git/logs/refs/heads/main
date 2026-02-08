@@ -1,0 +1,27 @@
+0000000000000000000000000000000000000000 3338d3920620861f8313a2745fd5d2be39f39534 w4daka <ignorenegativeideology999@gmail.com> 1768525662 +0900	clone: from https://github.com/w4daka/kickstart.nvim.git
+3338d3920620861f8313a2745fd5d2be39f39534 aca4217ba32109bd4e702595d41044cbc993b649 w4daka <ignorenegativeideology999@gmail.com> 1768534250 +0900	commit: initial commit
+aca4217ba32109bd4e702595d41044cbc993b649 9b96192f96c341f09c06644614d68b6bbe15401a w4daka <ignorenegativeideology999@gmail.com> 1768547988 +0900	commit: I proceeded singcolumn
+9b96192f96c341f09c06644614d68b6bbe15401a 9cb5f97a6424c016e0c5167e833cf920344536b4 w4daka <ignorenegativeideology999@gmail.com> 1768573151 +0900	commit: I proceeded which-key-nvim
+9cb5f97a6424c016e0c5167e833cf920344536b4 6b0f3f10e04558277d5a02d41c4229eeb1ed80f2 w4daka <ignorenegativeideology999@gmail.com> 1768615476 +0900	commit: mini.file & mini.tabline add
+6b0f3f10e04558277d5a02d41c4229eeb1ed80f2 6b0f3f10e04558277d5a02d41c4229eeb1ed80f2 w4daka <ignorenegativeideology999@gmail.com> 1768636003 +0900	Branch: renamed refs/heads/master to refs/heads/main
+6b0f3f10e04558277d5a02d41c4229eeb1ed80f2 6b0f3f10e04558277d5a02d41c4229eeb1ed80f2 w4daka <ignorenegativeideology999@gmail.com> 1768636018 +0900	Branch: renamed refs/heads/main to refs/heads/main
+6b0f3f10e04558277d5a02d41c4229eeb1ed80f2 e63e2d417be9d1392f4c3d7260704c2e5416eb77 w4daka <ignorenegativeideology999@gmail.com> 1768636163 +0900	commit: Remove github workflows
+e63e2d417be9d1392f4c3d7260704c2e5416eb77 b8ba907d3eceb6e4568eaff101f06a74bd7f2cf2 w4daka <ignorenegativeideology999@gmail.com> 1768650604 +0900	commit: I proceeded mini.nvim config
+b8ba907d3eceb6e4568eaff101f06a74bd7f2cf2 52a5addd56c665dfeff17827040f54d51e0078b3 w4daka <ignorenegativeideology999@gmail.com> 1768720166 +0900	commit: skkeleton add
+52a5addd56c665dfeff17827040f54d51e0078b3 323c0e495b4941ce5530dc5aaa199e52c836c71c w4daka <ignorenegativeideology999@gmail.com> 1768796606 +0900	commit: ministarter add
+323c0e495b4941ce5530dc5aaa199e52c836c71c 7b778820aa833bbff81aa263a78999fd5f8524cb w4daka <ignorenegativeideology999@gmail.com> 1768809565 +0900	commit: all plugins add
+7b778820aa833bbff81aa263a78999fd5f8524cb a12b182d0f702913aa692248dc5fe22cd94a5310 w4daka <ignorenegativeideology999@gmail.com> 1768812836 +0900	commit: lazy.git add
+a12b182d0f702913aa692248dc5fe22cd94a5310 a05b5d6ec8f47884673d002ddc4ea907c3ebc1b0 w4daka <ignorenegativeideology999@gmail.com> 1768814250 +0900	commit: denops.lua & Treesitter.lua add
+a05b5d6ec8f47884673d002ddc4ea907c3ebc1b0 516ea38f5b19a521e6b621a8507b75a2edf26928 w4daka <ignorenegativeideology999@gmail.com> 1768886029 +0900	commit: katakana by Q key add
+516ea38f5b19a521e6b621a8507b75a2edf26928 2eb176ec5d5fae9a89b87ceb0f7b2ff47f54a5d3 w4daka <ignorenegativeideology999@gmail.com> 1768886935 +0900	commit: README edit
+2eb176ec5d5fae9a89b87ceb0f7b2ff47f54a5d3 b1fad3daf497bdd819a782f5dda1ca9e791f5bf1 w4daka <ignorenegativeideology999@gmail.com> 1768893097 +0900	commit: add module plugins
+b1fad3daf497bdd819a782f5dda1ca9e791f5bf1 4c22d39559d49e28d3f596ebdef57f4a5adb4322 w4daka <ignorenegativeideology999@gmail.com> 1768958792 +0900	commit: markdownlint add
+4c22d39559d49e28d3f596ebdef57f4a5adb4322 76cb83180568cd2684a74282495dc9d89885d36f w4daka <ignorenegativeideology999@gmail.com> 1769072565 +0900	commit: ddc.vim setup
+76cb83180568cd2684a74282495dc9d89885d36f 8cda2f11dc71819a493caa9e994e8ff86f4a948e w4daka <ignorenegativeideology999@gmail.com> 1769254654 +0900	commit: denops plugin add
+8cda2f11dc71819a493caa9e994e8ff86f4a948e 34d38210669d4f71704edaa9b7b7e10ab8a70233 w4daka <ignorenegativeideology999@gmail.com> 1769338212 +0900	commit: aibo-nvim add
+34d38210669d4f71704edaa9b7b7e10ab8a70233 12eb766306ed6fd241b139f8e04dc31b61a796f5 w4daka <ignorenegativeideology999@gmail.com> 1770110973 +0900	commit: oil.nvim add
+12eb766306ed6fd241b139f8e04dc31b61a796f5 3d922917e77dea0360b78fa3bb94cad6d0977e12 w4daka <ignorenegativeideology999@gmail.com> 1770118799 +0900	commit: rustancea.nvim add
+3d922917e77dea0360b78fa3bb94cad6d0977e12 6944acd43ecf7694a8b12ece95fd29948076a7ee w4daka <ignorenegativeideology999@gmail.com> 1770195832 +0900	commit: skkをdefaultにした。
+6944acd43ecf7694a8b12ece95fd29948076a7ee 0aebfdce2d9129d6fcfd76bbd02048e2864b87cf w4daka <ignorenegativeideology999@gmail.com> 1770196683 +0900	commit: skkleton.lua edit
+0aebfdce2d9129d6fcfd76bbd02048e2864b87cf 23e82d0c9656453d834f6be88ae23ee49234024d w4daka <ignorenegativeideology999@gmail.com> 1770435200 +0900	commit: treesitter.lua edit
+23e82d0c9656453d834f6be88ae23ee49234024d fb9fb6c7600617027246eb348cc3bd5ddd246d33 w4daka <ignorenegativeideology999@gmail.com> 1770437220 +0900	commit: ocamllsp add

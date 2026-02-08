@@ -1,0 +1,25 @@
+0000000000000000000000000000000000000000 266367e5334c8973bdbf79828224c00223aef199 w4daka <ignorenegativeideology999@gmail.com> 1764314773 +0900	clone: from https://github.com/w4daka/.config-nvim-.git
+266367e5334c8973bdbf79828224c00223aef199 7f221c5160fb25949c3501f8ed28dc51a5f2e61d w4daka <ignorenegativeideology999@gmail.com> 1764744366 +0900	commit: chapter35まで進めた
+7f221c5160fb25949c3501f8ed28dc51a5f2e61d 7702d73e9184d84bc328411227e1075e3a4ae9c1 w4daka <ignorenegativeideology999@gmail.com> 1764745499 +0900	commit: add mini.git module
+7702d73e9184d84bc328411227e1075e3a4ae9c1 f0607e09fea97142b5aaac4e68ed069e85270c8a w4daka <ignorenegativeideology999@gmail.com> 1764748490 +0900	commit: add mini.operators
+f0607e09fea97142b5aaac4e68ed069e85270c8a a5d27782fd8ec7dc6b72073c21e336bb7da0f974 w4daka <ignorenegativeideology999@gmail.com> 1764749536 +0900	commit: chapter37 mini.animateまで進めた
+a5d27782fd8ec7dc6b72073c21e336bb7da0f974 95664327deb96077921f1c57ada5486f34c44ded w4daka <ignorenegativeideology999@gmail.com> 1764750428 +0900	commit: add mini.bracketed
+95664327deb96077921f1c57ada5486f34c44ded 7fe59ff326e5a44fe70dab1e159886905f620cb4 w4daka <ignorenegativeideology999@gmail.com> 1764750832 +0900	commit: add mini.splitjoin
+7fe59ff326e5a44fe70dab1e159886905f620cb4 16d3d7af1c02f7bf45a682493946dca3107896d9 w4daka <ignorenegativeideology999@gmail.com> 1764751025 +0900	commit: add mini.move
+16d3d7af1c02f7bf45a682493946dca3107896d9 9b7d44a9472f87e9a37654080e51c3b7a859d0d1 w4daka <ignorenegativeideology999@gmail.com> 1764752272 +0900	commit: mini.align add
+9b7d44a9472f87e9a37654080e51c3b7a859d0d1 b206313272c8c491ecfe00ec67e49ffe86dc516a w4daka <ignorenegativeideology999@gmail.com> 1764753869 +0900	commit: add mini.map
+b206313272c8c491ecfe00ec67e49ffe86dc516a 0fcd6aac52fd9c860f6a8a55180e09831b93197c w4daka <ignorenegativeideology999@gmail.com> 1764758409 +0900	commit: user_commandを定義した
+0fcd6aac52fd9c860f6a8a55180e09831b93197c d1688a543ff0107f349183b0ad01de279b72ff3a w4daka <ignorenegativeideology999@gmail.com> 1764760318 +0900	commit: 真意判定関数を追加した
+d1688a543ff0107f349183b0ad01de279b72ff3a 191c3956ad3fde988b5b81db7803ffdffce5fc42 w4daka <ignorenegativeideology999@gmail.com> 1764760373 +0900	commit: 真意判定関数を追加した
+191c3956ad3fde988b5b81db7803ffdffce5fc42 7395756131662b4d0ef68cc31dbaed449121cbff w4daka <ignorenegativeideology999@gmail.com> 1764761417 +0900	commit: add vim.loader
+7395756131662b4d0ef68cc31dbaed449121cbff f9ade6666a79ff14a14943e3286e64da2da9ebfa w4daka <ignorenegativeideology999@gmail.com> 1764762602 +0900	commit: treesitter add
+f9ade6666a79ff14a14943e3286e64da2da9ebfa d6e9016c920993d9c5496f2979e15405e384ecfb w4daka <ignorenegativeideology999@gmail.com> 1764820557 +0900	commit: clangd's lsp add
+d6e9016c920993d9c5496f2979e15405e384ecfb 32b4a7ca5c8fd87f9fd82eee413069f76eb5bf51 w4daka <ignorenegativeideology999@gmail.com> 1766992440 +0900	commit: options.lua add
+32b4a7ca5c8fd87f9fd82eee413069f76eb5bf51 de2e5e860a8b2371d48c549624fea201169e1742 w4daka <ignorenegativeideology999@gmail.com> 1767052252 +0900	commit: lua dir edit
+de2e5e860a8b2371d48c549624fea201169e1742 b6f5be2bd30c8dd7488484b36184bc71a8f03f09 w4daka <ignorenegativeideology999@gmail.com> 1767057287 +0900	commit: lsp.config edit
+b6f5be2bd30c8dd7488484b36184bc71a8f03f09 cc9379a668c8a1fdfc5b1a6f823c6062e4549bd0 w4daka <ignorenegativeideology999@gmail.com> 1767060163 +0900	commit: error edit
+cc9379a668c8a1fdfc5b1a6f823c6062e4549bd0 bd8ce32620c8015e819d757305e5336df4206977 w4daka <ignorenegativeideology999@gmail.com> 1767062113 +0900	commit: error edit
+bd8ce32620c8015e819d757305e5336df4206977 411fb26a2391308b880aed2613e7e67e265c96d0 w4daka <ignorenegativeideology999@gmail.com> 1767070446 +0900	commit: pyright add
+411fb26a2391308b880aed2613e7e67e265c96d0 c69eaaa7acf53bb3fc5da57330426726e2dc71f8 w4daka <ignorenegativeideology999@gmail.com> 1767136243 +0900	commit: pyright edit
+c69eaaa7acf53bb3fc5da57330426726e2dc71f8 8465e6ce32e660ea906faf05d5f66d347cb65911 w4daka <ignorenegativeideology999@gmail.com> 1767427862 +0900	commit: snacks.nvim add
+8465e6ce32e660ea906faf05d5f66d347cb65911 487549e4d4792c5db3fe2b3d64e3846d48375c33 w4daka <ignorenegativeideology999@gmail.com> 1767427993 +0900	commit: pyrightlspadd

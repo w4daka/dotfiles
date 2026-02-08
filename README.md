@@ -1,6 +1,6 @@
 # w4daka's dotfiles
 
-- shell `zsh`
+- shell `zsh` + `sheldon` + `starship`
 - editor `neovim`
 
 ## 個人的メモ

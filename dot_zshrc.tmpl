@@ -1,0 +1,52 @@
+alias gcmsg='git commit -m'
+alias gp='git push'
+alias gst='git status'
+alias ga='git add'
+alias nvim-ks='NVIM_APPNAME=nvim-kickstart nvim'
+alias nvim-dpp='NVIM_APPNAME=nvim-dpp nvim'
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export NVIM_APPNAME='nvim-kickstart'
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim-ks'
+fi
+setopt auto_cd
+export LANG=en_US.UTF-8
+export ARCHFLAGS="-arch $(uname -m)"
+
+export PATH=/usr/local/go/bin:$PATH
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/home/doxaripo/lib/ac-library-master
+ulimit -s unlimited
+export PATH="$HOME/.local/bin:$PATH"
+# zoxide
+eval "$(zoxide init zsh)"
+
+if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
+  print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
+  command mkdir -p "$HOME/.zi" && command chmod go-rwX "$HOME/.zi"
+  command git clone -q --depth=1 --branch "main" https://github.com/z-shell/zi "$HOME/.zi/bin" && \
+    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+    print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+source "$HOME/.zi/bin/zi.zsh"
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
+# examples here -> https://wiki.zshell.dev/ecosystem/category/-annexes
+zicompinit # <- https://wiki.zshell.dev/docs/guides/commands
+eval "$(sheldon source)"
+eval "$(starship init zsh)"
+. "/home/doxaripo/.deno/env"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export GEMINI_API_KEY="{{ .GEMINI_API_KEY }}"
+export PATH="$HOME/.local/bin:$PATH"
+eval $(opam env)

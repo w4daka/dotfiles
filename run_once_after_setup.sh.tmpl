@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# =============================================================================
+# 最終的な環境構築スクリプト (Ubuntu/Debian系)
+# このスクリプトは設定ファイルが配置された後に一度だけ実行されます
+# =============================================================================
+
+set -e # エラーが発生したら即停止
+
+echo "🚀 環境構築を開始します..."
+
+# 1. APTパッケージ（OS基盤・GUI・ビルドツールの最小構成）
+# i3, rofi, ghosttyなどのGUI系、およびコンパイラ
+echo "📦 システムパッケージをインストール中..."
+sudo apt update
+sudo apt install -y \
+    zsh \
+    i3 \
+    rofi \
+    make \
+    unzip \
+    gcc \
+    git \
+    curl \
+    flatpak \
+    fcitx5 \
+    libxkbcommon0 \
+    libc6 \
+    build-essential \
+    pkg-config \
+    libssl-dev
+
+# 2. mise本体のインストール (プログラミング言語・CLI管理)
+if ! command -v mise &> /dev/null; then
+    echo "🛠️  miseをインストール中..."
+    curl https://mise.jdx.dev/install.sh | sh
+fi
+# スクリプト内で直ちにmiseコマンドを使えるようにする
+export PATH="$HOME/.local/share/mise/bin:$PATH"
+
+# 3. Sheldon (Zshプラグインマネージャ)
+if ! command -v sheldon &> /dev/null; then
+    echo "🐚 sheldonをインストール中..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sheldon.cli.rs/install.sh | sh -s -- --bin-dir $HOME/.local/bin
+fi
+
+# 4. Flatpak (GUIアプリ: Chrome, Firefox, Anki)
+# WSL2環境ではGUIが不要な場合が多いため、条件分岐させることも可能
+echo "🌐 Flatpakアプリをセットアップ中..."
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install -y flathub com.google.Chrome org.mozilla.firefox net.ankiweb.Anki
+
+# 5. mise による一括インストール
+# ~/.config/mise/config.toml に基づき、Rust, Go, Node, Lazygit, Starship等が入ります
+echo "💎 miseで言語とツールをインストール中..."
+mise install -y
+
+# 6. TypeScript と Yarn の補完 (Node.js環境がある場合)
+# .default-npm-packages を読み込むか、直接インストール
+if command -v npm &> /dev/null; then
+    echo "📜 TypeScriptとYarnをグローバルインストール中..."
+    npm install -g typescript yarn
+fi
+
+# 7. 仕上げ: Ghostty (PPAを利用、またはバイナリ)
+# Ubuntu公式にない場合が多いため、一般的なPPA経由の例
+if ! command -v ghostty &> /dev/null; then
+    echo "👻 Ghosttyをインストール中..."
+    # 注: Ghosttyの配布元に合わせて調整してください
+    # 現時点ではビルド済みバイナリまたはサードパーティPPAが主流
+fi
+
+echo "✨ すべてのセットアップが完了しました！"
+echo "Zshを再起動（exec zsh）して環境を反映させてください。"

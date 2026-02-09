@@ -1,6 +1,7 @@
 #!/bin/bash
 # ================================================================= #
-# 🚀 統合セットアップスクリプト (Mise / Zsh / Flatpak / Neovim)
+# 🛠️  Ultimate Environment Setup Script
+# Zsh, Neovim, mise, Sheldon, Starship, Flatpak & Development Tools
 # ================================================================= #
 set -euo pipefail
 
@@ -30,47 +31,35 @@ echo "--- 🌐 5. Flatpak アプリのインストール ---"
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install -y flathub com.google.Chrome org.mozilla.firefox net.ankiweb.Anki
 
-echo "--- 🛠️ 6. mise の導入とツール一括インストール ---"
-# 推奨のインストールコマンドを使用
+echo "--- 🛠️  6. mise の導入とツール一括インストール ---"
+# mise の公式インストールスクリプト実行
 curl https://mise.run/bash | sh
 
-# 現在のシェルセッションで mise を有効化
-export PATH="$HOME/.local/bin:$HOME/.local/share/mise/bin:$PATH"
-eval "$(mise activate bash)"
+# 重要：現在の Bash セッションで mise を即座に有効化する
+export MISE_DATA_DIR="$HOME/.local/share/mise"
+export PATH="$HOME/.local/bin:$MISE_DATA_DIR/bin:$MISE_DATA_DIR/shims:$PATH"
+eval "$($HOME/.local/bin/mise activate bash)"
 
-# mise.toml (chezmoiで配置済み想定) に基づきツールをインストール
-mise install -y
+# すでに chezmoi で ~/.config/mise/config.toml が配置されている前提でインストール
+# もし設定ファイルがない場合は、このコマンドがスキップされるかエラーになるため注意
+if [ -f "$HOME/.config/mise/config.toml" ]; then
+    mise install -y
+else
+    echo "⚠️  ~/.config/mise/config.toml が見つかりません。手動でツールをインストールしてください。"
+    # 最小限のNodeだけでも入れておく場合: mise use --global node@lts
+fi
 
 echo "--- 📦 7. Node.js ツール (Typescript, yarn) ---"
+# mise で入れた node/npm を確実に参照させるためのリフレッシュ
+mise reshim
 npm install -g typescript yarn
 
-echo "--- 8. Nerd Fonts (JetBrainsMono) のインストール ---"
-# フォント保存ディレクトリの作成
-mkdir -p ~/.local/share/fonts
-
-# JetBrainsMono Nerd Font の最新版をダウンロード
-# (v3.1.0以降、GitHubの構造が変わったため直接タグ指定か最新バイナリを狙います)
-FONT_NAME="JetBrainsMono"
-URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${FONT_NAME}.zip"
-
-echo "Downloading ${FONT_NAME} Nerd Font..."
-curl -fLo "/tmp/${FONT_NAME}.zip" "$URL"
-
-# 解凍してフォントディレクトリへ移動
-unzip -o "/tmp/${FONT_NAME}.zip" -d ~/.local/share/fonts/${FONT_NAME}
-
-# フォントキャッシュの更新
-fc-cache -fv
-
-# 一時ファイルの削除
-rm "/tmp/${FONT_NAME}.zip"
-
-echo "✅ フォントのインストールが完了しました。"
-
-echo "--- 🔄 9. デフォルトシェルを Zsh へ変更 ---"
+echo "--- 🔄 8. デフォルトシェルを Zsh へ変更 ---"
 if [ "$SHELL" != "$(which zsh)" ]; then
+    echo "パスワードを入力してデフォルトシェルを Zsh に変更してください..."
     sudo chsh -s "$(which zsh)" "$USER"
 fi
 
-echo "✅ すべての工程が完了しました！"
-echo "再起動後、zsh 上で 'mise -v' や 'nvim' が動くことを確認してください。"
+echo "--- 🎉 セットアップ完了！ ---"
+echo "設定を完全に反映させるため、PCを再起動するか、一度ログアウトしてください。"
+echo "再起動後、Zsh上で 'nvim' や 'lazygit' が動作することを確認してください。"

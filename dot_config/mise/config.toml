@@ -6,11 +6,9 @@ go = "latest"
 deno = "latest"
 
 # --- GitHubからバイナリを直接取得 (高速) ---
-"github:starship/starship" = "latest"
 "github:zellij-org/zellij" = "latest"
 "github:jesseduffield/lazygit" = "latest"
 "github:sxyazi/yazi" = "latest"
-"github:rossmacarthur/sheldon" = "latest"
 
 # --- Cargo(Rust)経由でインストール ---
 # ripgrepなどはGitHubバイナリよりCargoの方が安定する場合があります

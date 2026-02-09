@@ -1,67 +1,53 @@
 #!/bin/bash
+# ================================================================= #
+# 🚀 統合セットアップスクリプト (Mise / Zsh / Flatpak / Neovim)
+# ================================================================= #
+set -euo pipefail
 
-# =============================================================================
-# 最終的な環境構築スクリプト (Ubuntu/Debian系)
-# このスクリプトは設定ファイルが配置された後に一度だけ実行されます
-# =============================================================================
-
-set -e # エラーが発生したら即停止
-
-echo "🚀 環境構築を開始します..."
-
-# 1. APTパッケージ（OS基盤・GUI・ビルドツールの最小構成）
-# i3, rofi, ghosttyなどのGUI系、およびコンパイラ
-echo "📦 システムパッケージをインストール中..."
+echo "--- 📦 1. システムパッケージ (apt) のインストール ---"
 sudo apt update
 sudo apt install -y \
-    zsh \
-    i3 \
-    rofi \
-    make \
-    unzip \
-    gcc \
-    git \
-    curl \
-    flatpak \
-    fcitx5 \
-    libxkbcommon0 \
-    libc6 \
-    build-essential \
-    pkg-config \
-    libssl-dev
+    zsh i3 rofi make unzip gcc git curl flatpak fcitx5 \
+    libxkbcommon0 libc6 build-essential pkg-config libssl-dev
 
-# 2. mise本体のインストール (プログラミング言語・CLI管理)
-if ! [ -f "$HOME/.local/bin/mise" ]; then
-    echo "🛠️  miseをインストール中..."
-    curl https://mise.run | sh
-fi
-# スクリプト内で直ちにmiseコマンドを使えるようにする
-export PATH="$HOME/.local/share/mise/bin:$PATH"
+# ディレクトリ準備
+mkdir -p "$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
 
-# 3. Sheldon (Zshプラグインマネージャ)
-if ! command -v sheldon &> /dev/null; then
-    echo "🐚 sheldonをインストール中..."
-    curl --proto '=https' --tlsv1.2 -sSf https://sheldon.cli.rs/install.sh | sh -s -- --bin-dir $HOME/.local/bin
-fi
+echo "--- 💤 2. Neovim (AppImage) のインストール ---"
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+chmod u+x nvim-linux-x86_64.appimage
+mv nvim-linux-x86_64.appimage "$HOME/.local/bin/nvim"
 
-# 4. Flatpak (GUIアプリ: Chrome, Firefox, Anki)
-# WSL2環境ではGUIが不要な場合が多いため、条件分岐させることも可能
-echo "🌐 Flatpakアプリをセットアップ中..."
+echo "--- 🐚 3. Sheldon のインストール ---"
+curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
+    | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
+
+echo "--- ✨ 4. Starship のインストール ---"
+curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
+
+echo "--- 🌐 5. Flatpak アプリのインストール ---"
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install -y flathub com.google.Chrome org.mozilla.firefox net.ankiweb.Anki
 
-# 5. mise による一括インストール
-# ~/.config/mise/config.toml に基づき、Rust, Go, Node, Lazygit, Starship等が入ります
-echo "💎 miseで言語とツールをインストール中..."
+echo "--- 🛠️ 6. mise の導入とツール一括インストール ---"
+# 推奨のインストールコマンドを使用
+curl https://mise.run/bash | sh
+
+# 現在のシェルセッションで mise を有効化
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/bin:$PATH"
+eval "$(mise activate bash)"
+
+# mise.toml (chezmoiで配置済み想定) に基づきツールをインストール
 mise install -y
 
-# 6. TypeScript と Yarn の補完 (Node.js環境がある場合)
-# .default-npm-packages を読み込むか、直接インストール
-if command -v npm &> /dev/null; then
-    echo "📜 TypeScriptとYarnをグローバルインストール中..."
-    npm install -g typescript yarn
+echo "--- 📦 7. Node.js ツール (Typescript, yarn) ---"
+npm install -g typescript yarn
+
+echo "--- 🔄 8. デフォルトシェルを Zsh へ変更 ---"
+if [ "$SHELL" != "$(which zsh)" ]; then
+    sudo chsh -s "$(which zsh)" "$USER"
 fi
 
-
-echo "✨ すべてのセットアップが完了しました！"
-echo "Zshを再起動（exec zsh）して環境を反映させてください。"
+echo "✅ すべての工程が完了しました！"
+echo "再起動後、zsh 上で 'mise -v' や 'nvim' が動くことを確認してください。"

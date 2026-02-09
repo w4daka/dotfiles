@@ -1,0 +1,24 @@
+[tools]
+# --- プログラミング言語 (コア) ---
+node = "lts"
+rust = "latest"
+go = "latest"
+deno = "latest"
+
+# --- GitHubからバイナリを直接取得 (高速) ---
+"github:starship/starship" = "latest"
+"github:zellij-org/zellij" = "latest"
+"github:jesseduffield/lazygit" = "latest"
+"github:sxyazi/yazi" = "latest"
+"github:rossmacarthur/sheldon" = "latest"
+
+# --- Cargo(Rust)経由でインストール ---
+# ripgrepなどはGitHubバイナリよりCargoの方が安定する場合があります
+"cargo:ripgrep" = "latest"
+"cargo:fd-find" = "latest"
+
+[settings]
+# インストールを並列で行う設定
+jobs = 4
+# 自動的にPATHを通す
+activate_aggressive = true

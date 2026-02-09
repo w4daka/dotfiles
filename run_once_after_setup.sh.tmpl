@@ -31,9 +31,9 @@ sudo apt install -y \
     libssl-dev
 
 # 2. mise本体のインストール (プログラミング言語・CLI管理)
-if ! command -v mise &> /dev/null; then
+if ! [ -f "$HOME/.local/bin/mise" ]; then
     echo "🛠️  miseをインストール中..."
-    curl https://mise.jdx.dev/install.sh | sh
+    curl https://mise.run | sh
 fi
 # スクリプト内で直ちにmiseコマンドを使えるようにする
 export PATH="$HOME/.local/share/mise/bin:$PATH"
@@ -62,13 +62,6 @@ if command -v npm &> /dev/null; then
     npm install -g typescript yarn
 fi
 
-# 7. 仕上げ: Ghostty (PPAを利用、またはバイナリ)
-# Ubuntu公式にない場合が多いため、一般的なPPA経由の例
-if ! command -v ghostty &> /dev/null; then
-    echo "👻 Ghosttyをインストール中..."
-    # 注: Ghosttyの配布元に合わせて調整してください
-    # 現時点ではビルド済みバイナリまたはサードパーティPPAが主流
-fi
 
 echo "✨ すべてのセットアップが完了しました！"
 echo "Zshを再起動（exec zsh）して環境を反映させてください。"

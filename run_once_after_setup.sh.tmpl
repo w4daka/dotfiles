@@ -44,7 +44,30 @@ mise install -y
 echo "--- 📦 7. Node.js ツール (Typescript, yarn) ---"
 npm install -g typescript yarn
 
-echo "--- 🔄 8. デフォルトシェルを Zsh へ変更 ---"
+echo "--- 8. Nerd Fonts (JetBrainsMono) のインストール ---"
+# フォント保存ディレクトリの作成
+mkdir -p ~/.local/share/fonts
+
+# JetBrainsMono Nerd Font の最新版をダウンロード
+# (v3.1.0以降、GitHubの構造が変わったため直接タグ指定か最新バイナリを狙います)
+FONT_NAME="JetBrainsMono"
+URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${FONT_NAME}.zip"
+
+echo "Downloading ${FONT_NAME} Nerd Font..."
+curl -fLo "/tmp/${FONT_NAME}.zip" "$URL"
+
+# 解凍してフォントディレクトリへ移動
+unzip -o "/tmp/${FONT_NAME}.zip" -d ~/.local/share/fonts/${FONT_NAME}
+
+# フォントキャッシュの更新
+fc-cache -fv
+
+# 一時ファイルの削除
+rm "/tmp/${FONT_NAME}.zip"
+
+echo "✅ フォントのインストールが完了しました。"
+
+echo "--- 🔄 9. デフォルトシェルを Zsh へ変更 ---"
 if [ "$SHELL" != "$(which zsh)" ]; then
     sudo chsh -s "$(which zsh)" "$USER"
 fi

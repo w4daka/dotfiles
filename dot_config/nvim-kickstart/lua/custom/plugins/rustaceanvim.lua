@@ -40,6 +40,9 @@ return {
             vim.cmd.RustLsp 'openCargo'
           end, vim.tbl_extend('force', opts, { desc = 'Open Cargo.toml' }))
 
+          vim.keymap.set('n', '<leader>re', function()
+            vim.cmd.RustLsp 'explainError'
+          end, vim.tbl_extend('force', opts, { desc = 'Rust explainError' }))
           vim.keymap.set('n', 'K', function()
             vim.cmd.RustLsp { 'hover', 'actions' }
           end, vim.tbl_extend('force', opts, { desc = 'Rust hover actions' }))

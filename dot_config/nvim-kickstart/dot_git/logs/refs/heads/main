@@ -25,3 +25,4 @@ b1fad3daf497bdd819a782f5dda1ca9e791f5bf1 4c22d39559d49e28d3f596ebdef57f4a5adb432
 6944acd43ecf7694a8b12ece95fd29948076a7ee 0aebfdce2d9129d6fcfd76bbd02048e2864b87cf w4daka <ignorenegativeideology999@gmail.com> 1770196683 +0900	commit: skkleton.lua edit
 0aebfdce2d9129d6fcfd76bbd02048e2864b87cf 23e82d0c9656453d834f6be88ae23ee49234024d w4daka <ignorenegativeideology999@gmail.com> 1770435200 +0900	commit: treesitter.lua edit
 23e82d0c9656453d834f6be88ae23ee49234024d fb9fb6c7600617027246eb348cc3bd5ddd246d33 w4daka <ignorenegativeideology999@gmail.com> 1770437220 +0900	commit: ocamllsp add
+fb9fb6c7600617027246eb348cc3bd5ddd246d33 1f85ac420d8a66fd4a2d45264cd301640e71664c w4daka <ignorenegativeideology999@gmail.com> 1771143513 +0900	commit: rust explain error add

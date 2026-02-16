@@ -20,6 +20,10 @@ return { -- Highlight, edit, and navigate code
       'cpp',
       'ocaml',
       'ocaml_interface',
+      'go',
+      'gomod',
+      'gowork',
+      'gosum',
     },
     -- Autoinstall languages that are not installed
     auto_install = true,

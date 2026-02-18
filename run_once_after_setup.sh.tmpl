@@ -1,31 +1,49 @@
 #!/bin/bash
 # ================================================================= #
-# 🚀 Ultimate Setup Script (Updated: Nerd Fonts Included)
+# 🚀 Universal Setup Script (Ubuntu & EndeavourOS / Arch)
 # ================================================================= #
 set -euo pipefail
 
-echo "--- 📦 1. システムパッケージ (apt) ---"
-sudo apt update
-sudo apt install -y \
-    zsh i3 rofi make unzip gcc git curl flatpak fcitx5 \
-    libxkbcommon0 libc6 build-essential pkg-config libssl-dev fontconfig
+# --- 🔍 OS判別関数の定義 ---
+if [ -f /etc/arch-release ]; then
+    OS="arch"
+    INSTALL_CMD="sudo pacman -S --noconfirm --needed"
+    UPDATE_CMD="sudo pacman -Syu --noconfirm"
+    PKG_LIST="base-devel zsh i3-wm rofi make unzip gcc git curl flatpak fcitx5-im libxkbcommon glibc pkgconf openssl fontconfig"
+elif [ -f /etc/lsb-release ] || [ -f /etc/debian_version ]; then
+    OS="debian"
+    INSTALL_CMD="sudo apt install -y"
+    UPDATE_CMD="sudo apt update"
+    PKG_LIST="zsh i3 rofi make unzip gcc git curl flatpak fcitx5 libxkbcommon0 libc6 build-essential pkg-config libssl-dev fontconfig"
+else
+    echo "❌ サポートされていないOSです。"
+    exit 1
+fi
+
+echo "--- 📦 1. システムパッケージ ($OS) ---"
+$UPDATE_CMD
+$INSTALL_CMD $PKG_LIST
 
 # ディレクトリ準備
 mkdir -p "$HOME/.local/bin"
 mkdir -p "$HOME/.local/share/fonts"
 export PATH="$HOME/.local/bin:$PATH"
 
-echo "---  font 2. Nerd Fonts (JetBrainsMono) のインストール ---"
-# JetBrainsMono Nerd Font をダウンロードして展開
+echo "--- font 2. Nerd Fonts (JetBrainsMono) ---"
 FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
 curl -fLo "/tmp/JetBrainsMono.zip" "$FONT_URL"
 unzip -o "/tmp/JetBrainsMono.zip" -d "$HOME/.local/share/fonts/"
-fc-cache -f # フォントキャッシュを更新
+fc-cache -f
 
-echo "--- 💤 3. Neovim (AppImage) のインストール ---"
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-chmod u+x nvim-linux-x86_64.appimage
-mv nvim-linux-x86_64.appimage "$HOME/.local/bin/nvim"
+echo "--- 💤 3. Neovim のインストール ---"
+if [ "$OS" = "arch" ]; then
+    sudo pacman -S --noconfirm neovim
+else
+    # Ubuntuの場合は最新版を確保するためAppImageを使用
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+    chmod u+x nvim-linux-x86_64.appimage
+    mv nvim-linux-x86_64.appimage "$HOME/.local/bin/nvim"
+fi
 
 echo "--- 🐚 4. Sheldon のインストール ---"
 curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
@@ -34,30 +52,30 @@ curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
 echo "--- ✨ 5. Starship のインストール ---"
 curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
 
-echo "--- 🌐 6. Flatpak アプリのインストール ---"
+echo "--- 🌐 6. Flatpak リポジトリ設定 ---"
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub com.google.Chrome org.mozilla.firefox net.ankiweb.Anki
 
-echo "--- 🛠️  7. mise の導入とツール一括インストール ---"
+echo "--- 🛠️  7. mise の導入 ---"
 curl https://mise.run/bash | sh
 export MISE_DATA_DIR="$HOME/.local/share/mise"
 export PATH="$HOME/.local/bin:$MISE_DATA_DIR/bin:$MISE_DATA_DIR/shims:$PATH"
 eval "$($HOME/.local/bin/mise activate bash)"
 
-# mise.toml が配置されている前提でツールインストール
 if [ -f "$HOME/.config/mise/config.toml" ]; then
     mise install -y
 else
     echo "⚠️  mise config not found, skipping tool installation."
 fi
 
-echo "--- 📦 8. Node.js ツール (Typescript, yarn) ---"
-mise reshim
-npm install -g typescript yarn
+echo "--- 📦 8. Node.js ツール ---"
+# miseでnodeが入っているか確認してから実行
+if command -v npm &> /dev/null; then
+    npm install -g typescript yarn
+fi
 
 echo "--- 🔄 9. デフォルトシェルを Zsh へ変更 ---"
-if [ "$SHELL" != "$(which zsh)" ]; then
+if [[ "$SHELL" != */zsh ]]; then
     sudo chsh -s "$(which zsh)" "$USER"
 fi
 
-echo "✅ すべて完了！再起動して、端末のフォント設定を 'JetBrainsMono Nerd Font' に変更してください。"
+echo "✅ すべて完了！再起動後、ターミナルのフォントを 'JetBrainsMono Nerd Font' にしてください。"

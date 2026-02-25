@@ -1,5 +1,6 @@
 {
   "conform.nvim": { "branch": "master", "commit": "c2526f1cde528a66e086ab1668e996d162c75f4f" },
+  "copy-file-path.nvim": { "branch": "main", "commit": "1ae57d11ce890fffc224f0daf88999f809829d87" },
   "crates.nvim": { "branch": "main", "commit": "ac9fa498a9edb96dc3056724ff69d5f40b898453" },
   "ddc-filter-matcher_head": { "branch": "main", "commit": "7a955d2f6a44e39687459f8f3a22f4daa063a981" },
   "ddc-filter-sorter_rank": { "branch": "main", "commit": "eed3cb33b3ae3f9128257fcfb95e0511d1b13891" },

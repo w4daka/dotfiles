@@ -9,6 +9,10 @@ deno = "latest"
 "github:zellij-org/zellij" = "latest"
 "github:jesseduffield/lazygit" = "latest"
 "github:sxyazi/yazi" = "latest"
+# 自動判別されるもの
+bat = "latest"
+ripgrep = "latest"
+pandoc = "latest"
 
 # --- Cargo(Rust)経由でインストール ---
 # ripgrepなどはGitHubバイナリよりCargoの方が安定する場合があります

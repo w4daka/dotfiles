@@ -135,7 +135,12 @@ return {
       pyright = {},
       ocamllsp = {},
       lua_ls = {
-        settings = { Lua = { completion = { callSnippet = 'Replace' } } },
+        settings = {
+          Lua = {
+            workspace = { checkThirdParty = false },
+            completion = { callSnippet = 'Replace' },
+          },
+        },
       },
     }
 
@@ -145,9 +150,7 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, { 'stylua', 'black', 'goimports' })
     -- LazyVim 推奨ツールのリスト
-    local ensure_installed = vim.tbl_keys(servers)
     vim.list_extend(ensure_installed, {
-      'goimports', -- インポート整理
       'gofumpt', -- 厳格なフォーマット
       'gomodifytags', -- JSONタグ自動生成
       'impl', -- インターフェース実装生成
@@ -170,13 +173,12 @@ return {
             return
           end
 
-          -- 最新の書き方 (v0.11以降)
+          -- 最新の書き方 (v0.11以降) もありますが、
+          -- lazydev.nvim などのプラグインとの互換性のために nvim-lspconfig の setup を使用します
           local config = servers[server_name] or {}
           config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, config.capabilities or {})
 
-          -- ここで vim.lsp.config を使用
-          vim.lsp.config(server_name, config)
-          vim.lsp.enable(server_name)
+          require('lspconfig')[server_name].setup(config)
         end,
       },
     }

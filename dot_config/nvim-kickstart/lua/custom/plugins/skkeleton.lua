@@ -41,12 +41,6 @@ return {
           mark = 'A',
         },
       })
-      vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-        pattern = vim.fn.expand '~' .. '/blog/content/post/english_practice_1/index.md',
-        callback = function()
-          vim.fn['ddc#custom#patch_buffer']('sources', {})
-        end,
-      })
 
       patch_global('sourceParams', {
         copilot = {

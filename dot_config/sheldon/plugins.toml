@@ -12,8 +12,8 @@
 
 shell = "zsh"
 
-[plugins.zsh-syntax-highlighting]
-github = "zsh-users/zsh-syntax-highlighting"
+ [plugins.fast-syntax-highlighting]
+ github = "zdharma-continuum/fast-syntax-highlighting"
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 [plugins.enhance]
@@ -22,6 +22,8 @@ github = "babarot/enhancd"
 github = "MichaelAquilina/zsh-you-should-use"
 [plugins.ls]
 github = "zpm-zsh/ls"
+ [plugins.zeno]
+ github = "yuki-yano/zeno.zsh"
 
 
 # For example:

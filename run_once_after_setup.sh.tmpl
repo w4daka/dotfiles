@@ -9,12 +9,14 @@ if [ -f /etc/arch-release ]; then
     OS="arch"
     INSTALL_CMD="sudo pacman -S --noconfirm --needed"
     UPDATE_CMD="sudo pacman -Syu --noconfirm"
-    PKG_LIST="base-devel zsh i3-wm rofi make unzip gcc git curl flatpak fcitx5-im libxkbcommon glibc pkgconf openssl fontconfig"
+    # Sway, Emacs, zoxide を追加
+    PKG_LIST="base-devel zsh i3-wm sway rofi emacs make unzip gcc git curl flatpak fcitx5-im libxkbcommon glibc pkgconf openssl fontconfig zoxide"
 elif [ -f /etc/lsb-release ] || [ -f /etc/debian_version ]; then
     OS="debian"
     INSTALL_CMD="sudo apt install -y"
     UPDATE_CMD="sudo apt update"
-    PKG_LIST="zsh i3 rofi make unzip gcc git curl flatpak fcitx5 libxkbcommon0 libc6 build-essential pkg-config libssl-dev fontconfig"
+    # Sway, Emacs, zoxide を追加
+    PKG_LIST="zsh i3 sway rofi emacs make unzip gcc git curl flatpak fcitx5 libxkbcommon0 libc6 build-essential pkg-config libssl-dev fontconfig zoxide"
 else
     echo "❌ サポートされていないOSです。"
     exit 1
@@ -45,17 +47,27 @@ else
     mv nvim-linux-x86_64.appimage "$HOME/.local/bin/nvim"
 fi
 
-echo "--- 🐚 4. Sheldon のインストール ---"
+echo "--- 📂 4. zoxide & zi のセットアップ ---"
+# zoxideはPKG_LISTで入れていますが、最新版スクリプトを回すのが確実です
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+# zi (fzfを利用したインタラクティブ選択) のために fzf もインストール
+if [ "$OS" = "arch" ]; then
+    sudo pacman -S --noconfirm fzf
+else
+    sudo apt install -y fzf
+fi
+
+echo "--- 🐚 5. Sheldon のインストール ---"
 curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
     | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
 
-echo "--- ✨ 5. Starship のインストール ---"
+echo "--- ✨ 6. Starship のインストール ---"
 curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
 
-echo "--- 🌐 6. Flatpak リポジトリ設定 ---"
+echo "--- 🌐 7. Flatpak リポジトリ設定 ---"
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-echo "--- 🛠️  7. mise の導入 ---"
+echo "--- 🛠️  8. mise の導入 ---"
 curl https://mise.run/bash | sh
 export MISE_DATA_DIR="$HOME/.local/share/mise"
 export PATH="$HOME/.local/bin:$MISE_DATA_DIR/bin:$MISE_DATA_DIR/shims:$PATH"
@@ -67,15 +79,16 @@ else
     echo "⚠️  mise config not found, skipping tool installation."
 fi
 
-echo "--- 📦 8. Node.js ツール ---"
-# miseでnodeが入っているか確認してから実行
+echo "--- 📦 9. Node.js ツール ---"
 if command -v npm &> /dev/null; then
     npm install -g typescript yarn
 fi
 
-echo "--- 🔄 9. デフォルトシェルを Zsh へ変更 ---"
+echo "--- 🔄 10. デフォルトシェルを Zsh へ変更 ---"
 if [[ "$SHELL" != */zsh ]]; then
     sudo chsh -s "$(which zsh)" "$USER"
 fi
 
-echo "✅ すべて完了！再起動後、ターミナルのフォントを 'JetBrainsMono Nerd Font' にしてください。"
+echo "✅ すべて完了！"
+echo "💡 Sway を起動するにはターミナルで 'sway' と入力してください。"
+echo "💡 zoxide を有効にするには .zshrc に 'eval \"\$(zoxide init zsh)\"' を追記してください。"

@@ -430,24 +430,21 @@ vim.keymap.set({ "i", "c" }, "<C-n>", "<cmd>call pum#map#insert_relative(+1)<CR>
 vim.keymap.set({ "i", "c" }, "<C-p>", "<cmd>call pum#map#insert_relative(-1)<CR>", opts)
 vim.keymap.set({ "i", "c" }, "<C-y>", "<cmd>call pum#map#confirm()<CR>", opts)
 vim.keymap.set({ "i", "c" }, "<C-e>", "<cmd>call pum#map#cancel()<CR>", opts)
--- IME制御用の共通関数 (Fcitx5の場合。Fcitx4なら fcitx-remote に書き換え)
+-- IME (Fcitx5) を強制的に英語入力にする関数
 local function fcitx_off()
-    vim.fn.jobstart("fcitx5-remote -c")
+    -- fcitx5-remote が存在するか確認してから実行（エラー防止）
+    if vim.fn.executable("fcitx5-remote") == 1 then
+        vim.fn.jobstart("fcitx5-remote -c")
+    elseif vim.fn.executable("fcitx-remote") == 1 then
+        -- 旧バージョンのFcitxの場合
+        vim.fn.jobstart("fcitx-remote -c")
+    end
 end
-
--- 1. Neovim起動時にIMEを強制オフ
-vim.api.nvim_create_autocmd("VimEnter", {
-    callback = fcitx_off,
-})
-
--- 2. インサートモードに入る時も常に英語（オフ）から始める
--- ※「前回の入力を引き継ぎたい」場合はこの設定は不要です
-vim.api.nvim_create_autocmd("InsertEnter", {
-    callback = fcitx_off,
-})
-
--- 3. [任意] 検索モードに入る時もIMEをオフにする
-vim.api.nvim_create_autocmd("CmdlineEnter", {
-    pattern = { "/", "?" },
+-- 以下のタイミングで実行
+vim.api.nvim_create_autocmd({ 
+    "VimEnter",    -- Neovim起動時
+    "InsertEnter", -- 挿入モード開始時（常に英語から打ちたい場合）
+    "FocusGained"  -- ブラウザからNeovimに戻ってきた時
+}, {
     callback = fcitx_off,
 })

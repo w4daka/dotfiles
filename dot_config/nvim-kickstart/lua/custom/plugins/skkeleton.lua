@@ -15,7 +15,7 @@ return {
     },
     config = function()
       vim.fn['skkeleton#config'] {
-        globalDictionaries = { '~/.skk/SKK-JISYO.L' },
+        globalDictionaries = { '~/.config/dict-skk/SKK-JISYO.L' },
         eggLikeNewline = true,
       }
       vim.cmd [[call ddc#custom#patch_global('sources', ['skkeleton', 'skkeleton_okuri'])]]

@@ -117,21 +117,7 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()
-	vim.g.clipboard = {
-		name = "win32yank-wsl",
-		copy = {
-			["+"] = "win32yank.exe -i --crlf",
-			["*"] = "win32yank.exe -i --crlf",
-		},
-		paste = {
-			["+"] = "win32yank.exe -o --lf",
-			["*"] = "win32yank.exe -o --lf",
-		},
-		cache_enabled = true, -- これが重要
-	}
-	vim.o.clipboard = "unnamedplus"
-end)
+vim.schedule(function()vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
 -- Avoid braaking lines in the middle of a word
@@ -444,3 +430,24 @@ vim.keymap.set({ "i", "c" }, "<C-n>", "<cmd>call pum#map#insert_relative(+1)<CR>
 vim.keymap.set({ "i", "c" }, "<C-p>", "<cmd>call pum#map#insert_relative(-1)<CR>", opts)
 vim.keymap.set({ "i", "c" }, "<C-y>", "<cmd>call pum#map#confirm()<CR>", opts)
 vim.keymap.set({ "i", "c" }, "<C-e>", "<cmd>call pum#map#cancel()<CR>", opts)
+-- IME制御用の共通関数 (Fcitx5の場合。Fcitx4なら fcitx-remote に書き換え)
+local function fcitx_off()
+    vim.fn.jobstart("fcitx5-remote -c")
+end
+
+-- 1. Neovim起動時にIMEを強制オフ
+vim.api.nvim_create_autocmd("VimEnter", {
+    callback = fcitx_off,
+})
+
+-- 2. インサートモードに入る時も常に英語（オフ）から始める
+-- ※「前回の入力を引き継ぎたい」場合はこの設定は不要です
+vim.api.nvim_create_autocmd("InsertEnter", {
+    callback = fcitx_off,
+})
+
+-- 3. [任意] 検索モードに入る時もIMEをオフにする
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+    pattern = { "/", "?" },
+    callback = fcitx_off,
+})

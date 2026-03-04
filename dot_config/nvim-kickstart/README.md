@@ -1,5 +1,6 @@
 # kickstart.nvimの自分用レファレンス
 
+
 ## 概要
 
 nvim-kickstartのコードを読む。機能のレファレンスを作るのが目標。

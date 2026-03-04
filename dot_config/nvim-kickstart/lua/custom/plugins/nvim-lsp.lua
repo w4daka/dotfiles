@@ -132,7 +132,6 @@ return {
           },
         },
       },
-      pyright = {},
       ocamllsp = {},
       lua_ls = {
         settings = {
@@ -148,7 +147,7 @@ return {
 
     -- Masonツールインストーラーの設定
     local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, { 'stylua', 'black', 'goimports' })
+    vim.list_extend(ensure_installed, { 'stylua', 'goimports' })
     -- LazyVim 推奨ツールのリスト
     vim.list_extend(ensure_installed, {
       'gofumpt', -- 厳格なフォーマット

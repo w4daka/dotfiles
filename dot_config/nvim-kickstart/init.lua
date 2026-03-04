@@ -434,3 +434,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     print('LSP Attached: ' .. client.name .. ' to buffer ' .. args.buf)
   end,
 })
+vim.keymap.set({ 'i', 'c', 't' }, '<C-j>', '<Plug>(skkeleton-toggle)', { noremap = false })
+
+-- pum.vim との連携用マップ（現状通り）
+vim.keymap.set({ 'i', 'c' }, '<C-n>', '<cmd>call pum#map#insert_relative(+1)<CR>', opts)
+vim.keymap.set({ 'i', 'c' }, '<C-p>', '<cmd>call pum#map#insert_relative(-1)<CR>', opts)
+vim.keymap.set({ 'i', 'c' }, '<C-y>', '<cmd>call pum#map#confirm()<CR>', opts)
+vim.keymap.set({ 'i', 'c' }, '<C-e>', '<cmd>call pum#map#cancel()<CR>', opts)

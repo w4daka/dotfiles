@@ -444,5 +444,3 @@ vim.keymap.set({ "i", "c" }, "<C-n>", "<cmd>call pum#map#insert_relative(+1)<CR>
 vim.keymap.set({ "i", "c" }, "<C-p>", "<cmd>call pum#map#insert_relative(-1)<CR>", opts)
 vim.keymap.set({ "i", "c" }, "<C-y>", "<cmd>call pum#map#confirm()<CR>", opts)
 vim.keymap.set({ "i", "c" }, "<C-e>", "<cmd>call pum#map#cancel()<CR>", opts)
--- vim.g.denops#deno を指定します
-vim.g["denops#deno"] = vim.fn.expand("/home/doxaripo/.local/share/mise/installs/deno/2.6.8/bin/deno")

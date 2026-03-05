@@ -1,3 +1,4 @@
+alias g='git'
 alias gcmsg='git commit -m'
 alias gp='git push'
 alias gst='git status'
@@ -6,12 +7,11 @@ alias emacs='emacs -nw'
 alias nvim-ks='NVIM_APPNAME=nvim-kickstart nvim'
 alias nvim-dpp='NVIM_APPNAME=nvim-dpp nvim'
 alias lg='lazygit'
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-export NVIM_APPNAME='nvim-kickstart'
+alias wezterm='flatpak run org.wezfurlong.wezterm'
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='nvim-ks'
+  export EDITOR='nvim'
 fi
 setopt auto_cd
 export LANG=en_US.UTF-8
@@ -50,42 +50,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export GEMINI_API_KEY="{{ .GEMINI_API_KEY }}"
 export PATH="$HOME/.local/bin:$PATH"
-eval $(opam env)
 eval "$(~/.local/bin/mise activate zsh)"
-export ZENO_HOME=~/.config/zeno
-
-# git file preview with color
-export ZENO_GIT_CAT="bat --color=always"
-
-# git folder preview with color
-# export ZENO_GIT_TREE="eza --tree"
-
-if [[ -n $ZENO_LOADED ]]; then
-  bindkey ' '  zeno-auto-snippet
-
-
-  bindkey '^m' zeno-auto-snippet-and-accept-line
-
-  bindkey '^i' zeno-completion
-
-  bindkey '^xx' zeno-insert-snippet           # open snippet picker (fzf) and insert at cursor
-
-  bindkey '^x '  zeno-insert-space
-  bindkey '^x^m' accept-line
-  bindkey '^x^z' zeno-toggle-auto-snippet
-
-  # preprompt bindings
-  bindkey '^xp' zeno-preprompt
-  bindkey '^xs' zeno-preprompt-snippet
-  # Outside ZLE you can run `zeno-preprompt git {{ "{{" }}cmd{{ "}}" }}` or `zeno-preprompt-snippet foo`
-  # to set the next prompt prefix; invoking them with an empty argument resets the state.
-
-  bindkey '^r' zeno-smart-history-selection # smart history widget
-
-  # fallback if completion not matched
-  # (default: fzf-completion if exists; otherwise expand-or-complete)
-  # export ZENO_COMPLETION_FALLBACK=expand-or-complete
-fi
 export PATH="$HOME/.luarocks/bin:$PATH"
 
 

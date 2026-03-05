@@ -117,21 +117,7 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()
-	vim.g.clipboard = {
-		name = "win32yank-wsl",
-		copy = {
-			["+"] = "win32yank.exe -i --crlf",
-			["*"] = "win32yank.exe -i --crlf",
-		},
-		paste = {
-			["+"] = "win32yank.exe -o --lf",
-			["*"] = "win32yank.exe -o --lf",
-		},
-		cache_enabled = true, -- これが重要
-	}
-	vim.o.clipboard = "unnamedplus"
-end)
+vim.schedule(function()vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
 -- Avoid braaking lines in the middle of a word
@@ -444,3 +430,21 @@ vim.keymap.set({ "i", "c" }, "<C-n>", "<cmd>call pum#map#insert_relative(+1)<CR>
 vim.keymap.set({ "i", "c" }, "<C-p>", "<cmd>call pum#map#insert_relative(-1)<CR>", opts)
 vim.keymap.set({ "i", "c" }, "<C-y>", "<cmd>call pum#map#confirm()<CR>", opts)
 vim.keymap.set({ "i", "c" }, "<C-e>", "<cmd>call pum#map#cancel()<CR>", opts)
+-- IME (Fcitx5) を強制的に英語入力にする関数
+local function fcitx_off()
+    -- fcitx5-remote が存在するか確認してから実行（エラー防止）
+    if vim.fn.executable("fcitx5-remote") == 1 then
+        vim.fn.jobstart("fcitx5-remote -c")
+    elseif vim.fn.executable("fcitx-remote") == 1 then
+        -- 旧バージョンのFcitxの場合
+        vim.fn.jobstart("fcitx-remote -c")
+    end
+end
+-- 以下のタイミングで実行
+vim.api.nvim_create_autocmd({ 
+    "VimEnter",    -- Neovim起動時
+    "InsertEnter", -- 挿入モード開始時（常に英語から打ちたい場合）
+    "FocusGained"  -- ブラウザからNeovimに戻ってきた時
+}, {
+    callback = fcitx_off,
+})

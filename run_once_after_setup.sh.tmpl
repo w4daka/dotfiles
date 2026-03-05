@@ -89,6 +89,20 @@ if [[ "$SHELL" != */zsh ]]; then
     sudo chsh -s "$(which zsh)" "$USER"
 fi
 
+echo "--- ⌨️  11. SKK Dictionary (SKK-JISYO.L) ---"
+DICT_DIR="$HOME/.config/dict-skk"
+DICT_PATH="$DICT_DIR/SKK-JISYO.L"
+
+if [ ! -f "$DICT_PATH" ]; then
+    echo "📥 Downloading SKK-JISYO.L..."
+    mkdir -p "$DICT_DIR"
+    # curl でダウンロードして gunzip で解凍し、指定のパスに保存
+    curl -L https://skk-dev.github.io/dict/SKK-JISYO.L.gz | gunzip > "$DICT_PATH"
+    echo "✅ SKK Dictionary installed to $DICT_PATH"
+else
+    echo "skk-jisyo already exists, skipping."
+fi
+
 echo "✅ すべて完了！"
 echo "💡 Sway を起動するにはターミナルで 'sway' と入力してください。"
 echo "💡 zoxide を有効にするには .zshrc に 'eval \"\$(zoxide init zsh)\"' を追記してください。"

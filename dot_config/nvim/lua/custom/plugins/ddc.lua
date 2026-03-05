@@ -1,0 +1,80 @@
+return {
+  -- 1. 基盤・コア
+  { 'vim-denops/denops.vim', lazy = false },
+  {
+    'Shougo/ddc.vim',
+    lazy = false,
+    dependencies = { 'vim-denops/denops.vim' },
+    config = function()
+      local patch_global = vim.fn['ddc#custom#patch_global']
+
+      patch_global('ui', 'pum')
+      patch_global('sources', { 'lsp', 'around' })
+
+      patch_global('sourceOptions', {
+        ['_'] = {
+          matchers = { 'matcher_head' },
+          sorters = { 'sorter_rank' },
+        },
+        lsp = {
+          mark = 'LSP',
+          forceCompletionPattern = [[\.\w*|:\w*|->\w*]],
+        },
+        -- skkeleton = {
+        --   mark = 'skk',
+        --   matchers = {}, -- matcher は必須
+        --   sorters = {},
+        --   isVolatile = true,
+        --   minAutoCompleteLength = 1,
+        --   forceCompletionPattern = [[\k+]],
+        -- },
+        -- copilot = {
+        --   mark = 'Co',
+        --   matchers = { 'matcher_head' },
+        --   sorters = { 'sorter_rank' },
+        --   minAutoCompleteLength = 0,
+        --   isVolatile = true,
+        --   forceCompletionPattern = [[\w+]],
+        --   timeout = 2000,
+        -- },
+        around = {
+          mark = 'A',
+        },
+      })
+
+      patch_global('sourceParams', {
+        copilot = {
+          enterprise = false,
+        },
+      })
+
+      vim.fn['ddc#enable']()
+    end,
+  },
+
+  -- 2. UI
+  { 'Shougo/pum.vim', lazy = false },
+  { 'Shougo/ddc-ui-pum' },
+
+  -- 3. Copilot (本体 + ddcソース)
+  -- {
+  --   'github/copilot.vim',
+  --   lazy = false,
+  --   config = function()
+  --     vim.g.copilot_no_maps = true
+  --
+  --     -- ドキュメントに基づいたファイルタイプ別の無効化設定
+  --     vim.g.copilot_filetypes = {
+  --       markdown = false, -- markdownを無効化
+  --       text = false, -- ついでにテキストファイルも無効化する場合
+  --     }
+  --   end,
+  -- },
+  -- { 'Shougo/ddc-source-copilot', dependencies = { 'github/copilot.vim' } },
+
+  -- 4. その他ソース・フィルター
+  { 'Shougo/ddc-source-lsp' },
+  { 'Shougo/ddc-source-around' },
+  { 'Shougo/ddc-filter-sorter_rank' },
+  { 'Shougo/ddc-filter-matcher_head' },
+}

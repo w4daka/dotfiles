@@ -42,7 +42,6 @@ return {
         \ })
         ]]
 
-      vim.cmd [[call skkeleton#config({'completionRankFile': '~/.skk/rank.json'})]]
       vim.cmd [[ call ddc#enable() ]]
       vim.cmd [[call ddc#custom#patch_global('ui','pum')]]
     end,

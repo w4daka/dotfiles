@@ -48,9 +48,7 @@ eval "$(starship init zsh)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export GEMINI_API_KEY="{{ .GEMINI_API_KEY }}"
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(~/.local/bin/mise activate zsh)"
 export PATH="$HOME/.luarocks/bin:$PATH"
 
-export PATH="$HOME/.local/kitty.app/bin:$PATH"

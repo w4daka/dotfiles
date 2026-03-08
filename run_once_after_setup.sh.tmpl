@@ -1,101 +1,259 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ==================================================
-# Kubuntu専用セットアップスクリプト（run once）
+# Kubuntu 開発環境セットアップ (run once)
 # ==================================================
 set -euo pipefail
 
+echo "=============================="
+echo "Kubuntu Setup Script"
+echo "=============================="
+
+# --------------------------------------------------
+# 1. Ubuntu ミラーを日本に変更
+# --------------------------------------------------
 echo "--- 1. 日本ミラーに変更 ---"
+
 if [ -f /etc/apt/sources.list.d/ubuntu.sources ]; then
     sudo cp /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources.backup
-    sudo sed -i 's|http://archive.ubuntu.com/ubuntu/|http://jp.archive.ubuntu.com/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources
-    sudo sed -i 's|http://us.archive.ubuntu.com/ubuntu/|http://jp.archive.ubuntu.com/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources
-    sudo apt update
+
+    sudo sed -i \
+        's|http://archive.ubuntu.com/ubuntu/|http://jp.archive.ubuntu.com/ubuntu/|g' \
+        /etc/apt/sources.list.d/ubuntu.sources
+
+    sudo sed -i \
+        's|http://us.archive.ubuntu.com/ubuntu/|http://jp.archive.ubuntu.com/ubuntu/|g' \
+        /etc/apt/sources.list.d/ubuntu.sources
 fi
 
-echo "--- 2. 必須パッケージのインストール ---"
-PKG_LIST="zsh i3 rofi make unzip gcc git curl flatpak fcitx5 libxkbcommon0 libc6 build-essential pkg-config libssl-dev fontconfig zoxide picom copyq fcitx5-frontend-all kde-config-flatpak fzf"
+
+# --------------------------------------------------
+# 2. APT keyring ディレクトリ準備
+# --------------------------------------------------
+echo "--- 2. keyring directory ---"
+
+sudo mkdir -p -m 755 /etc/apt/keyrings
+
+
+# --------------------------------------------------
+# 3. WezTerm リポジトリ追加
+# --------------------------------------------------
+echo "--- 3. WezTerm repo ---"
+
+curl -fsSL https://apt.fury.io/wez/gpg.key \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/wezterm.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/wezterm.gpg] https://apt.fury.io/wez/ * *" \
+  | sudo tee /etc/apt/sources.list.d/wezterm.list > /dev/null
+
+
+# --------------------------------------------------
+# 4. GitHub CLI リポジトリ追加
+# --------------------------------------------------
+echo "--- 4. GitHub CLI repo ---"
+
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+  | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
+
+sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+  | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+
+
+# --------------------------------------------------
+# 5. apt update
+# --------------------------------------------------
+echo "--- 5. apt update ---"
+sudo apt update
+
+
+# --------------------------------------------------
+# 6. 必須パッケージ
+# --------------------------------------------------
+echo "--- 6. 必須パッケージ ---"
+
+PKG_LIST="
+zsh
+i3
+rofi
+make
+unzip
+gcc
+git
+curl
+flatpak
+fcitx5
+fcitx5-frontend-all
+libxkbcommon0
+libc6
+build-essential
+pkg-config
+libssl-dev
+fontconfig
+zoxide
+picom
+copyq
+kde-config-flatpak
+fzf
+wezterm
+gh
+"
+
 sudo apt install -y $PKG_LIST
 
-echo "--- 3. WezTerm リポジトリ追加とインストール ---"
-curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
-echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
-sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
-sudo apt update
-sudo apt install -y wezterm
 
-echo "--- 4. ディレクトリ準備 ---"
-mkdir -p "$HOME/.local/bin" "$HOME/.local/share/fonts"
+# --------------------------------------------------
+# 7. ディレクトリ準備
+# --------------------------------------------------
+echo "--- 7. directories ---"
+
+mkdir -p "$HOME/.local/bin"
+mkdir -p "$HOME/.local/share/fonts"
+
 export PATH="$HOME/.local/bin:$PATH"
 
-echo "--- 5. Nerd Fonts (JetBrainsMono) ---"
+
+# --------------------------------------------------
+# 8. Nerd Fonts
+# --------------------------------------------------
+echo "--- 8. Nerd Fonts ---"
+
 FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
-curl -fLo "/tmp/JetBrainsMono.zip" "$FONT_URL"
-unzip -o "/tmp/JetBrainsMono.zip" -d "$HOME/.local/share/fonts/"
+
+curl -fLo /tmp/JetBrainsMono.zip "$FONT_URL"
+unzip -o /tmp/JetBrainsMono.zip -d "$HOME/.local/share/fonts/"
+
 fc-cache -f
 
-echo "--- 6. Neovim (AppImage) ---"
+
+# --------------------------------------------------
+# 9. Neovim
+# --------------------------------------------------
+echo "--- 9. Neovim ---"
+
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+
 chmod u+x nvim-linux-x86_64.appimage
+
 mv nvim-linux-x86_64.appimage "$HOME/.local/bin/nvim"
 
-echo "--- 7. zoxide インストール ---"
+
+# --------------------------------------------------
+# 10. zoxide
+# --------------------------------------------------
+echo "--- 10. zoxide ---"
+
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 
-echo "--- 8. Sheldon インストール ---"
+
+# --------------------------------------------------
+# 11. Sheldon
+# --------------------------------------------------
+echo "--- 11. sheldon ---"
+
 curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
     | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
 
-echo "--- 9. Starship インストール ---"
-curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
 
-echo "--- 10. Flatpak リポジトリ設定 ---"
-sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+# --------------------------------------------------
+# 12. Starship
+# --------------------------------------------------
+echo "--- 12. starship ---"
 
-echo "--- 11. Flatpak アプリ導入 ---"
-flatpak install -y flathub net.ankiweb.Anki com.vivaldi.Vivaldi org.obsproject.Studio org.kde.krita org.blender.Blender org.mozilla.Thunderbird org.kde.gwenview
+curl -sS https://starship.rs/install.sh \
+    | sh -s -- --yes --bin-dir "$HOME/.local/bin"
 
-echo "--- 12. mise 導入 ---"
+
+# --------------------------------------------------
+# 13. Flatpak
+# --------------------------------------------------
+echo "--- 13. flatpak ---"
+
+sudo flatpak remote-add --if-not-exists \
+  flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+flatpak install -y flathub \
+  net.ankiweb.Anki \
+  com.vivaldi.Vivaldi \
+  org.obsproject.Studio \
+  org.kde.krita \
+  org.blender.Blender \
+  org.mozilla.Thunderbird \
+  org.kde.gwenview
+
+
+# --------------------------------------------------
+# 14. mise
+# --------------------------------------------------
+echo "--- 14. mise ---"
+
 curl https://mise.run/bash | sh
+
 export MISE_DATA_DIR="$HOME/.local/share/mise"
 export PATH="$HOME/.local/bin:$MISE_DATA_DIR/bin:$MISE_DATA_DIR/shims:$PATH"
+
 eval "$($HOME/.local/bin/mise activate bash)"
+
 if [ -f "$HOME/.config/mise/config.toml" ]; then
     mise install -y
 else
-    echo "⚠️ mise config not found, skipping tool installation"
+    echo "mise config not found, skipping"
 fi
 
-echo "--- 13. Node.js ツール ---"
+
+# --------------------------------------------------
+# 15. Node tools
+# --------------------------------------------------
+echo "--- 15. node tools ---"
+
 if command -v npm &> /dev/null; then
     npm install -g typescript yarn
 fi
 
-echo "--- 14. デフォルトシェルを Zsh に変更 ---"
+
+# --------------------------------------------------
+# 16. default shell
+# --------------------------------------------------
+echo "--- 16. change shell ---"
+
 if [[ "$SHELL" != */zsh ]]; then
     sudo chsh -s "$(which zsh)" "$USER"
 fi
 
-echo "--- 15. SKK Dictionary ---"
+
+# --------------------------------------------------
+# 17. SKK dictionary
+# --------------------------------------------------
+echo "--- 17. SKK dictionary ---"
+
 DICT_DIR="$HOME/.config/dict-skk"
 DICT_PATH="$DICT_DIR/SKK-JISYO.L"
+
 if [ ! -f "$DICT_PATH" ]; then
     mkdir -p "$DICT_DIR"
-    echo "📥 ダウンロード中..."
-    curl -L https://skk-dev.github.io/dict/SKK-JISYO.L.gz | gunzip > "$DICT_PATH"
-    echo "✅ SKK Dictionary installed to $DICT_PATH"
-else
-    echo "skk-jisyo already exists, skipping"
+
+    curl -L https://skk-dev.github.io/dict/SKK-JISYO.L.gz \
+      | gunzip > "$DICT_PATH"
+
+    echo "installed SKK dictionary"
 fi
 
-echo "--- 16. cskk deb パッケージ導入 ---"
+
+# --------------------------------------------------
+# 18. cskk
+# --------------------------------------------------
+echo "--- 18. cskk packages ---"
+
 CSKK_DIR="$(chezmoi source-path)/dot_packages"
+
 if [ -d "$CSKK_DIR" ]; then
-    echo "📦 Installing cskk packages from $CSKK_DIR"
     sudo dpkg -i "$CSKK_DIR"/libcskk_*.deb
     sudo dpkg -i "$CSKK_DIR"/fcitx5-cskk_*.deb
-else
-    echo "⚠️ $CSKK_DIR not found, skipping cskk installation"
 fi
 
-echo "✅ すべて完了！"
-echo "💡 zoxide を有効にするには .zshrc に 'eval \"\$(zoxide init zsh)\"' を追記"
+
+echo "===================================="
+echo "Setup complete"
+echo "===================================="
+
+echo 'Add to .zshrc: eval "$(zoxide init zsh)"'

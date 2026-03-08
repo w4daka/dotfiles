@@ -2,32 +2,11 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
-config.font_size = 12.0
+config.font_size = 13.0
 config.use_ime = true
-
--- 基本フォント + フォールバック
-config.font = wezterm.font_with_fallback({
-	"JetBrainsMono Nerd Font", -- 英数字・記号・Powerline
-	"Noto Sans CJK JP", -- 日本語
-})
-
-config.font_size = 14
-
--- CJK文字だけ日本語フォントに置き換え（Nightly専用）
-config.font_rules = {
-	{
-		intensity = "Bold",
-		italic = true,
-		font = wezterm.font("JetBrainsMono Nerd Font"),
-	},
-	{
-		intensity = "Normal",
-		italic = true, -- イタリック有効
-		font = wezterm.font("Noto Sans CJK JP"),
-	},
-}
+config.font = wezterm.font("M+1Code Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" })
 config.adjust_window_size_when_changing_font_size = false
--- 背景の透過
+
 config.window_background_opacity = 0.8
 
 config.enable_wayland = false

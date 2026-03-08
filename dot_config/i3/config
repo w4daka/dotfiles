@@ -18,6 +18,7 @@ exec --no-startup-id picom -b
 exec --no-startup-id copyq
 exec --no-startup-id xss-lock -- i3lock --nofork
 exec --no-startup-id feh --bg-scale $HOME/.config/i3/wallpaper.png
+exec --no-startup-id start-pulseaudio-x11
 
 # -------------------------------
 # 音量キー
@@ -113,6 +114,10 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+#--------------------------------
+#スピーカー、イヤホンの切り替え
+bindsym mod1+Shift+1 exec pactl set-default-sink alsa_output.pci-0000_00_1f.3.analog-stereo
+bindsym mod1+Shift+2 exec pactl set-default-sink alsa_output.usb-JVCKENWOOD_JVCKENWOOD_USB_Audio-00.analog-stereo
 # -------------------------------
 # 追加ショートカット
 bindsym mod1+shift+s exec --no-startup-id spectacle

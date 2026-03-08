@@ -123,3 +123,11 @@ bindsym Mod1+v exec --no-startup-id copyq toggle
 bar {
     status_command i3status
 }
+# Floaterm Neovim scratchpad
+bindsym $mod+i exec --no-startup-id ~/.config/i3/ime.sh
+
+# Floaterm ウィンドウの floating とサイズ
+for_window [class="Floaterm"] floating enable
+for_window [class="Floaterm"] resize set 1200 700
+for_window [class="Floaterm"] border pixel 2
+# move position は指定せず scratchpad の位置を利用

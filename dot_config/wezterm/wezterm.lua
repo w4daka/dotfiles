@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
-config.font_size = 13.0
+config.font_size = 16.0
 config.use_ime = true
 config.font = wezterm.font("M+1Code Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" })
 config.adjust_window_size_when_changing_font_size = false

@@ -1,108 +1,101 @@
 #!/bin/bash
-# ================================================================= #
-# 🚀 Universal Setup Script (Ubuntu & EndeavourOS / Arch)
-# ================================================================= #
+# ==================================================
+# Kubuntu専用セットアップスクリプト（run once）
+# ==================================================
 set -euo pipefail
 
-# --- 🔍 OS判別関数の定義 ---
-if [ -f /etc/arch-release ]; then
-    OS="arch"
-    INSTALL_CMD="sudo pacman -S --noconfirm --needed"
-    UPDATE_CMD="sudo pacman -Syu --noconfirm"
-    # Sway, Emacs, zoxide を追加
-    PKG_LIST="base-devel zsh i3-wm sway rofi emacs make unzip gcc git curl flatpak fcitx5-im libxkbcommon glibc pkgconf openssl fontconfig zoxide"
-elif [ -f /etc/lsb-release ] || [ -f /etc/debian_version ]; then
-    OS="debian"
-    INSTALL_CMD="sudo apt install -y"
-    UPDATE_CMD="sudo apt update"
-    # Sway, Emacs, zoxide を追加
-    PKG_LIST="zsh i3 sway rofi emacs make unzip gcc git curl flatpak fcitx5 libxkbcommon0 libc6 build-essential pkg-config libssl-dev fontconfig zoxide"
-else
-    echo "❌ サポートされていないOSです。"
-    exit 1
+echo "--- 1. 日本ミラーに変更 ---"
+if [ -f /etc/apt/sources.list.d/ubuntu.sources ]; then
+    sudo cp /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources.backup
+    sudo sed -i 's|http://archive.ubuntu.com/ubuntu/|http://jp.archive.ubuntu.com/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources
+    sudo sed -i 's|http://us.archive.ubuntu.com/ubuntu/|http://jp.archive.ubuntu.com/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources
+    sudo apt update
 fi
 
-echo "--- 📦 1. システムパッケージ ($OS) ---"
-$UPDATE_CMD
-$INSTALL_CMD $PKG_LIST
+echo "--- 2. 必須パッケージのインストール ---"
+PKG_LIST="zsh i3 rofi make unzip gcc git curl flatpak fcitx5 libxkbcommon0 libc6 build-essential pkg-config libssl-dev fontconfig zoxide picom copyq fcitx5-frontend-all kde-config-flatpak fzf"
+sudo apt install -y $PKG_LIST
 
-# ディレクトリ準備
-mkdir -p "$HOME/.local/bin"
-mkdir -p "$HOME/.local/share/fonts"
+echo "--- 3. WezTerm リポジトリ追加とインストール ---"
+curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
+sudo apt update
+sudo apt install -y wezterm
+
+echo "--- 4. ディレクトリ準備 ---"
+mkdir -p "$HOME/.local/bin" "$HOME/.local/share/fonts"
 export PATH="$HOME/.local/bin:$PATH"
 
-echo "--- font 2. Nerd Fonts (JetBrainsMono) ---"
+echo "--- 5. Nerd Fonts (JetBrainsMono) ---"
 FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
 curl -fLo "/tmp/JetBrainsMono.zip" "$FONT_URL"
 unzip -o "/tmp/JetBrainsMono.zip" -d "$HOME/.local/share/fonts/"
 fc-cache -f
 
-echo "--- 💤 3. Neovim のインストール ---"
-if [ "$OS" = "arch" ]; then
-    sudo pacman -S --noconfirm neovim
-else
-    # Ubuntuの場合は最新版を確保するためAppImageを使用
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-    chmod u+x nvim-linux-x86_64.appimage
-    mv nvim-linux-x86_64.appimage "$HOME/.local/bin/nvim"
-fi
+echo "--- 6. Neovim (AppImage) ---"
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+chmod u+x nvim-linux-x86_64.appimage
+mv nvim-linux-x86_64.appimage "$HOME/.local/bin/nvim"
 
-echo "--- 📂 4. zoxide & zi のセットアップ ---"
-# zoxideはPKG_LISTで入れていますが、最新版スクリプトを回すのが確実です
+echo "--- 7. zoxide インストール ---"
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-# zi (fzfを利用したインタラクティブ選択) のために fzf もインストール
-if [ "$OS" = "arch" ]; then
-    sudo pacman -S --noconfirm fzf
-else
-    sudo apt install -y fzf
-fi
 
-echo "--- 🐚 5. Sheldon のインストール ---"
+echo "--- 8. Sheldon インストール ---"
 curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
     | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
 
-echo "--- ✨ 6. Starship のインストール ---"
+echo "--- 9. Starship インストール ---"
 curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
 
-echo "--- 🌐 7. Flatpak リポジトリ設定 ---"
+echo "--- 10. Flatpak リポジトリ設定 ---"
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-echo "--- 🛠️  8. mise の導入 ---"
+echo "--- 11. Flatpak アプリ導入 ---"
+flatpak install -y flathub net.ankiweb.Anki com.vivaldi.Vivaldi org.obsproject.Studio org.kde.krita org.blender.Blender org.mozilla.Thunderbird org.kde.gwenview
+
+echo "--- 12. mise 導入 ---"
 curl https://mise.run/bash | sh
 export MISE_DATA_DIR="$HOME/.local/share/mise"
 export PATH="$HOME/.local/bin:$MISE_DATA_DIR/bin:$MISE_DATA_DIR/shims:$PATH"
 eval "$($HOME/.local/bin/mise activate bash)"
-
 if [ -f "$HOME/.config/mise/config.toml" ]; then
     mise install -y
 else
-    echo "⚠️  mise config not found, skipping tool installation."
+    echo "⚠️ mise config not found, skipping tool installation"
 fi
 
-echo "--- 📦 9. Node.js ツール ---"
+echo "--- 13. Node.js ツール ---"
 if command -v npm &> /dev/null; then
     npm install -g typescript yarn
 fi
 
-echo "--- 🔄 10. デフォルトシェルを Zsh へ変更 ---"
+echo "--- 14. デフォルトシェルを Zsh に変更 ---"
 if [[ "$SHELL" != */zsh ]]; then
     sudo chsh -s "$(which zsh)" "$USER"
 fi
 
-echo "--- ⌨️  11. SKK Dictionary (SKK-JISYO.L) ---"
+echo "--- 15. SKK Dictionary ---"
 DICT_DIR="$HOME/.config/dict-skk"
 DICT_PATH="$DICT_DIR/SKK-JISYO.L"
-
 if [ ! -f "$DICT_PATH" ]; then
-    echo "📥 Downloading SKK-JISYO.L..."
     mkdir -p "$DICT_DIR"
-    # curl でダウンロードして gunzip で解凍し、指定のパスに保存
+    echo "📥 ダウンロード中..."
     curl -L https://skk-dev.github.io/dict/SKK-JISYO.L.gz | gunzip > "$DICT_PATH"
     echo "✅ SKK Dictionary installed to $DICT_PATH"
 else
-    echo "skk-jisyo already exists, skipping."
+    echo "skk-jisyo already exists, skipping"
+fi
+
+echo "--- 16. cskk deb パッケージ導入 ---"
+CSKK_DIR="$(chezmoi source-path)/dot_packages"
+if [ -d "$CSKK_DIR" ]; then
+    echo "📦 Installing cskk packages from $CSKK_DIR"
+    sudo dpkg -i "$CSKK_DIR"/libcskk_*.deb
+    sudo dpkg -i "$CSKK_DIR"/fcitx5-cskk_*.deb
+else
+    echo "⚠️ $CSKK_DIR not found, skipping cskk installation"
 fi
 
 echo "✅ すべて完了！"
-echo "💡 Sway を起動するにはターミナルで 'sway' と入力してください。"
-echo "💡 zoxide を有効にするには .zshrc に 'eval \"\$(zoxide init zsh)\"' を追記してください。"
+echo "💡 zoxide を有効にするには .zshrc に 'eval \"\$(zoxide init zsh)\"' を追記"

@@ -122,6 +122,9 @@ bindsym mod1+Shift+2 exec pactl set-default-sink alsa_output.usb-JVCKENWOOD_JVCK
 # 追加ショートカット
 bindsym mod1+shift+s exec --no-startup-id spectacle
 bindsym Mod1+v exec --no-startup-id copyq toggle
+# 画面の明るさ
+bindsym Mod1+Shift+3 exec --no-startup-id brightnessctl set 5%-
+bindsym Mod1+Shift+4 exec --no-startup-id brightnessctl set +5%
 
 # -------------------------------
 # i3bar

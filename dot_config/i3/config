@@ -19,6 +19,7 @@ exec --no-startup-id copyq
 exec --no-startup-id xss-lock -- i3lock --nofork
 exec --no-startup-id feh --bg-scale $HOME/.config/i3/wallpaper.png
 exec --no-startup-id start-pulseaudio-x11
+exec --no-startup-id setxkbmap -option ctrl:nocaps
 
 # -------------------------------
 # 音量キー
@@ -126,6 +127,8 @@ bindsym Mod1+v exec --no-startup-id copyq toggle
 bindsym Mod1+Shift+3 exec --no-startup-id brightnessctl set 5%-
 bindsym Mod1+Shift+4 exec --no-startup-id brightnessctl set +5%
 
+# タッチパッドのトグル
+bindsym $mod+Shift+t exec --no-startup-id ~/.config/i3/touchpad.sh
 # -------------------------------
 # i3bar
 bar {

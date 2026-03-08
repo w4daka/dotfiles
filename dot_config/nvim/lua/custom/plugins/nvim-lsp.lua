@@ -1,3 +1,5 @@
+-- ~/.config/nvim/lua/plugins/lspconfig.lua
+
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
@@ -20,6 +22,7 @@ return {
         if client.name == 'rust_analyzer' or client.name == 'rust-analyzer' then
           return
         end
+
         if client.name == 'gopls' then
           vim.api.nvim_create_autocmd('BufWritePre', {
             buffer = event.buf,
@@ -58,6 +61,11 @@ return {
           end
         end
 
+        -- Ruff はホバーを持たないので basedpyright に任せる
+        if client.name == 'ruff' then
+          client.server_capabilities.hoverProvider = false
+        end
+
         local map = function(keys, func, desc, mode)
           mode = mode or 'n'
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
@@ -82,34 +90,42 @@ return {
       signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = '󰅚 ',
-          [vim.diagnostic.severity.WARN] = '󰀪 ',
-          [vim.diagnostic.severity.INFO] = '󰋽 ',
-          [vim.diagnostic.severity.HINT] = '󰌶 ',
+          [vim.diagnostic.severity.WARN]  = '󰀪 ',
+          [vim.diagnostic.severity.INFO]  = '󰋽 ',
+          [vim.diagnostic.severity.HINT]  = '󰌶 ',
         },
       },
       virtual_text = true,
     }
 
-    -- サーバーごとの設定（Rustはここに入れない！）
+    -- ddc.vim で LSP 補完を受け取るために ddc_source_lsp のcapabilities を
+    -- 標準の capabilities にマージして全サーバーに渡す
+    local capabilities = vim.tbl_deep_extend(
+      'force',
+      vim.lsp.protocol.make_client_capabilities(),
+      require('ddc_source_lsp').make_client_capabilities()
+    )
+
     local servers = {
-      clangd = {
-        capabilities = { offsetEncoding = { 'utf-16' } },
-      },
+
+      -- ---------------------------------------------------------
+      -- Go (gopls)
+      -- ---------------------------------------------------------
       gopls = {
         settings = {
           gopls = {
-            gofumpt = true, -- より厳格なフォーマッタ
+            gofumpt = true,
             codelenses = {
               gc_details = false,
               generate = true,
               regenerate_cgo = true,
-              run_govulncheck = true, -- 脆弱性チェック
+              run_govulncheck = true,
               test = true,
               tidy = true,
               upgrade_dependency = true,
               vendor = true,
             },
-            hints = { -- インラインヒントの設定
+            hints = {
               assignVariableTypes = true,
               compositeLiteralFields = true,
               compositeLiteralTypes = true,
@@ -132,7 +148,39 @@ return {
           },
         },
       },
+
+      -- ---------------------------------------------------------
+      -- Python (basedpyright + ruff)
+      --
+      -- basedpyright → 型チェック・補完・定義ジャンプを担当
+      -- ruff         → フォーマット・lint を担当（ホバーは basedpyright に任せる）
+      -- ---------------------------------------------------------
+      basedpyright = {
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = 'basic',
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+            },
+          },
+        },
+      },
+
+      ruff = {
+        on_attach = function(client)
+          client.server_capabilities.hoverProvider = false
+        end,
+      },
+
+      -- ---------------------------------------------------------
+      -- OCaml (opam 管理のため Mason を介さず個別に有効化)
+      -- ---------------------------------------------------------
       ocamllsp = {},
+
+      -- ---------------------------------------------------------
+      -- Lua
+      -- ---------------------------------------------------------
       lua_ls = {
         settings = {
           Lua = {
@@ -143,20 +191,16 @@ return {
       },
     }
 
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-    -- Masonツールインストーラーの設定
     local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, { 'stylua', 'goimports' })
-    -- LazyVim 推奨ツールのリスト
     vim.list_extend(ensure_installed, {
-      'gofumpt', -- 厳格なフォーマット
-      'gomodifytags', -- JSONタグ自動生成
-      'impl', -- インターフェース実装生成
-      'delve', -- デバッガ
-      'golangci-lint', -- リンター
+      'stylua',
+      'goimports',
+      'gofumpt',
+      'gomodifytags',
+      'impl',
+      'delve',
+      'golangci-lint',
     })
-    -- rust-analyzer を明示的に除外
     require('mason-tool-installer').setup {
       ensure_installed = ensure_installed,
     }
@@ -167,26 +211,21 @@ return {
       },
       handlers = {
         function(server_name)
-          -- rust_analyzer は別管理なのでスキップ
-          if server_name == 'rust_analyzer' then
-            return
-          end
+          if server_name == 'rust_analyzer' then return end
 
-          -- 最新の書き方 (v0.11以降) もありますが、
-          -- lazydev.nvim などのプラグインとの互換性のために nvim-lspconfig の setup を使用します
           local config = servers[server_name] or {}
-          config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, config.capabilities or {})
-
+          config.capabilities = vim.tbl_deep_extend(
+            'force',
+            capabilities,
+            config.capabilities or {}
+          )
           require('lspconfig')[server_name].setup(config)
         end,
       },
     }
 
-    -- OCaml (opam) 用の個別設定
-    -- Masonを介さないため、ここで明示的に有効化します
-    vim.lsp.config('ocamllsp', {
-      capabilities = capabilities,
-    })
+    -- OCaml は Mason を介さないので個別に有効化
+    vim.lsp.config('ocamllsp', { capabilities = capabilities })
     vim.lsp.enable 'ocamllsp'
   end,
 }

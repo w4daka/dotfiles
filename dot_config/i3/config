@@ -19,8 +19,9 @@ exec --no-startup-id copyq
 exec --no-startup-id xss-lock -- i3lock --nofork
 exec --no-startup-id feh --bg-scale $HOME/.config/i3/wallpaper.png
 exec --no-startup-id start-pulseaudio-x11
-exec_always --no-startup-id sleep 1 && setxkbmap -option caps:nocaps
+exec_always --no-startup-id sh -c "sleep 1 && setxkbmap -option ctrl:nocaps"
 exec_always --no-startup-id ~/.config/i3/touchpad.sh
+exec --no-startup-id xset r rate 200 40
 
 # -------------------------------
 # 音量キー

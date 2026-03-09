@@ -44,14 +44,20 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
     require('telescope').setup {
-      -- You can put your default mappings / updates / etc. in here
-      --  All the info you're looking for is in `:help telescope.setup()`
-      --
-      -- defaults = {
-      --   mappings = {
-      --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-      --   },
-      -- },
+      defaults = {
+        layout_strategy = 'horizontal',
+        layout_config = {
+          preview_width = 0.55,
+          width = 0.9,
+          height = 0.9,
+        },
+        path_display = { 'smart' },
+      },
+      extensions = {
+        ['ui-select'] = {
+          require('telescope.themes').get_dropdown(),
+        },
+      },
       -- pickers = {}
       extensions = {
         ['ui-select'] = {
@@ -76,7 +82,23 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-
+    vim.keymap.set('n', '<leader>se', function()
+      builtin.live_grep {
+        cwd = vim.fn.expand '~/projects/learning-English-by-Japanese',
+        prompt_title = 'English Dictionary',
+      }
+    end, { desc = '[S]earch [E]nglish repo' })
+    vim.keymap.set('n', '<leader>sm', function()
+      builtin.grep_string {
+        cwd = vim.fn.expand '~/projects/learning-English-by-Japanese/mistakes',
+      }
+    end, { desc = '[S]earch [M]istakes' })
+    vim.keymap.set('n', '<leader>sm', function()
+      builtin.live_grep {
+        cwd = vim.fn.expand '~/projects/learning-English-by-Japanese/mistakes',
+        prompt_title = 'English Vocabulary',
+      }
+    end, { desc = '[S]earch [V]ocabulary' })
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()
       -- You can pass additional configuration to Telescope to change the theme, layout, etc.

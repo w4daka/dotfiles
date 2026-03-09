@@ -115,19 +115,18 @@ mkdir -p "$HOME/.local/share/fonts"
 
 export PATH="$HOME/.local/bin:$PATH"
 
-
 # --------------------------------------------------
 # 8. Nerd Fonts
 # --------------------------------------------------
 echo "--- 8. Nerd Fonts ---"
 
-FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
+FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/MPlus.zip"
 
-curl -fLo /tmp/JetBrainsMono.zip "$FONT_URL"
-unzip -o /tmp/JetBrainsMono.zip -d "$HOME/.local/share/fonts/"
+curl -fLo /tmp/MPlus.zip "$FONT_URL"
+
+unzip -o /tmp/MPlus.zip -d "$HOME/.local/share/fonts/"
 
 fc-cache -f
-
 
 # --------------------------------------------------
 # 9. Neovim

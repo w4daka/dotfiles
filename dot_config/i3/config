@@ -124,7 +124,7 @@ bindsym mod1+Shift+2 exec pactl set-default-sink alsa_output.usb-JVCKENWOOD_JVCK
 # -------------------------------
 # 追加ショートカット
 bindsym mod1+shift+s exec --no-startup-id spectacle
-bindsym Mod1+v exec --no-startup-id copyq toggle
+bindsym mod1+v exec --no-startup-id copyq toggle
 # 画面の明るさ
 bindsym Mod1+Shift+3 exec --no-startup-id brightnessctl set 5%-
 bindsym Mod1+Shift+4 exec --no-startup-id brightnessctl set +5%
@@ -134,6 +134,9 @@ bindsym $mod+Shift+t exec --no-startup-id ~/.config/i3/touchpad.sh
 
 #スリープモードのショートカット
 bindsym $mod+Shift+x exec --no-startup-id systemctl suspend
+
+# vivaldを起動するショートカット
+bindsym mod1+w exec --no-startup-id flatpak run com.vivaldi.Vivaldi
 # -------------------------------
 # i3bar
 bar {

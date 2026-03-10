@@ -7,16 +7,16 @@ font pango:monospace 8
 # -------------------------------
 # デュアルモニター設定
 # 例: 左: DP-1 右: HDMI-1
-exec --no-startup-id xrandr --output DP-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal
-exec --no-startup-id xrandr --output HDMI-1 --mode 1920x1080 --pos 1920x0 --rotate normal
+exec_always --no-startup-id xrandr --output DP-1 --primary --mode 1920x1080 --pos 0x0
+exec_always --no-startup-id xrandr --output HDMI-1 --mode 1920x1080 --pos 1920x0
 
 # -------------------------------
 # 自動起動アプリ (最小限)
 exec --no-startup-id env GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx XMODIFIERS=@im=fcitx fcitx5
 exec --no-startup-id nm-applet
-exec --no-startup-id picom -b
+exec_always --no-startup-id pkill picom; picom -b
 exec --no-startup-id copyq
-exec --no-startup-id xss-lock -- i3lock --nofork
+exec --no-startup-id xss-lock -- betterlockscreen -l dim
 exec --no-startup-id feh --bg-scale $HOME/.config/i3/wallpaper.png
 exec --no-startup-id start-pulseaudio-x11
 exec_always --no-startup-id sh -c "sleep 1 && setxkbmap -option ctrl:nocaps"

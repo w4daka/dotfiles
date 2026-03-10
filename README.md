@@ -70,3 +70,40 @@ git clone git@github.com:w4daka/リポジトリ名.git
 ```shell
 git remote set-url origin git@github.com:w4daka/dotfiles.git
 ```
+
+### Windowsに戻したいときにやること
+
+1. バックアップファイルの場所
+
+例：古いPCの backup フォルダにある
+
+\\DESKTOP-NSS35KE\backup\ext4.vhdx
+
+2. WSL復元の手順
+
+新しいPCや再インストール後にPowerShellで：
+
+wsl --import Ubuntu_backup C:\WSL\Ubuntu_backup \\DESKTOP-NSS35KE\backup\ext4.vhdx --version 2
+
+解説：
+
+Ubuntu_backup → 復元後のWSL名
+
+C:\WSL\Ubuntu_backup → WSLを配置するフォルダ
+
+ext4.vhdx → 先ほどバックアップしたファイル
+
+--version 2 → WSL2で復元
+
+3. 復元後の確認
+
+wsl -l -v
+
+Ubuntu_backup が Running または Stopped 状態で表示される。
+
+4. 起動
+
+wsl -d Ubuntu_backup
+
+これで 元のWSL環境そのまま。
+ホームディレクトリ、設定、パッケージすべて復元される。

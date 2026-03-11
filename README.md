@@ -75,9 +75,7 @@ git remote set-url origin git@github.com:w4daka/dotfiles.git
 
 1. バックアップファイルの場所
 
-例：古いPCの backup フォルダにある
-
-`\\DESKTOP-NSS35KE\backup\ext4.vhdx`
+例：古いPCの backup フォルダにある->`\\DESKTOP-NSS35KE\backup\ext4.vhdx`
 
 2. WSL復元の手順
 
@@ -89,7 +87,7 @@ wsl --import Ubuntu_backup C:\WSL\Ubuntu_backup \\DESKTOP-NSS35KE\backup\ext4.vh
 
 解説：
 
-`Ubuntu_backup` → 復元後のWSL名
+`Ubuntu_backup`-> 復元後のWSL名
 
 `C:\WSL\Ubuntu_backup` → WSLを配置するフォルダ
 
@@ -105,11 +103,11 @@ wsl -l -v
 
 Ubuntu_backup が Running または Stopped 状態で表示される。
 
-
 4. 起動
 
-``shell
+```shell
 wsl -d Ubuntu_backup
 ```
+
 これで 元のWSL環境そのまま。
 ホームディレクトリ、設定、パッケージすべて復元される。

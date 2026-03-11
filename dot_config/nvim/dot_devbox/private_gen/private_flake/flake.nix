@@ -102,6 +102,42 @@
               fromPath = "/nix/store/xhipkf0bzw22lwcvr4rfacarfl5b29jx-ocaml5.4.0-ocaml-lsp-server-1.25.0";
               inputAddressed = true;
             }))
+            (builtins.trace "downloading rustfmt@latest" (builtins.fetchClosure {
+              
+              fromStore = "https://cache.nixos.org";
+              fromPath = "/nix/store/yb62fm7wf3ysn5rnfj2r03snmk9pwwa2-rustfmt-1.93.0";
+              inputAddressed = true;
+            }))
+            (builtins.trace "downloading ocamlformat@latest" (builtins.fetchClosure {
+              
+              fromStore = "https://cache.nixos.org";
+              fromPath = "/nix/store/syql1w59rqmbhqnzj27q7anhwsqb3r67-ocaml4.14.1-ocamlformat-0.25.1";
+              inputAddressed = true;
+            }))
+            (builtins.trace "downloading prettier@latest" (builtins.fetchClosure {
+              
+              fromStore = "https://cache.nixos.org";
+              fromPath = "/nix/store/xdfb5f50gczga54xyaz79v4wj9hz21d3-prettier-3.6.2";
+              inputAddressed = true;
+            }))
+            (builtins.trace "downloading markdownlint-cli2@latest" (builtins.fetchClosure {
+              
+              fromStore = "https://cache.nixos.org";
+              fromPath = "/nix/store/4mis72r8nqdx32vc3mk3wkaszq29ngzn-markdownlint-cli2-0.21.0";
+              inputAddressed = true;
+            }))
+            (builtins.trace "downloading markdown-toc@latest" (builtins.fetchClosure {
+              
+              fromStore = "https://cache.nixos.org";
+              fromPath = "/nix/store/59rk83r3szp745l442jqnq9vvzxajkz0-markdown-toc-1.2.0";
+              inputAddressed = true;
+            }))
+            (builtins.trace "downloading tree-sitter@latest" (builtins.fetchClosure {
+              
+              fromStore = "https://cache.nixos.org";
+              fromPath = "/nix/store/aca95j471nd9bj5q8f6zzhr1hs36cqsw-tree-sitter-0.25.10";
+              inputAddressed = true;
+            }))
             (builtins.trace "evaluating nixpkgs-61684d-pkgs.nodePackages.typescript-language-server" nixpkgs-61684d-pkgs.nodePackages.typescript-language-server)
           ];
         };

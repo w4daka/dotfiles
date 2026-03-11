@@ -5,8 +5,6 @@ require("core.options")
 require("core.autocmds")
 require("core.user_command")
 require("keymaps.core")
-require("keymaps.lsp")
-require("keymaps.telescope")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -74,9 +72,11 @@ rtp:prepend(lazypath)
 require("lazy").setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   "NMAC427/guess-indent.nvim", -- Detect tabstop and shiftwidth automatically
-  { import = "custom.plugins" },
   { import = "lsp" },
   { import = "completion" },
+  { import = "utilites" },
+  { import = "ai" },
+  { import = "languages" },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

@@ -1,0 +1,16 @@
+{
+  "Lua.runtime.version": "LuaJIT",
+
+  "Lua.diagnostics.globals": [
+    "vim"
+  ],
+
+  "Lua.workspace.library": [
+    "$VIMRUNTIME",
+    "~/.local/share/nvim/lazy"
+  ],
+
+  "Lua.workspace.checkThirdParty": false,
+
+  "Lua.completion.callSnippet": "Replace"
+}

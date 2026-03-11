@@ -84,6 +84,24 @@
               fromPath = "/nix/store/0868kga1asp5qwjf3g9i9f15269w4z8c-gofumpt-0.9.2";
               inputAddressed = true;
             }))
+            (builtins.trace "downloading ocaml@latest" (builtins.fetchClosure {
+              
+              fromStore = "https://cache.nixos.org";
+              fromPath = "/nix/store/7dq8hjqhllxfwa96nlmdhii881i6iaz2-ocaml-5.4.0";
+              inputAddressed = true;
+            }))
+            (builtins.trace "downloading opam@latest" (builtins.fetchClosure {
+              
+              fromStore = "https://cache.nixos.org";
+              fromPath = "/nix/store/ilbpb01cyl1hlsmrkgjpv7rpfm3b987i-opam-2.5.0";
+              inputAddressed = true;
+            }))
+            (builtins.trace "downloading ocamlPackages.ocaml-lsp@latest" (builtins.fetchClosure {
+              
+              fromStore = "https://cache.nixos.org";
+              fromPath = "/nix/store/xhipkf0bzw22lwcvr4rfacarfl5b29jx-ocaml5.4.0-ocaml-lsp-server-1.25.0";
+              inputAddressed = true;
+            }))
             (builtins.trace "evaluating nixpkgs-61684d-pkgs.nodePackages.typescript-language-server" nixpkgs-61684d-pkgs.nodePackages.typescript-language-server)
           ];
         };

@@ -11,7 +11,10 @@
     "nodePackages.typescript-language-server@latest",
     "go@latest",
     "gopls@latest",
-    "gofumpt@latest"
+    "gofumpt@latest",
+    "ocaml@latest",
+    "opam@latest",
+    "ocamlPackages.ocaml-lsp@latest"
   ],
   "shell": {
     "init_hook": [

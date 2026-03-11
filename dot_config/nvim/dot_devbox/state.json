@@ -1,8 +1,8 @@
 {
-  "config_hash": "6f4e88fe576f882c5fd98442d789ad33bc772d68cf3757cc56df7aa758ef5710",
+  "config_hash": "7513701e3ca2b8dff8ee7e5c27319bd572a1c92d17645e02f432df125c4ec8cb",
   "devbox_version": "0.17.0",
   "is_fish": false,
-  "lock_file_hash": "9e992840e054837a40c443e9cea8da9952b573112188ad2685b0c0266c5eb4c9",
-  "nix_print_dev_env_hash": "252646d34eba5eb236af9edf308bce78d7546377bd15dffed21222fe36df19c7",
-  "nix_profile_manifest_hash": "0c249d3a38607aa65248d3691ebef5e3f7ffa25bd072bd32cb6a82e84a907041"
+  "lock_file_hash": "d669f8bd3896d5c19238313d4d276dcdb2dfea193a81c63b5a1c5256751e9d5e",
+  "nix_print_dev_env_hash": "02b4222d4c072326baa9951012d1c220d6fa687f0a8bacd3aca6f1888f19dcb0",
+  "nix_profile_manifest_hash": "aa00683ad0dbf6cf343f3166da99caf45ff542d5589a7d1ad1f48b80225d4fe2"
 }

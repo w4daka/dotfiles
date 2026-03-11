@@ -87,11 +87,11 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 if vim.g.started_by_firenvim then
-	vim.fn.setenv("NVIM_APPNAME", "nvim-kickstart")
+  vim.fn.setenv('NVIM_APPNAME', 'nvim-kickstart')
 end
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
@@ -108,7 +108,7 @@ vim.o.number = true
 vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.o.mouse = "a"
+vim.o.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
@@ -117,7 +117,9 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()vim.o.clipboard = 'unnamedplus' end)
+vim.schedule(function()
+  vim.o.clipboard = 'unnamedplus'
+end)
 
 -- Enable break indent
 -- Avoid braaking lines in the middle of a word
@@ -132,7 +134,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Keep signcolumn on by default
-vim.o.signcolumn = "yes"
+vim.o.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -153,10 +155,10 @@ vim.o.splitbelow = true
 --   See `:help lua-options`
 --   and `:help lua-options-guide`
 vim.o.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
-vim.o.inccommand = "split"
+vim.o.inccommand = 'split'
 
 -- Show which line your cursor is on
 vim.o.cursorline = true
@@ -178,10 +180,10 @@ vim.o.tabstop = 4 -- 1 tab == 2 spaces
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -189,7 +191,7 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 --
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -201,10 +203,10 @@ vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -215,39 +217,39 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 -- 挿入モード (Insert mode) での Emacs ライクな操作
 local map = vim.keymap.set
 
-map("i", "<C-b>", "<Left>", { desc = "左へ移動" })
-map("i", "<C-f>", "<Right>", { desc = "右へ移動" })
-map("i", "<C-a>", "<ESC>I", { desc = "行頭へ移動" })
-map("i", "<C-e>", "<End>", { desc = "行末へ移動" })
-map("i", "<C-d>", "<Del>", { desc = "一文字削除" })
+map('i', '<C-b>', '<Left>', { desc = '左へ移動' })
+map('i', '<C-f>', '<Right>', { desc = '右へ移動' })
+map('i', '<C-a>', '<ESC>I', { desc = '行頭へ移動' })
+map('i', '<C-e>', '<End>', { desc = '行末へ移動' })
+map('i', '<C-d>', '<Del>', { desc = '一文字削除' })
 
-vim.keymap.set({ "n", "x" }, "x", '"_d', { desc = "Delete using blackhole register" })
-vim.keymap.set("n", "X", '"_D', { desc = "Delete using blackhole register" })
-vim.keymap.set("o", "x", "d", { desc = "Delete using x" })
+vim.keymap.set({ 'n', 'x' }, 'x', '"_d', { desc = 'Delete using blackhole register' })
+vim.keymap.set('n', 'X', '"_D', { desc = 'Delete using blackhole register' })
+vim.keymap.set('o', 'x', 'd', { desc = 'Delete using x' })
 
-vim.keymap.set("c", "<c-b>", "<left>", { desc = "Emacs like left" })
-vim.keymap.set("c", "<c-f>", "<right>", { desc = "Emacs like right" })
-vim.keymap.set("c", "<c-a>", "<home>", { desc = "Emacs like home" })
-vim.keymap.set("c", "<c-e>", "<end>", { desc = "Emacs like end" })
-vim.keymap.set("c", "<c-h>", "<bs>", { desc = "Emacs like bs" })
-vim.keymap.set("c", "<c-d>", "<del>", { desc = "Emacs like del" })
+vim.keymap.set('c', '<c-b>', '<left>', { desc = 'Emacs like left' })
+vim.keymap.set('c', '<c-f>', '<right>', { desc = 'Emacs like right' })
+vim.keymap.set('c', '<c-a>', '<home>', { desc = 'Emacs like home' })
+vim.keymap.set('c', '<c-e>', '<end>', { desc = 'Emacs like end' })
+vim.keymap.set('c', '<c-h>', '<bs>', { desc = 'Emacs like bs' })
+vim.keymap.set('c', '<c-d>', '<del>', { desc = 'Emacs like del' })
 
-vim.keymap.set("n", "<space>;", "@:", { desc = "Re-run the last command" })
-vim.keymap.set("n", "<space>w", "<cmd>write<cr>", { desc = "Write" })
-vim.keymap.set("c", "<c-n>", function()
-	return vim.fn.wildmenumode() == 1 and "<c-n>" or "<down>"
-end, { expr = true, desc = "Select next" })
-vim.keymap.set("c", "<c-p>", function()
-	return vim.fn.wildmenumode() == 1 and "<c-p>" or "<up>"
-end, { expr = true, desc = "Select previous" })
+vim.keymap.set('n', '<space>;', '@:', { desc = 'Re-run the last command' })
+vim.keymap.set('n', '<space>w', '<cmd>write<cr>', { desc = 'Write' })
+vim.keymap.set('c', '<c-n>', function()
+  return vim.fn.wildmenumode() == 1 and '<c-n>' or '<down>'
+end, { expr = true, desc = 'Select next' })
+vim.keymap.set('c', '<c-p>', function()
+  return vim.fn.wildmenumode() == 1 and '<c-p>' or '<up>'
+end, { expr = true, desc = 'Select previous' })
 
-vim.keymap.set("n", "<space>q", function()
-	if not pcall(vim.cmd.tabclose) then
-		vim.cmd.quit()
-	end
-end, { desc = "Quit current tab or window" })
+vim.keymap.set('n', '<space>q', function()
+  if not pcall(vim.cmd.tabclose) then
+    vim.cmd.quit()
+  end
+end, { desc = 'Quit current tab or window' })
 
-vim.keymap.set("n", "q:", "<nop>", { desc = "Disable cmdwin" })
+vim.keymap.set('n', 'q:', '<nop>', { desc = 'Disable cmdwin' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -255,76 +257,73 @@ vim.keymap.set("n", "q:", "<nop>", { desc = "Disable cmdwin" })
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.hl.on_yank()`
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.hl.on_yank()
-	end,
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.hl.on_yank()
+  end,
 })
 -- vim.opt.runtimepath:append '~/denops-getting-started'
 
 -- Open init.lua(kickstart) by :Initlua
-vim.api.nvim_create_user_command("InitLua", function()
-	vim.cmd.edit("~/.config/nvim-kickstart/init.lua")
-end, { desc = "Open init.lua(kickstart)" })
+vim.api.nvim_create_user_command('InitLua', function()
+  vim.cmd.edit '~/.config/nvim-kickstart/init.lua'
+end, { desc = 'Open init.lua(kickstart)' })
 
 -- https://scrapbox.io/vim-jp/boolean%E3%81%AA%E5%80%A4%E3%82%92%E8%BF%94%E3%81%99vim.fn%E3%81%AEwrapper_function
 vim.bool_fn = setmetatable({}, {
-	__index = function(_, key)
-		return function(...)
-			local v = vim.fn[key](...)
-			if not v or v == 0 or v == "" then
-				return false
-			elseif type(v) == "table" and next(v) == nil then
-				return false
-			end
-			return true
-		end
-	end,
+  __index = function(_, key)
+    return function(...)
+      local v = vim.fn[key](...)
+      if not v or v == 0 or v == '' then
+        return false
+      elseif type(v) == 'table' and next(v) == nil then
+        return false
+      end
+      return true
+    end
+  end,
 })
 
 -- example:
 -- if vim.bool_fn.has('mac') then ... end
 
 -- augroup for this config file
-local augroup = vim.api.nvim_create_augroup("init.lua", {})
+local augroup = vim.api.nvim_create_augroup('init.lua', {})
 
 -- wrapper function to use internal augroup
 local function create_autocmd(event, opts)
-	vim.api.nvim_create_autocmd(
-		event,
-		vim.tbl_extend("force", {
-			group = augroup,
-		}, opts)
-	)
+  vim.api.nvim_create_autocmd(
+    event,
+    vim.tbl_extend('force', {
+      group = augroup,
+    }, opts)
+  )
 end
 
 -- https://vim-jp.org/vim-users-jp/2011/02/20/Hack-202.html
-create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function(event)
-		local dir = vim.fs.dirname(event.file)
-		local force = vim.v.cmdbang == 1
-		if
-			vim.bool_fn.isdirectory(dir) == false
-			and (force or vim.fn.confirm('"' .. dir .. '"dose not exist. Create?', "&Yes\n&No") == 1)
-		then
-			vim.fn.mkdir(vim.fn.iconv(dir, vim.opt.encoding:get(), vim.opt.termencoding:get()), "p")
-		end
-	end,
-	desc = "Auto mkdir to save file",
+create_autocmd('BufWritePre', {
+  pattern = '*',
+  callback = function(event)
+    local dir = vim.fs.dirname(event.file)
+    local force = vim.v.cmdbang == 1
+    if vim.bool_fn.isdirectory(dir) == false and (force or vim.fn.confirm('"' .. dir .. '"dose not exist. Create?', '&Yes\n&No') == 1) then
+      vim.fn.mkdir(vim.fn.iconv(dir, vim.opt.encoding:get(), vim.opt.termencoding:get()), 'p')
+    end
+  end,
+  desc = 'Auto mkdir to save file',
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-	if vim.v.shell_error ~= 0 then
-		error("Error cloning lazy.nvim:\n" .. out)
-	end
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+  if vim.v.shell_error ~= 0 then
+    error('Error cloning lazy.nvim:\n' .. out)
+  end
 end
 
 ---@type vim.Option
@@ -342,109 +341,110 @@ rtp:prepend(lazypath)
 --    :Lazy update
 --
 -- NOTE: Here is where you install your plugins.
-require("lazy").setup({
-	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-	"NMAC427/guess-indent.nvim", -- Detect tabstop and shiftwidth automatically
+require('lazy').setup({
+  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
-	-- NOTE: Plugins can also be added by using a table,
-	-- with the first argument being the link and the following
-	-- keys can be used to configure plugin behavior/loading/etc.
-	--
-	-- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
-	--
+  -- NOTE: Plugins can also be added by using a table,
+  -- with the first argument being the link and the following
+  -- keys can be used to configure plugin behavior/loading/etc.
+  --
+  -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
+  --
 
-	-- Alternatively, use `config = function() ... end` for full control over the configuration.
-	-- If you prefer to call `setup` explicitly, use:
-	--    {
-	--        'lewis6991/gitsigns.nvim',
-	--        config = function()
-	--            require('gitsigns').setup({
-	--                -- Your gitsigns configuration here
-	--            })
-	--        end,
-	--    }
-	--
+  -- Alternatively, use `config = function() ... end` for full control over the configuration.
+  -- If you prefer to call `setup` explicitly, use:
+  --    {
+  --        'lewis6991/gitsigns.nvim',
+  --        config = function()
+  --            require('gitsigns').setup({
+  --                -- Your gitsigns configuration here
+  --            })
+  --        end,
+  --    }
+  --
 
-	-- LSP Plugins
-	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
-	-- init.lua. If you want these files, they are in the repository, so you can just download them and
-	-- place them in the correct locations.
+  -- LSP Plugins
+  -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
+  -- init.lua. If you want these files, they are in the repository, so you can just download them and
+  -- place them in the correct locations.
 
-	-- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
-	--
-	--  Here are some example plugins that I've included in the Kickstart repository.
-	--  Uncomment any of the lines below to enable them (you will need to restart nvim).
-	--
-	-- require 'kickstart.plugins.debug',
-	-- require 'kickstart.plugins.indent_line',
-	-- require 'kickstart.plugins.lint',
-	-- require 'kickstart.plugins.autopairs',
-	-- require 'kickstart.plugins.neo-tree',
-	-- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
+  --
+  --  Here are some example plugins that I've included in the Kickstart repository.
+  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
+  --
+  -- require 'kickstart.plugins.debug',
+  -- require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.autopairs',
+  -- require 'kickstart.plugins.neo-tree',
+  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
-	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-	--    This is the easiest way to modularize your config.
-	--
-	--  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-	{ import = "custom.plugins" },
-	--
-	-- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
-	-- Or use telescope!
-	-- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
-	-- you can continue same window with `<space>sr` which resumes last telescope search
+  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
+  --    This is the easiest way to modularize your config.
+  --
+  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+  { import = 'custom.plugins' },
+  --
+  -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
+  -- Or use telescope!
+  -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
+  -- you can continue same window with `<space>sr` which resumes last telescope search
 }, {
-	ui = {
-		-- If you are using a Nerd Font: set icons to an empty table which will use the
-		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
-		icons = vim.g.have_nerd_font and {} or {
-			cmd = "⌘",
-			config = "🛠",
-			event = "📅",
-			ft = "📂",
-			init = "⚙",
-			keys = "🗝",
-			plugin = "🔌",
-			runtime = "💻",
-			require = "🌙",
-			source = "📄",
-			start = "🚀",
-			task = "📌",
-			lazy = "💤 ",
-		},
-	},
+  ui = {
+    -- If you are using a Nerd Font: set icons to an empty table which will use the
+    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
+    },
+  },
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 -- init.lua または適当な場所で確認
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		print("LSP Attached: " .. client.name .. " to buffer " .. args.buf)
-	end,
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    print('LSP Attached: ' .. client.name .. ' to buffer ' .. args.buf)
+  end,
 })
-vim.keymap.set({ "i", "c", "t" }, "<C-j>", "<Plug>(skkeleton-toggle)", { noremap = false })
+vim.keymap.set({ 'i', 'c', 't' }, '<C-j>', '<Plug>(skkeleton-toggle)', { noremap = false })
 
+local opts = { noremap = true, silent = true }
 -- pum.vim との連携用マップ（現状通り）
-vim.keymap.set({ "i", "c" }, "<C-n>", "<cmd>call pum#map#insert_relative(+1)<CR>", opts)
-vim.keymap.set({ "i", "c" }, "<C-p>", "<cmd>call pum#map#insert_relative(-1)<CR>", opts)
-vim.keymap.set({ "i", "c" }, "<C-y>", "<cmd>call pum#map#confirm()<CR>", opts)
-vim.keymap.set({ "i", "c" }, "<C-e>", "<cmd>call pum#map#cancel()<CR>", opts)
+vim.keymap.set({ 'i', 'c' }, '<C-n>', '<cmd>call pum#map#insert_relative(+1)<CR>', opts)
+vim.keymap.set({ 'i', 'c' }, '<C-p>', '<cmd>call pum#map#insert_relative(-1)<CR>', opts)
+vim.keymap.set({ 'i', 'c' }, '<C-y>', '<cmd>call pum#map#confirm()<CR>', opts)
+vim.keymap.set({ 'i', 'c' }, '<C-e>', '<cmd>call pum#map#cancel()<CR>', opts)
 -- IME (Fcitx5) を強制的に英語入力にする関数
 local function fcitx_off()
-    -- fcitx5-remote が存在するか確認してから実行（エラー防止）
-    if vim.fn.executable("fcitx5-remote") == 1 then
-        vim.fn.jobstart("fcitx5-remote -c")
-    elseif vim.fn.executable("fcitx-remote") == 1 then
-        -- 旧バージョンのFcitxの場合
-        vim.fn.jobstart("fcitx-remote -c")
-    end
+  -- fcitx5-remote が存在するか確認してから実行（エラー防止）
+  if vim.fn.executable 'fcitx5-remote' == 1 then
+    vim.fn.jobstart 'fcitx5-remote -c'
+  elseif vim.fn.executable 'fcitx-remote' == 1 then
+    -- 旧バージョンのFcitxの場合
+    vim.fn.jobstart 'fcitx-remote -c'
+  end
 end
 -- 以下のタイミングで実行
-vim.api.nvim_create_autocmd({ 
-    "VimEnter",    -- Neovim起動時
-    "InsertEnter", -- 挿入モード開始時（常に英語から打ちたい場合）
-    "FocusGained"  -- ブラウザからNeovimに戻ってきた時
+vim.api.nvim_create_autocmd({
+  'VimEnter', -- Neovim起動時
+  'InsertEnter', -- 挿入モード開始時（常に英語から打ちたい場合）
+  'FocusGained', -- ブラウザからNeovimに戻ってきた時
 }, {
-    callback = fcitx_off,
+  callback = fcitx_off,
 })

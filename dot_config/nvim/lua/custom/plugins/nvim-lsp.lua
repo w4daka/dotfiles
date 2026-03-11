@@ -90,9 +90,9 @@ return {
       signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = '󰅚 ',
-          [vim.diagnostic.severity.WARN]  = '󰀪 ',
-          [vim.diagnostic.severity.INFO]  = '󰋽 ',
-          [vim.diagnostic.severity.HINT]  = '󰌶 ',
+          [vim.diagnostic.severity.WARN] = '󰀪 ',
+          [vim.diagnostic.severity.INFO] = '󰋽 ',
+          [vim.diagnostic.severity.HINT] = '󰌶 ',
         },
       },
       virtual_text = true,
@@ -100,11 +100,7 @@ return {
 
     -- ddc.vim で LSP 補完を受け取るために ddc_source_lsp のcapabilities を
     -- 標準の capabilities にマージして全サーバーに渡す
-    local capabilities = vim.tbl_deep_extend(
-      'force',
-      vim.lsp.protocol.make_client_capabilities(),
-      require('ddc_source_lsp').make_client_capabilities()
-    )
+    local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('ddc_source_lsp').make_client_capabilities())
 
     local servers = {
 
@@ -184,13 +180,35 @@ return {
       lua_ls = {
         settings = {
           Lua = {
-            workspace = { checkThirdParty = false },
-            completion = { callSnippet = 'Replace' },
+            runtime = {
+              version = 'LuaJIT',
+            },
+
+            diagnostics = {
+              globals = { 'vim' },
+            },
+
+            workspace = {
+              checkThirdParty = false,
+
+              library = vim.api.nvim_get_runtime_file('', true),
+
+              -- これを追加
+              workspace = {
+                library = {
+                  vim.env.VIMRUNTIME,
+                  vim.fn.stdpath 'config' .. '/lua',
+                },
+              },
+            },
+
+            completion = {
+              callSnippet = 'Replace',
+            },
           },
         },
       },
     }
-
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua',
@@ -211,14 +229,12 @@ return {
       },
       handlers = {
         function(server_name)
-          if server_name == 'rust_analyzer' then return end
+          if server_name == 'rust_analyzer' then
+            return
+          end
 
           local config = servers[server_name] or {}
-          config.capabilities = vim.tbl_deep_extend(
-            'force',
-            capabilities,
-            config.capabilities or {}
-          )
+          config.capabilities = vim.tbl_deep_extend('force', capabilities, config.capabilities or {})
           require('lspconfig')[server_name].setup(config)
         end,
       },

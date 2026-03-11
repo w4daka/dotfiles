@@ -1,25 +1,25 @@
 return {
 
   {
-    'delphinus/skkeleton_indicator.nvim',
+    "delphinus/skkeleton_indicator.nvim",
     config = function()
-      require('skkeleton_indicator').setup {}
+      require("skkeleton_indicator").setup({})
     end,
   },
   {
-    'vim-skk/skkeleton',
+    "vim-skk/skkeleton",
     dependencies = {
-      'vim-denops/denops.vim',
-      'Shougo/ddc.vim',
-      'Shougo/ddc-ui-pum',
+      "vim-denops/denops.vim",
+      "Shougo/ddc.vim",
+      "Shougo/ddc-ui-pum",
     },
     config = function()
-      vim.fn['skkeleton#config'] {
-        globalDictionaries = { '~/.config/dict-skk/SKK-JISYO.L' },
+      vim.fn["skkeleton#config"]({
+        globalDictionaries = { "~/.config/dict-skk/SKK-JISYO.L" },
         eggLikeNewline = true,
-      }
-      vim.cmd [[call ddc#custom#patch_global('sources', ['skkeleton', 'skkeleton_okuri'])]]
-      vim.cmd [[call ddc#custom#patch_global('sourceOptions', {
+      })
+      vim.cmd([[call ddc#custom#patch_global('sources', ['skkeleton', 'skkeleton_okuri'])]])
+      vim.cmd([[call ddc#custom#patch_global('sourceOptions', {
         \   '_': {
         \     'matchers': ['matcher_head'],
         \     'sorters': ['sorter_rank']
@@ -40,10 +40,10 @@ return {
         \     'isVolatile': v:true,
         \   },
         \ })
-        ]]
+        ]])
 
-      vim.cmd [[ call ddc#enable() ]]
-      vim.cmd [[call ddc#custom#patch_global('ui','pum')]]
+      vim.cmd([[ call ddc#enable() ]])
+      vim.cmd([[call ddc#custom#patch_global('ui','pum')]])
     end,
   },
 }

@@ -22,8 +22,8 @@ github = "babarot/enhancd"
 github = "MichaelAquilina/zsh-you-should-use"
 [plugins.ls]
 github = "zpm-zsh/ls"
- [plugins.zeno]
- github = "yuki-yano/zeno.zsh"
+ [plugins.zoxide]
+inline = 'eval "$(zoxide init zsh)"'
 
 
 # For example:

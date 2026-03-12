@@ -51,4 +51,26 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(~/.local/bin/mise activate zsh)"
 export PATH="$HOME/.luarocks/bin:$PATH"
+export GHQ_ROOT=~/projects  
+function ghq-fzf() {
+  # ghq root を一度だけ取得（高速化）
+  local root="$(ghq root)"
+  local repo=$(ghq list | fzf \
+    --prompt="GHQ> " \
+    --height=80% --reverse --border \
+    --preview-window="right:60%:wrap" \
+    --preview="[[ -f $root/{}/README.md ]] && bat --color=always --style=header,grid $root/{}/README.md || eza -T -L 2 --icons $root/{}" \
+    --bind="ctrl-f:change-preview([[ -f $root/{}/README.md ]] && bat --color=always $root/{}/README.md || echo 'No README'),ctrl-t:change-preview(eza -T -L 3 --icons --color=always $root/{})" \
+    --bind="?:toggle-preview")
 
+  if [ -n "$repo" ]; then
+    # ディレクトリへ移動
+    cd "$root/$repo"
+    # 入力中のバッファをクリアしてプロンプトを再描画（履歴を汚さない）
+    BUFFER=""
+    zle reset-prompt
+  fi
+}
+
+zle -N ghq-fzf
+bindkey '^g' ghq-fzf

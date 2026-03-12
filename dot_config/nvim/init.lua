@@ -1,13 +1,13 @@
 if vim.g.started_by_firenvim then
   vim.fn.setenv("NVIM_APPNAME", "nvim-kickstart")
 end
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 require("core.options")
 require("core.autocmds")
 require("core.user_command")
 require("keymaps.core")
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 

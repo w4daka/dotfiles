@@ -76,6 +76,7 @@ alias nvim-ks='NVIM_APPNAME=nvim-kickstart nvim'
 alias nvim-dpp='NVIM_APPNAME=nvim-dpp nvim'
 alias lg='lazygit'
 alias md='mkdir'
+alias gc="git-cz"
 
 # ghq + fzf function
 function ghq-fzf() {

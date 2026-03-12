@@ -68,12 +68,15 @@ vim.keymap.set("c", "<c-p>", function()
   return vim.fn.wildmenumode() == 1 and "<c-p>" or "<up>"
 end, { expr = true, desc = "Select previous" })
 
-vim.keymap.set({ "i", "c", "t" }, "<C-j>", "<Plug>(skkeleton-toggle)", { noremap = false })
-
--- pum.vim との連携用マップ（現状通り）
-vim.keymap.set({ "i", "c" }, "<C-n>", "<cmd>call pum#map#insert_relative(+1)<CR>", opts)
-vim.keymap.set({ "i", "c" }, "<C-p>", "<cmd>call pum#map#insert_relative(-1)<CR>", opts)
-vim.keymap.set({ "i", "c" }, "<C-y>", "<cmd>call pum#map#confirm()<CR>", opts)
-vim.keymap.set({ "i", "c" }, "<C-e>", "<cmd>call pum#map#cancel()<CR>", opts)
-
 vim.keymap.set("n", "q:", "<nop>", { desc = "Disable cmdwin" })
+vim.keymap.set("n", "<leader>t", function()
+  -- 1. 垂直分割して新しいバッファを作成
+  vim.cmd("vnew")
+  -- 2. そのバッファでターミナルを起動
+  vim.cmd("terminal")
+  -- 3. (任意) ターミナル特有の設定：行番号非表示など
+  vim.wo.number = false
+  vim.wo.relativenumber = false
+  -- 4. 挿入モードへ移行
+  vim.cmd("startinsert")
+end, { desc = "Vertical terminal" })

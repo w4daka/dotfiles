@@ -7,6 +7,22 @@
 
 chezmoiを経由せずに変更したときは`chezmo add ~/hogehoge`する
 
+### chezmoiのパスを通す
+
+```shell
+# 1. 受け皿となるディレクトリを作成（既にあれば何もしません）
+mkdir -p ~/.local/bin
+
+# 2. 今ある chezmoi を移動
+mv ./bin/chezmoi ~/.local/bin/
+
+# 3. 念のため、さっき作られた空の bin ディレクトリを消す
+rmdir ./bin 2>/dev/null
+
+# 4. パス設定を反映させる
+source ~/.profile
+```
+
 ### 画面の明るさを変更できようにする
 
 ```shell

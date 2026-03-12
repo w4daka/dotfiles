@@ -27,8 +27,6 @@ export PATH=$PATH:$GOPATH/bin
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/home/doxaripo/lib/ac-library-master
 ulimit -s unlimited
 export PATH="$HOME/.local/bin:$PATH"
-# zoxide
-eval "$(zoxide init zsh)"
 
 if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
   print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
@@ -74,3 +72,5 @@ function ghq-fzf() {
 
 zle -N ghq-fzf
 bindkey '^g' ghq-fzf
+# zoxide
+eval "$(zoxide init zsh --hook pwd)"

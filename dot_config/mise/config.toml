@@ -13,6 +13,7 @@ deno = "latest"
 bat = "latest"
 ripgrep = "latest"
 pandoc = "latest"
+zoxide = "latest"
 
 # --- Cargo(Rust)経由でインストール ---
 # ripgrepなどはGitHubバイナリよりCargoの方が安定する場合があります

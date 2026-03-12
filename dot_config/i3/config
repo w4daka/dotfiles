@@ -141,13 +141,10 @@ bindsym mod1+w exec --no-startup-id flatpak run com.vivaldi.Vivaldi
 
 # --- スリープと画面ロックの修正 ---
 
-# 自動起動設定 (xss-lock が i3lock を呼び出すように変更)
-# -i の後に壁紙のパスを指定します
-exec --no-startup-id xss-lock -- i3lock -i ~/.config/i3/wallpaper.png
-
+exec --no-startup-id xss-lock -- betterlockscreen -l
 # 手動スリープショートカット ($mod+Shift+x)
 # ロック（画像表示） -> 1秒待機 -> スリープ
-bindsym $mod+Shift+x exec --no-startup-id "i3lock -i ~/.config/i3/wallpaper.png && sleep 1 && systemctl suspend"
+bindsym $mod+Shift+x exec --no-startup-id betterlockscreen -l
 # -------------------------------
 # i3bar
 bar {

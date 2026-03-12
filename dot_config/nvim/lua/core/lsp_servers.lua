@@ -51,6 +51,25 @@ local servers = {
   ocamllsp = {},
   ts_ls = {},
   clangd = {},
+  nixd = {
+    settings = {
+      nixd = {
+        nixpkgs = {
+          -- 補完を有効にするための設定
+          expr = "import <nixpkgs> { }",
+        },
+        formatting = {
+          command = { "nixfmt" }, -- 先ほど flake.nix に入れた nixfmt-rfc-style を使う
+        },
+        options = {
+          -- NixOSの設定やFlakeのオプションも補完したい場合はここに追加
+          nixos = {
+            expr = '(attributes)._module.args.options',
+          },
+        },
+      },
+    },
+  },
 }
 
 -- 3. 新しい API (vim.lsp.config) によるセットアップ

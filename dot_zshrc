@@ -96,3 +96,33 @@ function ghq-fzf() {
 }
 zle -N ghq-fzf
 bindkey '^g' ghq-fzf
+
+#trash command
+alias rm=rm_wrap
+
+function rm_wrap (){
+  if [ ! -e ~/.trash ]; then
+    mkdir ~/.trash
+  fi
+  if expr "$1" : "^-" >/dev/null 2>&1; then
+    echo "This is rm_wrap: Do not use any options."
+    return 1
+  fi
+  date=`date +%y%m%d-%R:%S`
+  mv -t ~/.trash -f "$@" --suffix $date
+}
+function clean (){
+  ionice -c 3 -p $$
+  echo -n "clean : ゴミ箱を空にしますか? (y/n)"
+  read answer
+  case $answer in
+    y)
+    \rm -rf ~/.trash/* 
+    \rm -rf ~/.trash/.* 
+    ;;
+    n)
+    ;;
+    *)
+    ;;
+  esac
+}

@@ -24,12 +24,17 @@ exec_always --no-startup-id ~/.config/i3/touchpad.sh
 exec --no-startup-id xset r rate 200 40
 
 # -------------------------------
-# 音量キー
+# 音量設定 (キーボードショートカット)
+# -------------------------------
+# $mod (Windowsキー) + Alt + 上下キー で操作する例です
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# 音量を上げる (5%ずつ)
+bindsym $mod+Mod1+Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+# 音量を下げる (5%ずつ)
+bindsym $mod+Mod1+Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
+# ミュート切り替え
+bindsym $mod+Mod1+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 
 # -------------------------------
 # ターミナル & アプリランチャー
@@ -138,6 +143,17 @@ bindsym $mod+Shift+x exec --no-startup-id systemctl suspend
 
 # vivaldを起動するショートカット
 bindsym mod1+w exec --no-startup-id flatpak run com.vivaldi.Vivaldi
+
+# -------------------------------
+# スリープと画面ロック (kscreensaver)
+# -------------------------------
+# 自動ロックの設定 (xss-lock を利用して kscreensaver を呼び出す)
+exec --no-startup-id xss-lock -- kscreensaver --lock
+
+# 手動スリープショートカット (画面ロック + システムサスペンド)
+# $mod + Shift + x で実行
+bindsym $mod+Shift+x exec --no-startup-id kscreensaver --lock && systemctl suspend
+
 # -------------------------------
 # i3bar
 bar {

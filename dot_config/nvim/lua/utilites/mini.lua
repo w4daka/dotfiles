@@ -106,13 +106,6 @@ return { -- Collection of various small independent plugins/modules
           preview = true,
           width_preview = 40,
         },
-        mappings = {
-          go_in = "<CR>",
-          go_in_plus = "L",
-          go_out = "H",
-          go_out_plus = "<BS>",
-          toggle_hidden = ".",
-        },
       })
 
       -- <leader>e でトグル起動（現在のファイルのディレクトリから開く）

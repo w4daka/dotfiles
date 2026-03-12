@@ -23,18 +23,15 @@ exec_always --no-startup-id ~/.config/i3/touchpad.sh
 exec --no-startup-id xset r rate 200 40
 
 
-# -------------------------------
-# 音量設定 (Win + Alt + 矢印キー)
-# -------------------------------
-# 211番 (alsa_output.pci-0000_00_1f.3.analog-stereo) を直接操作します
+# --- 音量設定 (名前で直接指定) ---
 set $refresh_i3status killall -SIGUSR1 i3status
 
 # 音量を上げる
-bindsym $mod+Mod1+Up exec --no-startup-id pactl set-sink-volume 211 +5% && $refresh_i3status
+bindsym $mod+Mod1+Up exec --no-startup-id pactl set-sink-volume alsa_output.pci-0000_00_1f.3.analog-stereo +5% && $refresh_i3status
 # 音量を下げる
-bindsym $mod+Mod1+Down exec --no-startup-id pactl set-sink-volume 211 -5% && $refresh_i3status
+bindsym $mod+Mod1+Down exec --no-startup-id pactl set-sink-volume alsa_output.pci-0000_00_1f.3.analog-stereo -5% && $refresh_i3status
 # ミュート切り替え
-bindsym $mod+Mod1+m exec --no-startup-id pactl set-sink-mute 211 toggle && $refresh_i3status
+bindsym $mod+Mod1+m exec --no-startup-id pactl set-sink-mute alsa_output.pci-0000_00_1f.3.analog-stereo toggle && $refresh_i3status
 
 # -------------------------------
 # ターミナル & アプリランチャー
@@ -142,16 +139,15 @@ bindsym $mod+Shift+t exec --no-startup-id ~/.config/i3/touchpad.sh
 # vivaldを起動するショートカット
 bindsym mod1+w exec --no-startup-id flatpak run com.vivaldi.Vivaldi
 
-# -------------------------------
-# スリープと画面ロック (kscreensaver)
-# -------------------------------
-# 自動ロックの設定 (xss-lock を利用して kscreensaver を呼び出す)
-exec --no-startup-id xss-lock -- kscreensaver --lock
+# --- スリープと画面ロックの修正 ---
 
-# 手動スリープショートカット (画面ロック + システムサスペンド)
-# $mod + Shift + x で実行
-bindsym $mod+Shift+x exec --no-startup-id kscreensaver --lock && systemctl suspend
+# 自動起動設定 (xss-lock が i3lock を呼び出すように変更)
+# -i の後に壁紙のパスを指定します
+exec --no-startup-id xss-lock -- i3lock -i ~/.config/i3/wallpaper.png
 
+# 手動スリープショートカット ($mod+Shift+x)
+# ロック（画像表示） -> 1秒待機 -> スリープ
+bindsym $mod+Shift+x exec --no-startup-id "i3lock -i ~/.config/i3/wallpaper.png && sleep 1 && systemctl suspend"
 # -------------------------------
 # i3bar
 bar {

@@ -16,25 +16,25 @@ exec --no-startup-id env GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx XMODIFIERS=@im=f
 exec --no-startup-id nm-applet
 exec_always --no-startup-id pkill picom; picom -b
 exec --no-startup-id copyq
-exec --no-startup-id xss-lock -- kscreensaver --lock
 exec --no-startup-id feh --bg-scale $HOME/.config/i3/wallpaper.png
 exec --no-startup-id start-pulseaudio-x11
 exec_always --no-startup-id sh -c "sleep 1 && setxkbmap -option ctrl:nocaps"
 exec_always --no-startup-id ~/.config/i3/touchpad.sh
 exec --no-startup-id xset r rate 200 40
 
+
 # -------------------------------
-# 音量設定 (キーボードショートカット)
+# 音量設定 (Win + Alt + 矢印キー)
 # -------------------------------
-# $mod (Windowsキー) + Alt + 上下キー で操作する例です
+# 211番 (alsa_output.pci-0000_00_1f.3.analog-stereo) を直接操作します
 set $refresh_i3status killall -SIGUSR1 i3status
 
-# 音量を上げる (5%ずつ)
-bindsym $mod+Mod1+Up exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-# 音量を下げる (5%ずつ)
-bindsym $mod+Mod1+Down exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
+# 音量を上げる
+bindsym $mod+Mod1+Up exec --no-startup-id pactl set-sink-volume 211 +5% && $refresh_i3status
+# 音量を下げる
+bindsym $mod+Mod1+Down exec --no-startup-id pactl set-sink-volume 211 -5% && $refresh_i3status
 # ミュート切り替え
-bindsym $mod+Mod1+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym $mod+Mod1+m exec --no-startup-id pactl set-sink-mute 211 toggle && $refresh_i3status
 
 # -------------------------------
 # ターミナル & アプリランチャー
@@ -138,8 +138,6 @@ bindsym Mod1+Shift+4 exec --no-startup-id brightnessctl set +5%
 # タッチパッドのトグル
 bindsym $mod+Shift+t exec --no-startup-id ~/.config/i3/touchpad.sh
 
-#スリープモードのショートカット
-bindsym $mod+Shift+x exec --no-startup-id systemctl suspend
 
 # vivaldを起動するショートカット
 bindsym mod1+w exec --no-startup-id flatpak run com.vivaldi.Vivaldi

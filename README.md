@@ -27,14 +27,14 @@ ls ~/.ssh/id_ed25519
 ssh-keygen -t ed25519 -C "ignorenegativeideology999@gmail.com"
 ```
 
-2. SSHキーをGithubに登録
+1. SSHキーをGithubに登録
 
 ```shell
 # 公開鍵をコピー
 cat ~/.ssh/id_ed25519.pub
 ```
 
-3. Github CLIでGithubに登録
+1. Github CLIでGithubに登録
 
 ```shell
 gh auth login
@@ -42,21 +42,21 @@ gh auth login
 # ブラウザ認証を経て接続確認
 ```
 
-4. Gitユーザー情報設定(グローバル)
+1. Gitユーザー情報設定(グローバル)
 
 ```shell
 git config --global user.name w4daka
 git config --global user.email ignorenegativeideology999@gmail.com
 ```
 
-5. 設定確認
+1. 設定確認
 
 ```shell
 git config --global user.name
 git config --global user.email
 ```
 
-6. 動作確認
+1. 動作確認
 
 ```shell
 # SSH接続確認
@@ -65,7 +65,7 @@ ssh -T git@github.com
 git clone git@github.com:w4daka/リポジトリ名.git
 ```
 
-7. dotfilesリポジトリをsshに変える
+1. dotfilesリポジトリをsshに変える
 
 ```shell
 git remote set-url origin git@github.com:w4daka/dotfiles.git
@@ -77,13 +77,15 @@ git remote set-url origin git@github.com:w4daka/dotfiles.git
 
 例：古いPCの backup フォルダにある
 
-\\DESKTOP-NSS35KE\backup\ext4.vhdx
+`\\DESKTOP-NSS35KE\backup\ext4.vhdx`
 
-2. WSL復元の手順
+1. WSL復元の手順
 
 新しいPCや再インストール後にPowerShellで：
 
+```shell
 wsl --import Ubuntu_backup C:\WSL\Ubuntu_backup \\DESKTOP-NSS35KE\backup\ext4.vhdx --version 2
+```
 
 解説：
 
@@ -95,15 +97,19 @@ ext4.vhdx → 先ほどバックアップしたファイル
 
 --version 2 → WSL2で復元
 
-3. 復元後の確認
+1. 復元後の確認
 
+```shell
 wsl -l -v
+```
 
 Ubuntu_backup が Running または Stopped 状態で表示される。
 
-4. 起動
+1. 起動
 
+```shell
 wsl -d Ubuntu_backup
+```
 
 これで 元のWSL環境そのまま。
 ホームディレクトリ、設定、パッケージすべて復元される。

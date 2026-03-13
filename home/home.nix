@@ -31,6 +31,7 @@
     bat
     direnv
     nix-direnv
+    gh
 
     # runtime
     nodejs_25

@@ -1,268 +1,82 @@
 #!/usr/bin/env bash
-# ==================================================
-# Kubuntu 開発環境セットアップ (run once)
-# ==================================================
 set -euo pipefail
 
-echo "=============================="
-echo "Kubuntu Setup Script"
-echo "=============================="
-
-# --------------------------------------------------
-# 1. Ubuntu ミラーを日本に変更
-# --------------------------------------------------
-echo "--- 1. 日本ミラーに変更 ---"
-
-if [ -f /etc/apt/sources.list.d/ubuntu.sources ]; then
-    sudo cp /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources.backup
-
-    sudo sed -i \
-        's|http://archive.ubuntu.com/ubuntu/|http://jp.archive.ubuntu.com/ubuntu/|g' \
-        /etc/apt/sources.list.d/ubuntu.sources
-
-    sudo sed -i \
-        's|http://us.archive.ubuntu.com/ubuntu/|http://jp.archive.ubuntu.com/ubuntu/|g' \
-        /etc/apt/sources.list.d/ubuntu.sources
-fi
-
-
-# --------------------------------------------------
-# 2. APT keyring ディレクトリ準備
-# --------------------------------------------------
-echo "--- 2. keyring directory ---"
-
-sudo mkdir -p -m 755 /etc/apt/keyrings
-
-
-# --------------------------------------------------
-# 3. WezTerm リポジトリ追加
-# --------------------------------------------------
-echo "--- 3. WezTerm repo ---"
-
-curl -fsSL https://apt.fury.io/wez/gpg.key \
-  | sudo gpg --dearmor -o /etc/apt/keyrings/wezterm.gpg
-
-echo "deb [signed-by=/etc/apt/keyrings/wezterm.gpg] https://apt.fury.io/wez/ * *" \
-  | sudo tee /etc/apt/sources.list.d/wezterm.list > /dev/null
-
-
-# --------------------------------------------------
-# 4. GitHub CLI リポジトリ追加
-# --------------------------------------------------
-echo "--- 4. GitHub CLI repo ---"
-
-curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
-  | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
-
-sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
-  | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-
-
-# --------------------------------------------------
-# 5. apt update
-# --------------------------------------------------
-echo "--- 5. apt update ---"
-sudo apt update
-
-
-# --------------------------------------------------
-# 6. 必須パッケージ
-# --------------------------------------------------
-echo "--- 6. 必須パッケージ ---"
-
-PKG_LIST="
-zsh
-i3
-rofi
-make
-unzip
-gcc
-git
-curl
-flatpak
-fcitx5
-fcitx5-frontend-all
-libxkbcommon0
-libc6
-build-essential
-pkg-config
-libssl-dev
-fontconfig
-zoxide
-picom
-copyq
-kde-config-flatpak
-fzf
-wezterm
-gh
-xclip
-feh
-brightnessctl
-xss-lock
-plasma-workspace
-jq
-x11-utils
-x11-xserver-utils
-i3status
-libnotify-bin
-"
-
-sudo apt install -y $PKG_LIST
-
-
-# --------------------------------------------------
-# 7. ディレクトリ準備
-# --------------------------------------------------
-echo "--- 7. directories ---"
-
-mkdir -p "$HOME/.local/bin"
-mkdir -p "$HOME/.local/share/fonts"
-
-export PATH="$HOME/.local/bin:$PATH"
-
-# --------------------------------------------------
-# 8. Nerd Fonts
-# --------------------------------------------------
-echo "--- 8. Nerd Fonts ---"
-
-FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/MPlus.zip"
-
-curl -fLo /tmp/MPlus.zip "$FONT_URL"
-
-unzip -o /tmp/MPlus.zip -d "$HOME/.local/share/fonts/"
-
-fc-cache -f
-
-# --------------------------------------------------
-# 9. Neovim
-# --------------------------------------------------
-echo "--- 9. Neovim ---"
-
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-
-chmod u+x nvim-linux-x86_64.appimage
-
-mv nvim-linux-x86_64.appimage "$HOME/.local/bin/nvim"
-
-
-# --------------------------------------------------
-# 10. zoxide
-# --------------------------------------------------
-echo "--- 10. zoxide ---"
-
-curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-
-
-# --------------------------------------------------
-# 11. Sheldon
-# --------------------------------------------------
-echo "--- 11. sheldon ---"
-
-curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
-    | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
-
-
-# --------------------------------------------------
-# 12. Starship
-# --------------------------------------------------
-echo "--- 12. starship ---"
-
-curl -sS https://starship.rs/install.sh \
-    | sh -s -- --yes --bin-dir "$HOME/.local/bin"
-
-
-# --------------------------------------------------
-# 13. Flatpak
-# --------------------------------------------------
-echo "--- 13. flatpak ---"
-
-sudo flatpak remote-add --if-not-exists \
-  flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
-flatpak install -y flathub \
-  net.ankiweb.Anki \
-  com.vivaldi.Vivaldi \
-  com.obsproject.Studio \
-  org.kde.krita \
-  org.blender.Blender \
-  org.mozilla.Thunderbird \
-  org.kde.gwenview
-
-
-# --------------------------------------------------
-# 14. mise
-# --------------------------------------------------
-echo "--- 14. mise ---"
-
-curl https://mise.run/bash | sh
-
-export MISE_DATA_DIR="$HOME/.local/share/mise"
-export PATH="$HOME/.local/bin:$MISE_DATA_DIR/bin:$MISE_DATA_DIR/shims:$PATH"
-
-eval "$($HOME/.local/bin/mise activate bash)"
-
-if [ -f "$HOME/.config/mise/config.toml" ]; then
-    mise install -y
-else
-    echo "mise config not found, skipping"
-fi
-
-
-# --------------------------------------------------
-# 15. Node tools
-# --------------------------------------------------
-echo "--- 15. node tools ---"
-
-if command -v npm &> /dev/null; then
-    npm install -g typescript yarn markdownlint-cli2 markdown-toc prettier git-cz repomix
-fi
-
-
-# --------------------------------------------------
-# 16. default shell
-# --------------------------------------------------
-echo "--- 16. change shell ---"
-
-if [[ "$SHELL" != */zsh ]]; then
-    sudo chsh -s "$(which zsh)" "$USER"
-fi
-
-
-# --------------------------------------------------
-# 17. SKK dictionary
-# --------------------------------------------------
-echo "--- 17. SKK dictionary ---"
-
-DICT_DIR="$HOME/.config/dict-skk"
-DICT_PATH="$DICT_DIR/SKK-JISYO.L"
-
-if [ ! -f "$DICT_PATH" ]; then
-    mkdir -p "$DICT_DIR"
-
-    curl -L https://skk-dev.github.io/dict/SKK-JISYO.L.gz \
-      | gunzip > "$DICT_PATH"
-
-    echo "installed SKK dictionary"
-fi
-
-
-# --------------------------------------------------
-# 18. cskk
-# --------------------------------------------------
-echo "--- 18. cskk packages ---"
-
-CSKK_DIR="$(chezmoi source-path)/dot_packages"
-
-if [ -d "$CSKK_DIR" ]; then
-    sudo dpkg -i "$CSKK_DIR"/libcskk_*.deb
-    sudo dpkg -i "$CSKK_DIR"/fcitx5-cskk_*.deb
-fi
-
-
 echo "===================================="
-echo "Setup complete"
+echo "chezmoi bootstrap start"
 echo "===================================="
 
-echo 'Add to .zshrc: eval "$(zoxide init zsh)"'
+# --------------------------------------------------
+# OS detection
+# --------------------------------------------------
+
+OS="$(uname -s)"
+
+echo "Detected OS: $OS"
+
+# --------------------------------------------------
+# minimal packages (Linux only)
+# --------------------------------------------------
+
+if command -v apt >/dev/null 2>&1; then
+  echo "Installing minimal packages via apt"
+
+  sudo apt update
+
+  sudo apt install -y \
+    curl \
+    git \
+    build-essential \
+    ca-certificates
+fi
+
+
+# --------------------------------------------------
+# install nix
+# --------------------------------------------------
+
+if ! command -v nix >/dev/null 2>&1; then
+  echo "Installing Nix"
+
+  curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+fi
+
+
+# --------------------------------------------------
+# load nix environment
+# --------------------------------------------------
+
+if [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+  . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+fi
+
+
+# --------------------------------------------------
+# enable flakes
+# --------------------------------------------------
+
+mkdir -p ~/.config/nix
+
+cat <<EOF >> ~/.config/nix/nix.conf
+experimental-features = nix-command flakes
+EOF
+
+
+# --------------------------------------------------
+# apply flake home-manager
+# --------------------------------------------------
+
+DOTFILES="$HOME/.local/share/chezmoi"
+
+echo "Applying flake configuration"
+
+nix run home-manager/master -- switch --flake "$DOTFILES"
+
+
+# --------------------------------------------------
+# finish
+# --------------------------------------------------
+
+echo "===================================="
+echo "Bootstrap finished"
+echo "Log out and log in again"
+echo "===================================="

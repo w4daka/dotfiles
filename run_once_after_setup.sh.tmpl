@@ -1,32 +1,53 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "===================================="
+echo "=================================="
 echo "chezmoi bootstrap start"
-echo "===================================="
+echo "=================================="
 
 # --------------------------------------------------
 # OS detection
 # --------------------------------------------------
 
-OS="$(uname -s)"
+if command -v apt >/dev/null 2>&1; then
+    OS="debian"
+elif command -v pacman >/dev/null 2>&1; then
+    OS="arch"
+else
+    OS="unknown"
+fi
 
 echo "Detected OS: $OS"
 
 # --------------------------------------------------
-# minimal packages (Linux only)
+# minimal packages
 # --------------------------------------------------
 
-if command -v apt >/dev/null 2>&1; then
-  echo "Installing minimal packages via apt"
+if [ "$OS" = "debian" ]; then
+    echo "Installing minimal packages (apt)"
 
-  sudo apt update
+    sudo apt update
 
-  sudo apt install -y \
-    curl \
-    git \
-    build-essential \
-    ca-certificates
+    sudo apt install -y \
+        curl \
+        git \
+        build-essential \
+        ca-certificates
+
+elif [ "$OS" = "arch" ]; then
+    echo "Installing minimal packages (pacman)"
+
+    sudo pacman -Sy --noconfirm
+
+    sudo pacman -S --needed --noconfirm \
+        curl \
+        git \
+        base-devel \
+        ca-certificates
+
+else
+    echo "Unsupported OS"
+    exit 1
 fi
 
 
@@ -35,9 +56,9 @@ fi
 # --------------------------------------------------
 
 if ! command -v nix >/dev/null 2>&1; then
-  echo "Installing Nix"
+    echo "Installing Nix"
 
-  curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 fi
 
 
@@ -46,7 +67,7 @@ fi
 # --------------------------------------------------
 
 if [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
-  . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+    . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
 
 
@@ -56,9 +77,11 @@ fi
 
 mkdir -p ~/.config/nix
 
+if ! grep -q "flakes" ~/.config/nix/nix.conf 2>/dev/null; then
 cat <<EOF >> ~/.config/nix/nix.conf
 experimental-features = nix-command flakes
 EOF
+fi
 
 
 # --------------------------------------------------
@@ -76,7 +99,7 @@ nix run home-manager/master -- switch --flake "$DOTFILES"
 # finish
 # --------------------------------------------------
 
-echo "===================================="
+echo "=================================="
 echo "Bootstrap finished"
 echo "Log out and log in again"
-echo "===================================="
+echo "=================================="

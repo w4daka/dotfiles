@@ -21,6 +21,7 @@
     lazygit
     ghq
     commitizen
+    age
 
     # dev
     git

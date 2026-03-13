@@ -29,6 +29,8 @@
     nixfmt
     zellij
     bat
+    direnv
+    nix-direnv
 
     # runtime
     nodejs_25

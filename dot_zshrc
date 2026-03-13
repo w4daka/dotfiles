@@ -34,10 +34,6 @@ ulimit -s unlimited
 # =============================================================================
 # 3. Development Tools (Mise & NVM)
 # =============================================================================
-# mise: すべてのツールパスを確定させる (zoxideより先に実行)
-if (( $+commands[mise] )); then
-  eval "$(mise activate zsh)"
-fi
 
 # nvm: 既存の設定を維持
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -126,3 +122,6 @@ function clean (){
     ;;
   esac
 }
+
+#direnv
+eval "$(direnv hook zsh)"

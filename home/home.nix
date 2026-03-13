@@ -20,6 +20,7 @@
     yazi
     lazygit
     ghq
+    commitizen
 
     # dev
     git

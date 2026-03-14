@@ -41,7 +41,7 @@
     opencode
     tree-sitter
     python315
-
+    python313Packages.huggingface-hub
     # runtime
     nodejs_25
     deno

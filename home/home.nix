@@ -33,6 +33,9 @@
     direnv
     nix-direnv
     gh
+    llama-cpp
+    lua-language-server
+    stylua
 
     # runtime
     nodejs_25

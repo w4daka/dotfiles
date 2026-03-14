@@ -39,6 +39,11 @@
     deno
     pnpm_9
     go
+
+    #markdown
+    markdown-toc
+    markdownlint-cli2
+
   ];
 
   programs.home-manager.enable = true;

@@ -36,6 +36,11 @@
     llama-cpp
     lua-language-server
     stylua
+    repomix
+    uv
+    opencode
+    tree-sitter
+    python315
 
     # runtime
     nodejs_25

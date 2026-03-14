@@ -46,6 +46,10 @@ vim.g.mkdp_preview_options = {
 -- example:
 -- if vim.bool_fn.has('mac') then ... end
 
+    -- Rustup が Nix ツールチェーンを「カスタム」として誤認するのを防ぐ
+  vim.env.RUSTUP_TOOLCHAIN = nil
+  vim.env.RUSTUP_AUTO_INSTALL = "0"
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

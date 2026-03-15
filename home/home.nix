@@ -41,6 +41,7 @@
     opencode
     tree-sitter
     python315
+    tailscale
     # runtime
     nodejs_25
     deno

@@ -40,8 +40,6 @@
     opencode
     tree-sitter
     python315
-    tailscale
-    tmux
 
     # runtime
     nodejs_25

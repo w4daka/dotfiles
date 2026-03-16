@@ -2,7 +2,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "Shougo/ddc-source-lsp", -- capabilities用
       "j-hui/fidget.nvim", -- 進捗表示（お好みで）
     },
     config = function()

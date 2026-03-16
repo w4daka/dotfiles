@@ -28,7 +28,6 @@
     neovim
     nixd
     nixfmt
-    zellij
     bat
     direnv
     nix-direnv
@@ -42,6 +41,8 @@
     tree-sitter
     python315
     tailscale
+    tmux
+
     # runtime
     nodejs_25
     deno

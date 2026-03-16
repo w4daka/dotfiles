@@ -40,10 +40,17 @@ local servers = {
       },
     },
   },
-  basedpyright = {
+  pyright = {
     settings = {
-      basedpyright = {
-        analysis = { typeCheckingMode = "basic" },
+      pyright = {
+        disableOrganizeImports = true,
+      },
+      python = {
+        analysis = {
+          autoImportCompletions = false,
+          diagnosticMode = "workspace",
+          ignore = { "*" },
+        },
       },
     },
   },
@@ -64,7 +71,7 @@ local servers = {
         options = {
           -- NixOSの設定やFlakeのオプションも補完したい場合はここに追加
           nixos = {
-            expr = '(attributes)._module.args.options',
+            expr = "(attributes)._module.args.options",
           },
         },
       },

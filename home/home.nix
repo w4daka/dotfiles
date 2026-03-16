@@ -39,13 +39,15 @@
     uv
     opencode
     tree-sitter
-    python315
+    pyright
+    ruff
 
     # runtime
     nodejs_25
     deno
     pnpm_9
     go
+    python315
 
     #markdown
     markdown-toc

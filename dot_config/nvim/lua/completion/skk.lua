@@ -10,7 +10,7 @@ return {
     "vim-skk/skkeleton",
     dependencies = {
       "vim-denops/denops.vim",
-      "shg-eo/skkeleton-azik",
+      "k16em/skkeleton-azik-kanatable",
     },
 
     config = function()
@@ -19,7 +19,6 @@ return {
         kanaTable = "azik",
 
         eggLikeNewline = true,
-
         globalDictionaries = {
           "~/.config/skk/SKK-JISYO.L",
           "~/.config/skk/SKK-JISYO.jinmei",

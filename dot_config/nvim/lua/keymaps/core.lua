@@ -80,3 +80,22 @@ vim.keymap.set("n", "<leader>t", function()
   -- 4. 挿入モードへ移行
   vim.cmd("startinsert")
 end, { desc = "Vertical terminal" })
+
+-- LuaSnipをTabで展開、ジャンプ
+vim.keymap.set({ "i", "s" }, "<Tab>", function()
+  local ls = require("luasnip")
+  if ls.expand_or_jumpable() then
+    return "<Plug>luasnip-expand-or-jump"
+  else
+    return "<Tab>"
+  end
+end, { expr = true, silent = true })
+
+vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+  local ls = require("luasnip")
+  if ls.jumpable(-1) then
+    return "<Plug>luasnip-jump-prev"
+  else
+    return "<S-Tab>"
+  end
+end, { expr = true, silent = true })

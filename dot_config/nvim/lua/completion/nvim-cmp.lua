@@ -9,6 +9,7 @@ return {
       "hrsh7th/cmp-cmdline",
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
+      "saadparwaiz1/cmp_luasnip",
       "onsails/lspkind.nvim",
       "vim-skk/skkeleton",
       "rinx/cmp-skkeleton", -- または Xantibody/blink-cmp-skkeleton を使う場合は後述

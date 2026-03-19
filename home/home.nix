@@ -22,6 +22,7 @@
     ghq
     commitizen
     age
+    pandoc
 
     # dev
     git
@@ -39,8 +40,6 @@
     uv
     opencode
     tree-sitter
-    pyright
-    ruff
 
     # runtime
     nodejs_25

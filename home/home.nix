@@ -12,6 +12,8 @@
     starship
     zoxide
     fzf
+    sheldon
+    wezterm
 
     # cli
     ripgrep
@@ -23,6 +25,7 @@
     commitizen
     age
     pandoc
+    copyq
 
     # dev
     git

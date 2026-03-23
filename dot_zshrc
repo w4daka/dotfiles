@@ -30,7 +30,7 @@ fi
 setopt auto_cd          # ディレクトリ名入力だけで移動
 setopt hist_ignore_dups # 履歴の重複を無視
 ulimit -s unlimited
-
+autoload -Uz compinit && compinit
 # =============================================================================
 # 3. Development Tools (Mise & NVM)
 # =============================================================================

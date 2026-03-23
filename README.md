@@ -40,7 +40,7 @@ sudo usermod -aG video $USER
 ls ~/.ssh/id_ed25519
 
 # 存在しなければ作成
-ssh-keygen -t ed25519 -C "my e.mail adress"
+ssh-keygen -t ed25519 -C "my email address"
 ```
 
 1. SSHキーをGithubに登録

@@ -62,7 +62,7 @@ gh auth login
 
 ```shell
 git config --global user.name w4daka
-git config --global user.email ignorenegativeideology999@gmail.com
+git config --global user.email "my email address"
 ```
 
 1. 設定確認

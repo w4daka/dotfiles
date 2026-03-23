@@ -92,7 +92,7 @@ DOTFILES="$HOME/.local/share/chezmoi"
 
 echo "Applying flake configuration"
 
-nix run home-manager/master -- switch --flake "$DOTFILES"
+nix run home-manager/master -- switch --flake .
 
 
 # --------------------------------------------------

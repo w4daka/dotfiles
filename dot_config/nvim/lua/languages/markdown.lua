@@ -4,9 +4,13 @@ return {
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = "cd app && npm install", -- 初回インストール時または更新時に依存関係をビルド
+    build = function()
+      local app_dir = vim.fn.stdpath("data") .. "/lazy/markdown-preview.nvim/app"
+      vim.fn.system("cd " .. app_dir .. " && npm install")
+    end,
     init = function()
-      vim.g.mkdp_filetypes = { "markdown" } -- Markdownファイルでのみ有効化
+      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_browser = "/usr/bin/vivaldi-stable" -- 明示指定で環境変数依存を排除
     end,
     ft = { "markdown" },
   },

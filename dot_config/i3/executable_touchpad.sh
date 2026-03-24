@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 DEVICE="VEN_04F3:00 04F3:32EB Touchpad"
 
 state=$(xinput list-props "$DEVICE" | grep "libinput Send Events Mode Enabled" | awk '{print $5}')

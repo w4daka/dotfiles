@@ -136,7 +136,7 @@ bindsym $mod+Shift+t exec --no-startup-id ~/.config/i3/touchpad.sh
 
 
 # vivaldを起動するショートカット
-bindsym mod1+w exec --no-startup-id flatpak run com.vivaldi.Vivaldi
+bindsym mod1+w exec --no-startup-id vivaldi
 
 # --- スリープと画面ロックの修正 ---
 

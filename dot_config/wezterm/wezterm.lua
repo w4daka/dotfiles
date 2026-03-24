@@ -42,6 +42,8 @@ config.colors = {
 	},
 }
 
+config.enable_kitty_graphics = true
+
 -- タブの形をカスタマイズ
 -- タブの左側の装飾
 local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_lower_right_triangle

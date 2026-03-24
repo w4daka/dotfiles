@@ -1,12 +1,14 @@
 -- install without yarn or npm
 return {
+  -- ~/.config/nvim/lua/plugins.lua または init.lua 内
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
+    build = "cd app && npm install", -- 初回インストール時または更新時に依存関係をビルド
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" } -- Markdownファイルでのみ有効化
     end,
+    ft = { "markdown" },
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",

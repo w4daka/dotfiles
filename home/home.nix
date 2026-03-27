@@ -27,7 +27,6 @@
 
     # dev
     git
-    neovim
     nixd
     nixfmt
     bat

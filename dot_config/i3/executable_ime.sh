@@ -3,10 +3,6 @@
 FLOAT_CLASS="Floaterm"
 CLIP_FILE="/tmp/clip"
 
-# wezterm 内の PATH を通す (mise / local bin)
-export MISE_DATA_DIR="$HOME/.local/share/mise"
-export PATH="$HOME/.local/bin:$MISE_DATA_DIR/bin:$MISE_DATA_DIR/shims:$PATH"
-eval "$($HOME/.local/bin/mise activate bash)"
 
 # i3 で既存 Floaterm を検索
 FloatingVim=$(i3-msg -t get_tree \

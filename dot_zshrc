@@ -129,7 +129,7 @@ eval "$(direnv hook zsh)"
 # ----------------------------
 
 # 設定（必要なら .zshrc で上書き）
-: "${DDGMD_OUTBASE:=${XDG_DATA_HOME:-$HOME/projects/github.com/w4daka/webclip}"
+: "${DDGMD_OUTBASE:=${XDG_DATA_HOME:-$HOME/projects/github.com/w4daka/webclip}}"
 : "${DDGMD_MAX_BYTES:=10485760}"          # 10 MiB
 : "${DDGMD_CONNECT_TIMEOUT:=10}"          # seconds
 : "${DDGMD_MAX_TIME:=30}"                 # seconds

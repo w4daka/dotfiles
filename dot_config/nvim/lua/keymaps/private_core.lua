@@ -69,7 +69,7 @@ vim.keymap.set("c", "<c-p>", function()
 end, { expr = true, desc = "Select previous" })
 
 vim.keymap.set("n", "q:", "<nop>", { desc = "Disable cmdwin" })
-vim.keymap.set("n", "<leader>t", function()
+vim.keymap.set("n", "<leader>tt", function()
   -- 1. 垂直分割して新しいバッファを作成
   vim.cmd("vnew")
   -- 2. そのバッファでターミナルを起動

@@ -123,6 +123,146 @@ function clean (){
 
 #direnv
 eval "$(direnv hook zsh)"
+# ----------------------------
+# ddgmd: DuckDuckGo HTML検索 → URL候補抽出 → fzfでN本選択 → curl/pandocでMD化（画像抽出）
+# hardened: https-only, urlencoding, curl limits, pandoc --sandbox, safe temp dirs
+# ----------------------------
 
-# w3m でduckduckgoを開くalias
-alias ddg='w3m https://duckduckgo.com/'
+# 設定（必要なら .zshrc で上書き）
+: "${DDGMD_OUTBASE:=${XDG_DATA_HOME:-$HOME/projects/github.com/w4daka/webclip}}"
+: "${DDGMD_MAX_BYTES:=10485760}"          # 10 MiB
+: "${DDGMD_CONNECT_TIMEOUT:=10}"          # seconds
+: "${DDGMD_MAX_TIME:=30}"                 # seconds
+: "${DDGMD_USER_AGENT:=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Safari}"
+: "${DDGMD_ACCEPT_LANGUAGE:=ja,en-US;q=0.7,en;q=0.3}"
+
+_ddgmd_die() { print -ru2 -- "ddgmd: $*"; return 1; }
+
+_ddgmd_need_cmd() {
+  local c
+  for c in "$@"; do
+    command -v "$c" >/dev/null 2>&1 || _ddgmd_die "missing command: $c"
+  done
+}
+
+_ddgmd_encode_query() {
+  local q="$*"
+  if command -v python3 >/dev/null 2>&1; then
+    python3 - "$q" <<'PY'
+import sys, urllib.parse
+print(urllib.parse.quote_plus(sys.argv[1]))
+PY
+  else
+    # 最低限のフォールバック（正確性は落ちる）
+    print -r -- "$q" \
+      | sed -e 's/%/%25/g' -e 's/ /+/g' -e 's/&/%26/g' -e 's/?/%3F/g' -e 's/#/%23/g'
+  fi
+}
+
+_ddgmd_pick_urls() {
+  # stdin: w3m -dump の全文 → URL一覧（重複除去）
+  grep -Eo 'https?://[^[:space:]]+' \
+    | sed 's/[)\],.;]$//' \
+    | awk '!seen[$0]++'
+}
+
+_ddgmd_is_safe_url() {
+  local url="$1"
+  [[ -n "$url" ]] || return 1
+  [[ "${#url}" -le 2048 ]] || return 1
+  [[ "$url" == https://* ]] || return 1
+  [[ "$url" != *$'\n'* && "$url" != *$'\r'* && "$url" != *$'\t'* ]] || return 1
+  [[ "$url" != *" "* ]] || return 1
+  return 0
+}
+
+_ddgmd_slug() {
+  local s="$1"
+  s="${s#https://}"
+  s="${s//[^A-Za-z0-9._-]/_}"
+  s="${s:l}"
+  print -r -- "${s[1,80]}"
+}
+
+ddgmd() {
+  emulate -L zsh
+  set -euo pipefail
+  umask 077
+
+  local n query enc search_url picked
+  local -a urls
+
+  n="${1:-}"; shift || true
+  query="$*"
+
+  [[ -n "$n" && -n "$query" ]] || { print -ru2 -- "usage: ddgmd <N> <query...>"; return 2; }
+  [[ "$n" == <-> && "$n" -ge 1 ]] || { _ddgmd_die "N must be integer >= 1"; return 2; }
+
+  _ddgmd_need_cmd w3m fzf curl pandoc awk sed grep mktemp date
+
+  mkdir -p -- "$DDGMD_OUTBASE" || _ddgmd_die "cannot create outbase: $DDGMD_OUTBASE"
+  local outdir
+  outdir="$(mktemp -d "$DDGMD_OUTBASE/ddgmd.XXXXXXXX")" || _ddgmd_die "mktemp failed"
+
+  enc="$(_ddgmd_encode_query "$query")"
+  search_url="https://html.duckduckgo.com/html/?q=$enc"
+
+  picked="$(
+    w3m -dump "$search_url" \
+      | _ddgmd_pick_urls \
+      | while IFS= read -r url; do
+          _ddgmd_is_safe_url "$url" && print -r -- "$url"
+        done \
+      | fzf --multi --prompt="pick($n)> " \
+            --header="TABで複数選択 / Enterで確定 / ESCでキャンセル" \
+            --height=80% --reverse \
+      | head -n "$n"
+  )" || true
+
+  [[ -n "$picked" ]] || { print -ru2 -- "cancelled"; return 1; }
+
+  urls=("${(@f)picked}")
+  local url
+  for url in "${urls[@]}"; do
+    _ddgmd_is_safe_url "$url" || { print -ru2 -- "skip unsafe url: $url"; continue; }
+
+    local stamp base dir html md
+    stamp="$(date +%F_%H%M%S)"
+    base="$(_ddgmd_slug "$url")"
+    dir="$outdir/${stamp}_${base}"
+    mkdir -p -- "$dir/media" || { print -ru2 -- "mkdir failed: $dir"; continue; }
+
+    html="$dir/page.html"
+    md="$dir/page.md"
+
+    if ! curl -fsS \
+        --proto '=https' --proto-redir '=https' \
+        --tlsv1.2 \
+        --connect-timeout "$DDGMD_CONNECT_TIMEOUT" \
+        --max-time "$DDGMD_MAX_TIME" \
+        --max-filesize "$DDGMD_MAX_BYTES" \
+        -H "User-Agent: $DDGMD_USER_AGENT" \
+        -H "Accept-Language: $DDGMD_ACCEPT_LANGUAGE" \
+        -L \
+        "$url" -o "$html"; then
+      print -ru2 -- "fetch failed: $url"
+      continue
+    fi
+
+    if ! pandoc --sandbox \
+        "$html" -f html -t gfm \
+        --extract-media="$dir/media" \
+        -o "$md"; then
+      print -ru2 -- "pandoc failed: $url"
+      continue
+    fi
+
+    print -r -- "$url" > "$dir/source_url.txt"
+    print -- "saved: $md"
+  done
+}
+
+ddg1md() { ddgmd 1 "$@"; }
+ddg2md() { ddgmd 2 "$@"; }
+ddg3md() { ddgmd 3 "$@"; }
+ddg4md() { ddgmd 4 "$@"; }

@@ -24,6 +24,7 @@
     commitizen
     age
     pandoc
+    lazydocker
 
     # dev
     git
@@ -38,7 +39,6 @@
     stylua
     repomix
     uv
-    opencode
     tree-sitter
 
     # runtime

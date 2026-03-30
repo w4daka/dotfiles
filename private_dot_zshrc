@@ -6,7 +6,15 @@ export ARCHFLAGS="-arch $(uname -m)"
 export GOPATH="$HOME/go"
 export GHQ_ROOT="$HOME/projects"
 export NVM_DIR="$HOME/.nvm"
+if [[ -f /.dockerenv ]]; then
+  export IN_DOCKER=1
+fi
 
+# 例: Docker内ではホスト依存の機能を切る
+if [[ -n "$IN_DOCKER" ]]; then
+  export DIRENV_LOG_FORMAT=""
+  # 必要なら GUI/clipboard 系や nix 系初期化をスキップ
+fi
 # パスの重複登録を防ぎ、存在しないパスを無視する設定
 typeset -U path PATH
 path=(

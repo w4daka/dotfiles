@@ -25,7 +25,7 @@
     age
     pandoc
     lazydocker
-
+    codex
     # dev
     git
     nixd

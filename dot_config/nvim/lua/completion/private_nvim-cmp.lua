@@ -30,7 +30,6 @@ return {
         exact_length = 2, -- 2文字以上で補完開始
         first_case_insensitive = true, -- 大文字小文字区別しない
         document = false, -- document モードは重いのでオフ推奨
-        sqlite = false, -- sqlite を使うと高速だが初回ビルドが必要
       })
 
       cmp.setup({

@@ -12,15 +12,14 @@ exec_always --no-startup-id xrandr --output HDMI-1 --mode 1920x1080 --pos 1920x0
 
 # -------------------------------
 # 自動起動アプリ (最小限)
-exec --no-startup-id sh -c 'nmcli device disconnect wlan0; nmcli connection up "Buffalo-G-57B0-WPA3"'
-
+exec --no-startup-id nmcli radio wifi off
 exec_always --no-startup-id pkill picom; picom -b
 exec --no-startup-id copyq
 exec --no-startup-id feh --bg-scale $HOME/.config/i3/wallpaper.png
 exec --no-startup-id start-pulseaudio-x11
 exec_always --no-startup-id sh -c "sleep 1 && setxkbmap -option ctrl:nocaps"
-exec_always --no-startup-id ~/.config/i3/touchpad.sh
 exec --no-startup-id xset r rate 200 40
+exec_always --no-startup-id ~/.config/i3/touchpad.sh off
 
 
 # --- 音量設定 (名前で直接指定) ---
@@ -133,7 +132,7 @@ bindsym Mod1+Shift+3 exec --no-startup-id brightnessctl set 5%-
 bindsym Mod1+Shift+4 exec --no-startup-id brightnessctl set +5%
 
 # タッチパッドのトグル
-bindsym $mod+Shift+t exec --no-startup-id ~/.config/i3/touchpad.sh
+bindsym $mod+Shift+t exec --no-startup-id ~/.config/i3/touchpad.sh toggle
 
 
 # vivaldを起動するショートカット

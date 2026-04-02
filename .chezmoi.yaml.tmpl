@@ -1,0 +1,12 @@
+# chezmoi configuration (templated)
+# Put this file at the root of your source directory as: .chezmoi.yaml.tmpl
+# This file defines template data used by *.tmpl files.
+
+sourceDir: "{{ .chezmoi.sourceDir }}"
+destDir: "{{ .chezmoi.destDir }}"
+
+# Template data accessible as: .devcontainer, .has_gui, .has_skk_large_dict
+data:
+  devcontainer: {{ eq (env "DEVCONTAINER") "1" }}
+  has_gui: {{ ne (env "DEVCONTAINER") "1" }}
+  has_skk_large_dict: {{ ne (env "DEVCONTAINER") "1" }}

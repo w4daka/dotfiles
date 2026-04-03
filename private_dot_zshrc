@@ -14,7 +14,6 @@ path=(
   "$HOME/go/bin"
   "/usr/local/go/bin"
   "$HOME/.luarocks/bin"
-  "$HOME/.devcontainers/bin:$PATH"
   $path
 )
 
@@ -126,3 +125,4 @@ function clean (){
 #direnv
 eval "$(direnv hook zsh)"
 
+export PATH="$HOME/.devcontainers/bin:$PATH"

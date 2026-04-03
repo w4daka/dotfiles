@@ -1,0 +1,127 @@
+# =============================================================================
+# 1. Environment Variables & Path (環境変数とパス)
+# =============================================================================
+export LANG=en_US.UTF-8
+export ARCHFLAGS="-arch $(uname -m)"
+export GOPATH="$HOME/go"
+export GHQ_ROOT="$HOME/projects"
+export NVM_DIR="$HOME/.nvm"
+
+# パスの重複登録を防ぎ、存在しないパスを無視する設定
+typeset -U path PATH
+path=(
+  "$HOME/.local/bin"
+  "$HOME/go/bin"
+  "/usr/local/go/bin"
+  "$HOME/.luarocks/bin"
+  $path
+)
+
+# エディタ設定
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+# =============================================================================
+# 2. Zsh Options (シェル設定)
+# =============================================================================
+setopt auto_cd          # ディレクトリ名入力だけで移動
+setopt hist_ignore_dups # 履歴の重複を無視
+ulimit -s unlimited
+autoload -Uz compinit && compinit
+# =============================================================================
+# 3. Development Tools (Mise & NVM)
+# =============================================================================
+
+# nvm: 既存の設定を維持
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# =============================================================================
+# 4. Plugin Manager (Sheldon)
+# =============================================================================
+# zoxide の init も sheldon 内の plugins.toml で管理することを推奨
+if (( $+commands[sheldon] )); then
+  eval "$(sheldon source)"
+fi
+
+# =============================================================================
+# 5. UI & Prompts (Starship & Zoxide)
+# =============================================================================
+# sheldon側でevalしていない場合の予備
+if (( $+commands[zoxide] )) && ! [[ "$(type z)" == *"function"* ]]; then
+  eval "$(zoxide init zsh --hook pwd)"
+fi
+
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
+fi
+
+# =============================================================================
+# 6. Aliases & Functions
+# =============================================================================
+alias g='git'
+alias gcmsg='git commit -m'
+alias gp='git push'
+alias gst='git status'
+alias ga='git add'
+alias nvim-ks='NVIM_APPNAME=nvim-kickstart nvim'
+alias nvim-dpp='NVIM_APPNAME=nvim-dpp nvim'
+alias lg='lazygit'
+alias md='mkdir'
+alias ddg='w3m https://duckduckgo.com/'
+
+# ghq + fzf function
+function ghq-fzf() {
+  local root="$(ghq root)"
+  local repo=$(ghq list | fzf \
+    --prompt="GHQ> " \
+    --height=80% --reverse --border \
+    --preview-window="right:60%:wrap" \
+    --preview="[[ -f $root/{}/README.md ]] && bat --color=always --style=header,grid $root/{}/README.md || eza -T -L 2 --icons $root/{}" \
+    --bind="ctrl-f:change-preview([[ -f $root/{}/README.md ]] && bat --color=always $root/{}/README.md || echo 'No README'),ctrl-t:change-preview(eza -T -L 3 --icons --color=always $root/{})" \
+    --bind="?:toggle-preview")
+
+  if [ -n "$repo" ]; then
+    cd "$root/$repo"
+    zle reset-prompt
+  fi
+}
+zle -N ghq-fzf
+bindkey '^g' ghq-fzf
+
+#trash command
+alias rm=rm_wrap
+
+function rm_wrap (){
+  if [ ! -e ~/.trash ]; then
+    mkdir ~/.trash
+  fi
+  if expr "$1" : "^-" >/dev/null 2>&1; then
+    echo "This is rm_wrap: Do not use any options."
+    return 1
+  fi
+  date=`date +%y%m%d-%R:%S`
+  mv -t ~/.trash -f "$@" --suffix $date
+}
+function clean (){
+  ionice -c 3 -p $$
+  echo -n "clean : ゴミ箱を空にしますか? (y/n)"
+  read answer
+  case $answer in
+    y)
+    \rm -rf ~/.trash/* 
+    \rm -rf ~/.trash/.* 
+    ;;
+    n)
+    ;;
+    *)
+    ;;
+  esac
+}
+
+#direnv
+eval "$(direnv hook zsh)"
+

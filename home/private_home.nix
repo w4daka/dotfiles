@@ -24,6 +24,7 @@
     pandoc
     lazydocker
     codex
+    devcontainer
 
     # dev
     git

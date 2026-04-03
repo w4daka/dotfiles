@@ -125,4 +125,3 @@ function clean (){
 #direnv
 eval "$(direnv hook zsh)"
 
-export PATH="$HOME/.devcontainers/bin:$PATH"

@@ -18,14 +18,14 @@
     ripgrep
     fd
     jq
-    yazi
     lazygit
     ghq
-    commitizen
     age
     pandoc
     lazydocker
     codex
+    devcontainer
+
     # dev
     git
     nixd

@@ -19,7 +19,7 @@
     in
     {
 
-      homeConfigurations.w4dkaka = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.w4daka = home-manager.lib.homeManagerConfiguration {
 
         inherit pkgs;
 

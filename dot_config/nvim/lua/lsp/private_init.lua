@@ -25,11 +25,7 @@ return {
         },
       })
 
-      -- Hover等のウィンドウを丸角にする
-      vim.lsp.handlers["textDocument/hover"] =
-        vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-      vim.lsp.handlers["textDocument/signatureHelp"] =
-        vim.lsp.with(vim.lsp.handlers.signatureHelp, { border = "rounded" })
+      vim.o.winborder = "rounded"
 
       -------------------------------------------------
       -- 2. LspAttach (自動コマンド・キーマップ)

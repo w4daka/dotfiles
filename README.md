@@ -5,4 +5,4 @@
 
 ## 個人的メモ
 
-chezmoiを経由せずに変更したときは`chezmo add ~/hogehoge` と`chezmoi re-add`する
+chezmoiを経由せずに変更したときは`chezmo add ~/hogehoge`する

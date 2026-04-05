@@ -47,7 +47,6 @@
     yarn
     pnpm_9
     go
-    python315
 
     #markdown
     markdown-toc

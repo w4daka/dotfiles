@@ -25,6 +25,7 @@
     lazydocker
     codex
     devcontainer
+    eza
 
     # dev
     git

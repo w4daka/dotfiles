@@ -6,7 +6,6 @@
   "exclusive": true,
   "passthrough": false,
   "gtk-layer-shell": true,
-  /* === Modules Order === */
   "modules-left": [
     "custom/archicon",
     "clock",
@@ -24,16 +23,16 @@
     "pulseaudio/slider",
     "pulseaudio",
     "network",
-    "hyprland/language"
+    "hyprland/language",
+    "custom/hyprwhspr"
   ],
-  /* === Modules Left === */
   "custom/archicon": {
-    "format": "",
-    "on-click": "wofi --show drun",
+    "format": "\uf346",
+    "on-click": "rofi -show drun",
     "tooltip": false
   },
   "clock": {
-    "timezone": "America/Mexico_City",
+    "timezone": "Asia/Tokyo",
     "format": "{:%I:%M  %d, %m}",
     "tooltip-format": "{calendar}",
     "calendar": {
@@ -41,34 +40,33 @@
     }
   },
   "cpu": {
-    "format": "{usage}% ",
+    "format": "{usage}% \uec19",
     "tooltip": true,
-    "tooltip-format": "Uso de CPU: {usage}%\nNúcleos: {cores}"
+    "tooltip-format": "Uso de CPU: {usage}%\nN\u00facleos: {cores}"
   },
   "memory": {
-    "format": "{}% 󰍛",
+    "format": "{}% \udb80\udf5b",
     "tooltip": true,
     "tooltip-format": "RAM en uso: {used} / {total} ({percentage}%)"
   },
   "disk": {
-    "format": "{percentage_free}% ",
+    "format": "{percentage_free}% \uf0a0",
     "tooltip": true,
     "tooltip-format": "Espacio libre: {free} / {total} ({percentage_free}%)"
   },
   "temperature": {
-    "format": "{temperatureC}°C {icon}",
+    "format": "{temperatureC}\u00b0C {icon}",
     "tooltip": true,
-    "tooltip-format": "Temperatura actual: {temperatureC}°C\nCrítico si > 80°C",
+    "tooltip-format": "Temperatura actual: {temperatureC}\u00b0C\nCr\u00edtico si > 80\u00b0C",
     "format-icons": [
-      ""
+      "\uf2c9"
     ]
   },
-  /* === Modules Center === */
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
-      "default": "",
-      "active": ""
+      "default": "\uf111",
+      "active": "\ue0b6\ue0b4"
     },
     "persistent-workspaces": {
       "*": 2
@@ -77,7 +75,6 @@
     "all-outputs": true,
     "show-special": true
   },
-  /* === Modules Right === */
   "wlr/taskbar": {
     "format": "{icon}",
     "all-outputs": true,
@@ -92,39 +89,42 @@
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
-      "activated": "",
-      "deactivated": ""
+      "activated": "\uf06e",
+      "deactivated": "\uf070"
     }
   },
   "pulseaudio/slider": {
     "format": "{volume}%",
-    "format-muted": " MUTE",
+    "format-muted": "\ueb24 MUTE",
     "step": 5,
     "tooltip": false
   },
   "pulseaudio": {
     "format": "{volume}% {icon}",
-    "format-muted": " {format_source}",
+    "format-muted": "\uf6a9 {format_source}",
     "format-icons": {
       "default": [
-        "",
-        ""
+        "\uf026",
+        "\uf027"
       ]
     }
   },
   "network": {
     "format": "{ifname}",
-    "format-ethernet": "{ifname} 󰈀",
-    "format-disconnected": " ",
-    "tooltip-format": " {ifname} via {gwaddr}",
-    "tooltip-format-ethernet": " {ifname} {ipaddr}/{cidr}",
+    "format-ethernet": "{ifname} \udb80\ude00",
+    "format-disconnected": "\uf127 ",
+    "tooltip-format": "\uf796 {ifname} via {gwaddr}",
+    "tooltip-format-ethernet": "\uf0c1 {ifname} {ipaddr}/{cidr}",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50
   },
   "hyprland/language": {
-    "format": "{} ",
+    "format": "{} \uf11c",
     "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
     "format-es": "ESP",
     "format-en": "ENG"
-  }
+  },
+  "include": [
+    "/home/w4daka/.config/waybar/hyprwhspr-module.jsonc"
+  ]
 }

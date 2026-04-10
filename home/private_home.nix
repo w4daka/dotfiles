@@ -43,10 +43,7 @@
     tree-sitter
 
     # runtime
-    nodejs_25
     deno
-    yarn
-    pnpm_9
     go
 
     #markdown

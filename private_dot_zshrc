@@ -77,8 +77,8 @@ alias ga='git add'
 alias nvim-ks='NVIM_APPNAME=nvim-kickstart nvim'
 alias nvim-dpp='NVIM_APPNAME=nvim-dpp nvim'
 alias lg='lazygit'
-alias md='mkdir'
-alias ddg='w3m https://duckduckgo.com/'
+alias md='mkdir -p'
+alias claude='ollama launch claude'
 
 # ghq + fzf function
 function ghq-fzf() {

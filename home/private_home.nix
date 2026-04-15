@@ -23,7 +23,6 @@
     age
     pandoc
     lazydocker
-    codex
     devcontainer
     eza
 

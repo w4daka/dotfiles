@@ -1,175 +1,153 @@
-@import "/usr/lib/hyprwhspr/config/waybar/hyprwhspr-style.css";
-/* -- Global rules -- */
+/* ============================================================
+ *   GLOBAL
+ * ============================================================ */
 * {
-  border: none;
-  font-family: "JetbrainsMono Nerd Font";
-  font-size: 15px;
-  min-height: 10px;
+  font-family: "FontAwesome", "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 12px;
+  color: #fff;
+  padding: 0;
 }
 
+/* ============================================================
+ *   TOOLTIP
+ * ============================================================ */
+tooltip, .tooltip {
+  background: linear-gradient(180deg, #55aaff 0%,  rgba(0, 60, 200, 1) 30%, rgba(10, 20, 128, 1) 70%);
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 8px;
+  box-shadow: none;
+}
+
+/* ============================================================
+ *   WAYBAR WINDOW
+ * ============================================================ */
 window#waybar {
-  background: rgba(34, 36, 54, 0.6);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
-window#waybar.hidden {
-  opacity: 0.2;
-}
-
-/* - Genera rules for visible modules -- */
-#custom-archicon,
+/* ============================================================
+ *   MODULES (Blue Gradient)
+ * ============================================================ */
+#workspaces,
 #clock,
+#battery,
 #cpu,
 #memory,
-#disk,
-#temperature,
-#idle_inhibitor,
+#network,
 #pulseaudio,
 #pulseaudio-slider,
-#network,
-#language {
-  color: #161320;
-  margin-top: 6px;
-  margin-bottom: 6px;
-  padding-left: 10px;
-  padding-right: 10px;
-  transition: none;
-}
-
-/* Separation to the left */
-#custom-archicon,
-#cpu,
-#idle_inhibitor {
-  margin-left: 5px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-
-/* Separation to the rigth */
-#clock,
-#temperature,
-#language {
-  margin-right: 5px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-/* -- Specific styles -- */
-
-/* Modules left */
-#custom-archicon {
-  font-size: 20px;
-  color: #89B4FA;
-  background: #161320;
-  padding-right: 17px;
+#backlight,
+#backlight-slider,
+#tray,
+#custom-power {
+  font-family: fira-code;
+  background: linear-gradient(180deg, #55aaff 0%,  rgba(0, 60, 200, 1) 50%, rgba(10, 20, 200, 1) 50%, rgba(10, 20, 128, 1) 80%);
 }
 
 #clock {
-  background: #ABE9B3;
+  border-radius: 24px;
+  padding: 0 10px;
 }
 
-#cpu {
-  background: #96CDFB;
+/* ============================================================
+ *   MODULE END CAPS
+ * ============================================================ */
+#workspaces {
+  border-radius: 24px;
+}
+
+#custom-power {
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+  padding: 0 10px 0 6px;
 }
 
 #memory {
-  background: #DDB6F2;
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
 }
 
-#disk {
-  background: #F5C2E7;
+/* ============================================================
+ *   PADDING
+ * ============================================================ */
+#tray {
+  padding-left: 4px;
 }
 
-#temperature {
-  background: #F8BD96;
+#workspaces,
+#battery,
+#cpu {
+  padding: 0 10px;
+  padding-left: 6px;
 }
 
-/* Modules center */
-#workspaces {
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  margin: 6px 5px;
-  padding: 0px 6px;
-}
-
-#workspaces button {
-  color: #B5E8E0;
-  background: transparent;
-  padding: 4px 4px;
-  transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
-}
-
-#workspaces button.occupied {
-  color: #A6E3A1;
-}
-
-#workspaces button.active {
-  color: #89B4FA;
-  text-shadow: 0 0 4px #ABE9B3;
-}
-
-#workspaces button:hover {
-  color: #89B4FA;
-}
-
-#workspaces button.active:hover {}
-
-/* Modules right */
-#taskbar {
-  background: transparent;
-  border-radius: 10px;
-  padding: 0px 5px;
-  margin: 6px 5px;
-}
-
-#taskbar button {
-  padding: 0px 5px;
-  margin: 0px 3px;
-  border-radius: 6px;
-  transition: background 0.3s ease;
-}
-
-#taskbar button.active {
-  background: rgba(34, 36, 54, 0.5);
-}
-
-#taskbar button:hover {
-  background: rgba(34, 36, 54, 0.5);
-}
-
-#idle_inhibitor {
-  background: #B5E8E0;
-  padding-right: 15px;
+#battery.charging {
+  padding-right: 4px;
 }
 
 #pulseaudio {
-  min-width: 55px;
-  color: #1A1826;
-  background: #F5E0DC;
+  padding: 0 12px;
+  padding-left: 6px;
 }
 
-#pulseaudio-slider {
-  color: #1A1826;
-  background: #E8A2AF;
-  min-width: 50px;
+#backlight {
+  padding: 0;
+  margin: 0 -5px;
 }
 
-#pulseaudio-slider slider {}
-
-
-#network {
-  background: #CBA6F7;
-  padding-right: 13px;
+#memory {
+  padding: 0 6px;
+  padding-left: 12px;
 }
 
-#language {
-  background: #A6E3A1;
-  padding-right: 15px;
+/* ============================================================
+ *   SLIDERS
+ * ============================================================ */
+#pulseaudio-slider slider,
+#backlight-slider slider {
+  min-height: 0;
+  min-width: 0;
+  opacity: 0;
+  background-image: none;
+  border: none;
+  box-shadow: none;
 }
 
-/* === Optional animation === */
-@keyframes blink {
-  to {
-    background-color: #BF616A;
-    color: #B5E8E0;
-  }
+#pulseaudio-slider trough,
+#backlight-slider trough {
+  margin:6px 0;
+  min-height: 8px;
+  border: none;
+  min-width: 10px;
+  border-radius: 2px;
+  background: transparent;
+  box-shadow: none;
+}
+
+#pulseaudio-slider highlight,
+#backlight-slider highlight {
+  min-height: 4px;
+  min-width: 10px;
+  border: none;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #55aaff 0%,  rgba(0, 60, 200, 1) 50%, rgba(10, 20, 200, 1) 50%, rgba(10, 20, 170, 1) 80%);
+  box-shadow: 0px 0px 3px 0px rgba(255, 255, 255,0.1) inset;
+}
+
+/* ============================================================
+ *   WORKSPACES BUTTONS
+ * ============================================================ */
+#workspaces button {
+  padding: 0;
+  margin: 0 3px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }

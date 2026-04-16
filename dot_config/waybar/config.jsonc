@@ -1,130 +1,127 @@
+// -*- mode: jsonc -*-
 {
-  "layer": "top",
-  "position": "top",
-  "autohide": true,
-  "autohide-blocked": false,
-  "exclusive": true,
-  "passthrough": false,
-  "gtk-layer-shell": true,
-  "modules-left": [
-    "custom/archicon",
-    "clock",
-    "cpu",
-    "memory",
-    "disk",
-    "temperature"
-  ],
-  "modules-center": [
-    "hyprland/workspaces"
-  ],
-  "modules-right": [
-    "wlr/taskbar",
-    "idle_inhibitor",
-    "pulseaudio/slider",
-    "pulseaudio",
-    "network",
-    "hyprland/language",
-    "custom/hyprwhspr"
-  ],
-  "custom/archicon": {
-    "format": "\uf346",
-    "on-click": "rofi -show drun",
-    "tooltip": false
-  },
-  "clock": {
-    "timezone": "Asia/Tokyo",
-    "format": "{:%I:%M  %d, %m}",
-    "tooltip-format": "{calendar}",
-    "calendar": {
-      "mode": "month"
-    }
-  },
-  "cpu": {
-    "format": "{usage}% \uec19",
-    "tooltip": true,
-    "tooltip-format": "Uso de CPU: {usage}%\nN\u00facleos: {cores}"
-  },
-  "memory": {
-    "format": "{}% \udb80\udf5b",
-    "tooltip": true,
-    "tooltip-format": "RAM en uso: {used} / {total} ({percentage}%)"
-  },
-  "disk": {
-    "format": "{percentage_free}% \uf0a0",
-    "tooltip": true,
-    "tooltip-format": "Espacio libre: {free} / {total} ({percentage_free}%)"
-  },
-  "temperature": {
-    "format": "{temperatureC}\u00b0C {icon}",
-    "tooltip": true,
-    "tooltip-format": "Temperatura actual: {temperatureC}\u00b0C\nCr\u00edtico si > 80\u00b0C",
-    "format-icons": [
-      "\uf2c9"
-    ]
-  },
-  "hyprland/workspaces": {
-    "format": "{icon}",
-    "format-icons": {
-      "default": "\uf111",
-      "active": "\ue0b6\ue0b4"
+     "layer": "top",
+    //"position": "bottom",
+	"mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "reload_style_on_change": false, // make it off when not styling so you save disk being on always for the style.css
+    //"width": 1280,
+    "height": 24,
+    "margin-left": 8,
+    "margin-right": 8,
+    "margin-top": 6,
+    "margin-bottom": 0,
+    "spacing": 0, // Gaps between modules
+
+    "modules-left": [
+        "hyprland/workspaces",
+    ],
+    "modules-center": [
+        "clock",
+    ],
+    "modules-right": [
+        "memory",
+        "cpu",
+        "backlight",
+        "backlight/slider",
+        "pulseaudio",
+        "pulseaudio/slider",
+        "battery",
+        "tray",
+        "custom/power",
+	],
+    
+    "tray": {
+        "icon-size": 16,
+        "spacing": 6
     },
-    "persistent-workspaces": {
-      "*": 2
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%I:%M %p}",
+        "format-alt": "{:%Y-%m-%d}"
     },
-    "disable-scroll": true,
-    "all-outputs": true,
-    "show-special": true
-  },
-  "wlr/taskbar": {
-    "format": "{icon}",
-    "all-outputs": true,
-    "active-first": true,
-    "tooltip-format": "{name}",
-    "on-click": "activate",
-    "on-click-middle": "close",
-    "ignore-list": [
-      "rofi"
-    ]
-  },
-  "idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-      "activated": "\uf06e",
-      "deactivated": "\uf070"
+    "cpu": { "format": "{usage}% " },
+    "memory": { "format": "{}% " },
+    "battery": {
+        "states": { "warning": 30, "critical": 15 },
+        "format-charging": "{capacity}% ",
+        "format-full": " 100%",
+        "format": "{capacity}% {icon}",
+        "format-icons": ["", "", "", "", ""] 
+    },
+    "network": {
+        "tooltip": true,
+        "format-wifi": "{icon} ",
+        "format-icons": ["󰤟", "󰤢", "󰤥"],
+        "format-ethernet": "󰈀 ", 
+        "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>", 
+        "format-linked": "󰈀 {ifname} (No IP)", 
+        "format-disconnected": " ", 
+        "tooltip-format-disconnected": "Disconnected", 
+        "on-click": "/usr/local/bin/ags -t ControlPanel", 
+        "interval": 2
+    },
+    "pulseaudio": {
+        "format": "{icon}",
+        "rotate": 0, 
+        "format-muted": "x", 
+        "tooltip-format": "{icon} {desc} {volume}%", 
+        "scroll-step": 5, 
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "", 
+            "car": "", 
+            "default": ["", "", ""]
+        }
+    },
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+          "1": "",
+          "2": "",
+          "3": "",
+          "4": "",
+          "5": "",
+          "default": "",
+          "active": "" 
+        },
+        "persistent-workspaces": {
+          "*": [ 1, 2, 3, 4, 5 ]
+        }
+    },
+    "backlight": {
+        "tooltip": false,
+        "device": "intel_backlight",
+        "rotate": 0,
+        "format": " {icon}  ", 
+        "format-icons": ["󰃞", "󰃝", "󰃟", "󰃠"], 
+        "scroll-step": 1,
+        "min-length": 2
+    },
+    "backlight/slider": {
+        "min": 5,
+        "max": 100,
+        "rotate": 0,
+        "orientation": "vertical",
+        "device": "intel_backlight",
+        "scroll-step": 1
+    },
+    "custom/power": {
+        "format": "⏻ ",
+        "tooltip": false,
+        "on-click": "~/.config/waybar/power.sh"
+    },
+    "pulseaudio/slider": {
+        "min": 0,
+        "max": 100,
+        "rotate": 0,
+        "orientation": "vertical",
+        "device": "pulseaudio",
+        "scroll-step": 1
     }
-  },
-  "pulseaudio/slider": {
-    "format": "{volume}%",
-    "format-muted": "\ueb24 MUTE",
-    "step": 5,
-    "tooltip": false
-  },
-  "pulseaudio": {
-    "format": "{volume}% {icon}",
-    "format-muted": "\uf6a9 {format_source}",
-    "format-icons": {
-      "default": [
-        "\uf026",
-        "\uf027"
-      ]
-    }
-  },
-  "network": {
-    "format": "{ifname}",
-    "format-ethernet": "{ifname} \udb80\ude00",
-    "format-disconnected": "\uf127 ",
-    "tooltip-format": "\uf796 {ifname} via {gwaddr}",
-    "tooltip-format-ethernet": "\uf0c1 {ifname} {ipaddr}/{cidr}",
-    "tooltip-format-disconnected": "Disconnected",
-    "max-length": 50
-  },
-  "hyprland/language": {
-    "format": "{} \uf11c",
-    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
-    "format-es": "ESP",
-    "format-en": "ENG"
-  },
-  "include": [
-    "/home/w4daka/.config/waybar/hyprwhspr-module.jsonc"
-  ]
 }

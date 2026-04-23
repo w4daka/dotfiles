@@ -12,7 +12,6 @@ exec_always --no-startup-id xrandr --output HDMI-1 --mode 1920x1080 --pos 1920x0
 
 # -------------------------------
 # 自動起動アプリ (最小限)
-exec --no-startup-id nmcli radio wifi off
 exec_always --no-startup-id pkill picom; picom -b
 exec --no-startup-id copyq
 exec --no-startup-id feh --bg-scale $HOME/.config/i3/wallpaper.png

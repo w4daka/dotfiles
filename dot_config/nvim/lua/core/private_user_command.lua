@@ -2,3 +2,181 @@
 vim.api.nvim_create_user_command("InitLua", function()
   vim.cmd.edit("~/.config/nvim/init.lua")
 end, { desc = "Open init.lua" })
+
+-- help
+--                                                   *nvim_create_user_command()*
+-- nvim_create_user_command({name}, {command}, {opts})
+--     Creates a global |user-commands| command.
+--
+--     For Lua usage see |lua-guide-commands-create|.
+--
+--     Example: >vim
+--         :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {'bang': v:true})
+--         :SayHello
+--         Hello world!
+-- <
+--
+--     Attributes: ~
+--         Since: 0.7.0
+--
+--     Parameters: ~
+--       • {name}     (`string`) Name of the new user command. Must begin with an
+--                    uppercase letter.
+--       • {command}  (`string|fun(args: vim.api.keyset.create_user_command.command_args)`)
+--                    Replacement command to execute when this user command is
+--                    executed. When called from Lua, the command can also be a
+--                    Lua function. The function is called with a single table
+--                    argument that contains the following keys:
+--                    • name: (string) Command name
+--                    • args: (string) The args passed to the command, if any
+--                      <args>
+--                    • fargs: (table) The args split by unescaped whitespace
+--                      (when more than one argument is allowed), if any <f-args>
+--                    • nargs: (string) Number of arguments |:command-nargs|
+--                    • bang: (boolean) "true" if the command was executed with a
+--                      ! modifier <bang>
+--                    • line1: (number) The starting line of the command range
+--                      <line1>
+--                    • line2: (number) The final line of the command range
+--                      <line2>
+--                    • range: (number) The number of items in the command range:
+--                      0, 1, or 2 <range>
+--                    • count: (number) Any count supplied <count>
+--                    • reg: (string) The optional register, if specified <reg>
+--                    • mods: (string) Command modifiers, if any <mods>
+--                    • smods: (table) Command modifiers in a structured format.
+--                      Has the same structure as the "mods" key of
+--                      |nvim_parse_cmd()|.
+--       • {opts}     (`vim.api.keyset.user_command`) Optional flags
+--                    • `desc` (string) Command description.
+--                    • `force` (boolean, default true) Override any previous
+--                      definition.
+--                    • `complete` |:command-complete| command or function like
+--                      |:command-completion-customlist|.
+--                    • `preview` (function) Preview handler for 'inccommand'
+--                      |:command-preview|
+--                    • Set boolean |command-attributes| such as |:command-bang|
+--                      or |:command-bar| to true (but not |:command-buffer|, use
+--                      |nvim_buf_create_user_command()| instead).
+-- 日本語
+-- -- nvim_create_user_command({name}, {command}, {opts})
+--     グローバルな |user-commands| を作成します。指示。
+--
+--     Lua の使用法については、|lua-guide-commands-create| を参照してください。
+--
+--     例: >vim
+--         :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {'bang': v:true})
+--         :SayHello
+--         Hello world!
+-- <
+--
+--     属性: ~
+--         導入日: 0.7.0
+--
+--     パラメータ: ~
+--       • {name} (`string`) 新しいユーザー コマンドの名前。で始まる必要があります
+--                    大文字。
+--       • {command} (`string|fun(args: vim.api.keyset.create_user_command.command_args)`)
+--                    このユーザー コマンドが次の場合に実行する置換コマンド
+--                    実行されました。 Lua から呼び出される場合、コマンドは
+--                    ルア機能。関数は単一のテーブルで呼び出されます
+--                    次のキーを含む引数:
+--                    • name: (文字列) コマンド名
+--                    • args: (文字列) コマンドに渡される引数 (存在する場合)
+--                      <引数>
+--                    • fargs: (テーブル) エスケープされていない空白によって分割された引数
+--                      (複数の引数が許可される場合)、<f-args> がある場合
+--                    • nargs: (文字列) 引数の数 |:command-nargs|
+--                    • bang: (ブール値) コマンドが実行された場合は「true」
+--                      ！修飾子 <bang>
+--                    • line1: (数値) コマンド範囲の開始行
+--                      <行1>
+--                    • line2: (数値) コマンド範囲の最後の行
+--                      <行2>
+--                    • range: (数値) コマンド範囲内の項目の数:
+--                      0、1、または 2 <範囲>
+--                    • count: (数値) 指定された任意のカウント <count>
+--                    • reg: (文字列) オプションのレジスタ (指定されている場合) <reg>
+--                    • mods: (文字列) コマンド修飾子 (存在する場合) <mods>
+--                    • smods: (表) 構造化フォーマットのコマンド修飾子。
+--                      の「mods」キーと同じ構造を持ちます。
+--                      |nvim_parse_cmd()|。
+--       • {opts} (`vim.api.keyset.user_command`) オプションのフラグ
+--                    • `desc` (文字列) コマンドの説明。
+--                    • `force` (ブール値、デフォルトは true) 以前のすべてをオーバーライドします。
+--                      定義。
+--                    • `complete` |:command-complete|のようなコマンドまたは関数
+--                      |:コマンド補完カスタムリスト|。
+--                    • `preview` (関数) 'incommand' のプレビュー ハンドラー
+--                      |:コマンドプレビュー|
+--                    • ブール値を設定 |コマンド属性| |:command-bang| など
+--                      または |:コマンドバー| true に設定します (|:command-buffer| ではなく、使用してください)
+--                      |nvim_buf_create_user_command()|代わりに)。
+
+-- ユーザコマンドを作る                                 *lua-guide-commands-create*
+--
+-- ユーザコマンドは |nvim_create_user_command()| で作れる。この関数は
+-- 3つの省略できない引数を取る:
+-- • コマンドの名前の文字列 (組み込みのコマンドと区別するため、
+--   大文字で始める必要がある)
+-- • コマンドを呼び出したときに実行するVimのコマンドの文字列ないしLuaの関数
+-- • |command-attributes| のテーブル
+--   さらに以下も指定できる
+--   • `desc`: コマンドを説明する文字列
+--   • `force`: コマンドを上書きしないためには `false` にする。
+--   • `preview`: |:command-preview| に使われるLuaの関数
+--
+-- 例:
+-- >lua
+--     vim.api.nvim_create_user_command('Test', 'echo "It works!"', {})
+--     vim.cmd.Test()
+--     --> It works!
+-- <
+-- 第3引数は指定する属性がなくとも必須であることに注意。
+--
+-- Luaの関数はコマンドの引数や修飾子を含むテーブルを引数として呼び出される。
+-- 特に重要なもの:
+-- • `name`:  コマンド名の文字列
+-- • `fargs`: 空白で区切った引数を含むテーブル (|<f-args>| を参照)
+-- • `bang`:  コマンドが `!` を付けて実行されたなら `true` (|<bang>| を参照)
+-- • `line1`: コマンド範囲の最初の行番号 (|<line1>| を参照)
+-- • `line2`: コマンド範囲の最後の行番号 (|<line2>| を参照)
+-- • `range`: コマンド範囲を指定した要素の数: 0、1、もしくは2 (|<range>| を参照)
+-- • `count`: 与えられたカウント (|<count>| を参照)
+-- • `smods`: コマンド修飾子を含むテーブル (|<mods>| を参照)
+--
+-- 例:
+-- >lua
+--     vim.api.nvim_create_user_command('Upper',
+--       function(opts)
+--         print(string.upper(opts.fargs[1]))
+--       end,
+--       { nargs = 1 })
+--
+--     vim.cmd.Upper('foo')
+--     --> FOO
+-- <
+-- `complete` 属性には |:command-complete| に列挙されたものに加え、
+-- Luaの関数が指定できる。 >lua
+--
+--     vim.api.nvim_create_user_command('Upper',
+--       function(opts)
+--         print(string.upper(opts.fargs[1]))
+--       end,
+--       { nargs = 1,
+--         complete = function(ArgLead, CmdLine, CursorPos)
+--           -- 補完候補をリスト的なテーブルとして返す
+--           return { "foo", "bar", "baz" }
+--         end,
+--     })
+-- <
+-- バッファローカルなユーザコマンドは `vim.api.`|nvim_buf_create_user_command()|
+-- で作る。第1引数はバッファ番号 (`0` の場合は現在のバッファ)、
+-- 残りの引数は |nvim_create_user_command()| と同じ:
+-- >lua
+--     vim.api.nvim_buf_create_user_command(0, 'Upper',
+--       function(opts)
+--         print(string.upper(opts.fargs[1]))
+--       end,
+--       { nargs = 1 })
+-- <

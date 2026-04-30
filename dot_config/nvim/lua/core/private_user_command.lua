@@ -3,6 +3,11 @@ vim.api.nvim_create_user_command("InitLua", function()
   vim.cmd.edit("~/.config/nvim/init.lua")
 end, { desc = "Open init.lua" })
 
+vim.api.nvim_create_user_command("SayHello", 'echo "Hello!"', { desc = "say hello" })
+
+vim.api.nvim_create_user_command("Greet", function(args)
+  print("Hello, " .. args.args)
+end, { nargs = 1, desc = "greet command" })
 -- help
 --                                                   *nvim_create_user_command()*
 -- nvim_create_user_command({name}, {command}, {opts})

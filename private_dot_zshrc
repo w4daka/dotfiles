@@ -77,6 +77,7 @@ alias ga='git add'
 alias nvim-ks='NVIM_APPNAME=nvim-kickstart nvim'
 alias lg='lazygit'
 alias md='mkdir -p'
+alias ollamaoc='ollama launch opencode --model gemma4:31b-cloud'
 
 # ghq + fzf function
 function ghq-fzf() {
@@ -135,3 +136,5 @@ eval "$(direnv hook zsh)"
 
 # opencode
 export PATH=/home/w4daka/.opencode/bin:$PATH
+
+export PATH=~/bin:$PATH

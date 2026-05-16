@@ -291,7 +291,7 @@ hl.bind(
 	mainMod .. " + SHIFT + E",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
-hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + space", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
@@ -352,7 +352,7 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 hl.bind(mainMod .. "+ SHIFT + X", hl.dsp.exec_cmd("hyprlock"))
 hl.bind("ALT + V", hl.dsp.exec_cmd("copyq toggle"))
 hl.bind("ALT + W", hl.dsp.exec_cmd("qutebrowser"))
-
+hl.bind(mainMod .. "+ SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------

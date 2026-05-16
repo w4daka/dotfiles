@@ -1,153 +1,225 @@
-/* ============================================================
- *   GLOBAL
- * ============================================================ */
+/* Colors (dracula) */
+@define-color foreground	#f8f8f2;
+@define-color background	rgba(40, 42, 54, 0.5);
+@define-color orange	#ffb86c;
+@define-color gray	#44475a;
+@define-color black #21222c;
+@define-color red	#ff5555;
+@define-color green	#50fa7b;
+@define-color yellow	#f1fa8c;
+@define-color cyan	#8be9fd;
+@define-color blue	#6272a4;
+@define-color purple	#bd93f9;
+@define-color pink	#ff79c6;
+@define-color white #ffffff;
+@define-color brred #ff6e6e;
+@define-color brgreen #69ff94;
+@define-color bryellow #ffffa5;
+@define-color brcyan #a4ffff;
+@define-color brblue #6272a4;
+@define-color brpurple #d6acff;
+@define-color brpink #ff92df;
+
+@define-color arch_blue #89b4fa;
+
+@define-color workspace_background	@background;
+@define-color workspace_button	@foreground;
+@define-color workspace_active	@black;
+@define-color workspace_active_background	@green;
+@define-color workspace_urgent	@white;
+@define-color workspace_urgent_background	@brred;
+@define-color workspace_hover	@black;
+@define-color workspace_hover_background	@pink;
+@define-color critical	@red;
+@define-color warning	@yellow;
+
+
+@keyframes blink {
+    to {
+        background-color: @white;
+        color: @black;
+    }
+}
+
 * {
-  font-family: "FontAwesome", "Roboto", "Helvetica", "Arial", sans-serif;
-  font-size: 12px;
-  color: #fff;
-  padding: 0;
+    border: none;
+    border-radius: 0;
+    font-family: "monospace";
+    font-weight: bold;
+    font-size: 16px;
+    min-height: 0;
 }
 
-/* ============================================================
- *   TOOLTIP
- * ============================================================ */
-tooltip, .tooltip {
-  background: linear-gradient(180deg, #55aaff 0%,  rgba(0, 60, 200, 1) 30%, rgba(10, 20, 128, 1) 70%);
-  color: #fff;
-  border-radius: 8px;
-  padding: 6px 8px;
-  box-shadow: none;
-}
-
-/* ============================================================
- *   WAYBAR WINDOW
- * ============================================================ */
 window#waybar {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  border: none;
-  padding: 0;
-  margin: 0;
+    background: transparent;
+    color: @foreground;
 }
 
-/* ============================================================
- *   MODULES (Blue Gradient)
- * ============================================================ */
-#workspaces,
-#clock,
-#battery,
-#cpu,
-#memory,
-#network,
-#pulseaudio,
-#pulseaudio-slider,
-#backlight,
-#backlight-slider,
-#tray,
-#custom-power {
-  font-family: fira-code;
-  background: linear-gradient(180deg, #55aaff 0%,  rgba(0, 60, 200, 1) 50%, rgba(10, 20, 200, 1) 50%, rgba(10, 20, 128, 1) 80%);
-}
-
-#clock {
-  border-radius: 24px;
-  padding: 0 10px;
-}
-
-/* ============================================================
- *   MODULE END CAPS
- * ============================================================ */
 #workspaces {
-  border-radius: 24px;
+    background: @workspace_background;
+    opacity: 1;
+    transition: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+
+/* ── niri/workspaces button states ──────────────────────────────────────
+   .empty    = exists but no windows (named workspaces never disappear)
+   .active   = visible on this output but not keyboard-focused
+   .focused  = the workspace currently receiving input
+   .urgent   = has a window requesting attention
+   ───────────────────────────────────────────────────────────────────── */
+
+#workspaces button,
+#workspaces button.empty {
+    background: transparent;
+    color: @blue;
+    border-radius: 5px;
+    padding: 0 6px;
+    min-width: 18px;
+    transition: none;
+}
+
+#workspaces button.active {
+    background: transparent;
+    color: @purple;
+    border-bottom: 2px solid @purple;
+    border-radius: 5px 5px 0 0;
+}
+
+#workspaces button.focused {
+    background: @workspace_active_background;
+    color: @workspace_active;
+    border-radius: 5px;
+    border-bottom: 2px solid @pink;
+}
+
+#workspaces button.urgent {
+    background: @workspace_urgent_background;
+    color: @workspace_urgent;
+    border-radius: 5px;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#workspaces button:hover {
+    background: @workspace_hover_background;
+    color: @workspace_hover;
+    border-radius: 5px;
+}
+
+#workspaces button:not(.current_output) {
+    opacity: 0.5;
+}
+
+#taskbar {
+    background: @background;
+    border-radius: 5px;
+    margin: 5px 10px 5px 50px;
+}
+
+tooltip {
+    background: @background;
+    opacity: 0.95;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: @purple;
+}
+
+tooltip label {
+    color: @foreground;
+}
+
+#custom-fuzzel,
+#custom-lock_screen,
+#custom-power,
+#custom-weather,
+#custom-khorshididate,
+#cpu,
+#disk,
+#custom-updates,
+#memory,
+#clock,
+#custom-clock,
+#battery,
+#pulseaudio,
+#network,
+#tray,
+#temperature,
+#backlight,
+#language {
+    background: @background;
+    opacity: 1;
+    padding: 0px 5px;
+    margin: 2px 0px 2px 0px;
+}
+
+#disk.critical,
+#temperature.critical {
+    background-color: @critical;
+}
+
+#disk.warning,
+#temperature.warning {
+    background-color: @warning;
+}
+
+#battery {
+    color: @green;
+    border-radius: 5px 0px 0px 5px;
+}
+
+#battery.discharging {
+    color: @foreground;
+}
+
+#battery.warning:not(.charging) {
+    background: @warning;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#battery.critical:not(.charging) {
+    background-color: @critical;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#custom-fuzzel {
+    color: @arch_blue;
+    border-radius: 5px 0px 0px 5px;
 }
 
 #custom-power {
-  border-top-right-radius: 24px;
-  border-bottom-right-radius: 24px;
-  padding: 0 10px 0 6px;
+    color: @red;
+    border-radius: 0px 5px 5px 0px;
 }
 
-#memory {
-  border-top-left-radius: 24px;
-  border-bottom-left-radius: 24px;
+#clock,
+#custom-clock {
+    border-radius: 0px 5px 5px 0px;
 }
 
-/* ============================================================
- *   PADDING
- * ============================================================ */
 #tray {
-  padding-left: 4px;
+    background: @background;
+    border-radius: 5px;
+    margin: 5px 50px 5px 10px;
 }
 
-#workspaces,
-#battery,
-#cpu {
-  padding: 0 10px;
-  padding-left: 6px;
+#wireplumber {
+    background: @background;
 }
 
-#battery.charging {
-  padding-right: 4px;
-}
-
-#pulseaudio {
-  padding: 0 12px;
-  padding-left: 6px;
-}
-
-#backlight {
-  padding: 0;
-  margin: 0 -5px;
-}
-
-#memory {
-  padding: 0 6px;
-  padding-left: 12px;
-}
-
-/* ============================================================
- *   SLIDERS
- * ============================================================ */
-#pulseaudio-slider slider,
-#backlight-slider slider {
-  min-height: 0;
-  min-width: 0;
-  opacity: 0;
-  background-image: none;
-  border: none;
-  box-shadow: none;
-}
-
-#pulseaudio-slider trough,
-#backlight-slider trough {
-  margin:6px 0;
-  min-height: 8px;
-  border: none;
-  min-width: 10px;
-  border-radius: 2px;
-  background: transparent;
-  box-shadow: none;
-}
-
-#pulseaudio-slider highlight,
-#backlight-slider highlight {
-  min-height: 4px;
-  min-width: 10px;
-  border: none;
-  border-radius: 3px;
-  background: linear-gradient(180deg, #55aaff 0%,  rgba(0, 60, 200, 1) 50%, rgba(10, 20, 200, 1) 50%, rgba(10, 20, 170, 1) 80%);
-  box-shadow: 0px 0px 3px 0px rgba(255, 255, 255,0.1) inset;
-}
-
-/* ============================================================
- *   WORKSPACES BUTTONS
- * ============================================================ */
-#workspaces button {
-  padding: 0;
-  margin: 0 3px;
-  background: transparent;
-  border: none;
-  color: #fff;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+#wireplumber.source {
+    background: @background;
 }

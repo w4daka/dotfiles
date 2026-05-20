@@ -9,9 +9,9 @@ if [ ! -f /etc/arch-release ]; then
 fi
 
 # Calculate updates for each service
-AUR=$(yay -Qua | wc -l)
+AUR=$(paru -Qua | wc -l)
 OFFICIAL=$(checkupdates | wc -l)
-ALL=$(yay -Qet | wc -l)
+ALL=$(paru -Qet | wc -l)
 
 # Case/switch for each service updates
 case $1 in
@@ -21,7 +21,7 @@ esac
 
 # If the parameter is "update", update all services
 if [ "$1" = "update" ]; then
-    foot yay -Syu; pkill -SIGRTMIN+8 waybar
+    foot paru -Syu; pkill -SIGRTMIN+8 waybar
 fi
 
 # If there aren't any parameters, return the total number of updates

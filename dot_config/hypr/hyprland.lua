@@ -340,6 +340,11 @@ hl.bind(
 	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
 	{ locked = true, repeating = true }
 )
+hl.bind("ALT + SHIFT +1", hl.dsp.exec_cmd("pactl set-default-sink alsa_output.pci-0000_00_1f.3.analog-stereo"))
+hl.bind(
+	"ALT + SHIFT + 2",
+	hl.dsp.exec_cmd("pactl set-default-sink alsa_output.usb-JVCKENWOOD_JVCKENWOOD_USB_Audio-00.analog-stereo")
+)
 hl.bind("ALT + SHIFT + 4", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
 hl.bind("ALT + SHIFT + 3", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
 

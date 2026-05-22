@@ -4,7 +4,7 @@
 #   qute://help/settings.html
 
 # Uncomment this to still load settings configured via autoconfig.yml
-# config.load_autoconfig(True)
+config.load_autoconfig(True)
 
 # セッションをセーブして、次のセッションで自動的に回復されるようにする。
 # Save & restore session automatically
@@ -52,8 +52,7 @@ config.bind('<Ctrl+k>', 'fake-key <backspace>', mode='insert')
 
 # quickmark.. is the bookmark for qutebrowser
 config.bind('sq', 'quickmark-save')
-
-
+config.bind('cs', 'config-source')
 
 
 
@@ -168,4 +167,7 @@ c.colors.tabs.selected.even.fg = '#d5c4a1'
 # Background color of selected even tabs.
 # Type: QtColor
 c.colors.tabs.selected.even.bg = '#202020'
+
+
+c.spellcheck.languages = ["en-US"]
 

@@ -20,8 +20,6 @@
     jq
     lazygit
     ghq
-    age
-    pandoc
     lazydocker
     devcontainer
     eza

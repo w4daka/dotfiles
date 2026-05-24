@@ -77,6 +77,7 @@ alias ga='git add'
 alias nvim-ks='NVIM_APPNAME=nvim-kickstart nvim'
 alias lg='lazygit'
 alias md='mkdir -p'
+alias pacbak='tar -cjf packages/pacman_database.tar.bz2 /var/lib/pacman/local'
 
 # ghq + fzf function
 function ghq-fzf() {

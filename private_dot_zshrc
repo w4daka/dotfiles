@@ -78,6 +78,7 @@ alias nvim-ks='NVIM_APPNAME=nvim-kickstart nvim'
 alias lg='lazygit'
 alias md='mkdir -p'
 alias pacbak='tar -cjf /home/w4daka/.local/share/chezmoi/packages/pacman_database.tar.bz2 /var/lib/pacman/local'
+alias tailscaleup='sudo systemctl start tailscaled && sudo tailscale up'
 
 # ghq + fzf function
 function ghq-fzf() {

@@ -359,6 +359,8 @@ hl.bind("ALT + V", hl.dsp.exec_cmd("copyq toggle"))
 hl.bind("ALT + W", hl.dsp.exec_cmd("qutebrowser"))
 hl.bind(mainMod .. "+ SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
 hl.bind(mainMod .. "+ SHIFT + W", hl.dsp.exec_cmd("rofi -show window"))
+hl.bind(mainMod .. "+ SHIFT + W", hl.dsp.exec_cmd("rofi -show window"))
+hl.bind(mainMod .. "+ V", hl.dsp.exec_cmd("vivaldi"))
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------

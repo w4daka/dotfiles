@@ -48,13 +48,17 @@ return { -- Collection of various small independent plugins/modules
       local starter = require("mini.starter")
       starter.setup({
         header = [[
-      ███╗ ██╗██╗ ██╗███████╗██╗██████╗ ███████╗
-      ████╗ ██║██║ ██║██╔════╝██║██╔══██╗██╔════╝
-      ██╔██╗ ██║██║ ██║█████╗ ██║██████╔╝█████╗
-      ██║╚██╗██║╚██╗ ██╔╝██╔══╝ ██║██╔══██╗██╔══╝
-      ██║ ╚████║ ╚████╔╝ ██║ ██║██║ ██║███████╗
-      ╚═╝ ╚═══╝ ╚═══╝ ╚═╝ ╚═╝╚═╝ ╚═╝╚══════╝
+███▄▄▄▄      ▄████████  ▄██████▄   ▄█    █▄   ▄█    ▄▄▄▄███▄▄▄▄   
+███▀▀▀██▄   ███    ███ ███    ███ ███    ███ ███  ▄██▀▀▀███▀▀▀██▄ 
+███   ███   ███    █▀  ███    ███ ███    ███ ███▌ ███   ███   ███ 
+███   ███  ▄███▄▄▄     ███    ███ ███    ███ ███▌ ███   ███   ███ 
+███   ███ ▀▀███▀▀▀     ███    ███ ███    ███ ███▌ ███   ███   ███ 
+███   ███   ███    █▄  ███    ███ ███    ███ ███  ███   ███   ███ 
+███   ███   ███    ███ ███    ███ ███    ███ ███  ███   ███   ███ 
+ ▀█   █▀    ██████████  ▀██████▀   ▀██████▀  █▀    ▀█   ███   █▀  
+                                                                  
         ]],
+
         items = {
           starter.sections.recent_files(5, false),
           starter.sections.sessions(5, true),
@@ -93,12 +97,12 @@ return { -- Collection of various small independent plugins/modules
         tabline_use_icons = vim.g.have_nerd_font, -- Nerd Font があればアイコン表示
         -- format = nil, -- デフォルトでファイル名 + アイコン + 変更マーク
       })
-      local statusline = require("mini.statusline")
-      statusline.setup({ use_icons = vim.g.have_nerd_font })
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return "%2l:%-2v"
-      end
+      -- local statusline = require("mini.statusline")
+      -- statusline.setup({ use_icons = vim.g.have_nerd_font })
+      -- ---@diagnostic disable-next-line: duplicate-set-field
+      -- statusline.section_location = function()
+      --   return "%2l:%-2v"
+      -- end
       -- mini.files の設定と <leader>e キー割り当て
       require("mini.files").setup({
         -- 必要に応じてカスタマイズ（デフォルトでほぼ問題なし）

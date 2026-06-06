@@ -1,16 +1,16 @@
 {
-  "Lua.runtime.version": "LuaJIT",
-
-  "Lua.diagnostics.globals": [
-    "vim"
-  ],
-
-  "Lua.workspace.library": [
-    "$VIMRUNTIME",
-    "~/.local/share/nvim/lazy"
-  ],
-
-  "Lua.workspace.checkThirdParty": false,
-
-  "Lua.completion.callSnippet": "Replace"
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime": {
+    "version": "LuaJIT"
+  },
+  "workspace": {
+    "library": [
+      "lua",
+      "$VIMRUNTIME",
+      "${3rd}/luv/library",
+      "${3rd}/busted/library",
+      "$HOME/.local/share/nvim/lazy"
+    ],
+    "checkThirdParty": false
+  }
 }

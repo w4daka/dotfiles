@@ -79,7 +79,18 @@ return {
           always_visible = true,
         },
       },
-      lualine_y = { "filetype", "progress" },
+      lualine_y = {
+           {
+                            -- skkeletonの状態表示
+                            cond = function()
+                                return vim.fn['skkeleton#is_enabled']()
+                            end,
+                            function()
+                                return vim.fn['skkeleton#mode']()
+                            end,
+                            color = { fg = '#ff9e64', gui = 'bold' }, -- オレンジ色で目立たせる
+                        },
+      "filetype", "progress" , },
       lualine_z = { { "location", separator = { right = "" }, left_padding = 2 } },
     },
     inactive_sections = {

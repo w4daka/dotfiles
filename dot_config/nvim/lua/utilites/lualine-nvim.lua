@@ -1,0 +1,122 @@
+local function selectionCount()
+  local mode = vim.fn.mode()
+  local start_line, end_line, start_pos, end_pos
+
+  -- 選択モードでない場合には無効
+  if not (mode:find("[vV\22]") ~= nil) then
+    return ""
+  end
+  start_line = vim.fn.line("v")
+  end_line = vim.fn.line(".")
+
+  if mode == "V" then
+    -- 行選択モードの場合は、各行全体をカウントする
+    start_pos = 1
+    end_pos = vim.fn.strlen(vim.fn.getline(end_line)) + 1
+  else
+    start_pos = vim.fn.col("v")
+    end_pos = vim.fn.col(".")
+  end
+
+  local chars = 0
+  for i = start_line, end_line do
+    local line = vim.fn.getline(i)
+    local line_len = vim.fn.strlen(line)
+    local s_pos = (i == start_line) and start_pos or 1
+    local e_pos = (i == end_line) and end_pos or line_len + 1
+    chars = chars + vim.fn.strchars(line:sub(s_pos, e_pos - 1))
+  end
+
+  local lines = math.abs(end_line - start_line) + 1
+  return tostring(lines) .. " lines, " .. tostring(chars) .. " characters"
+end
+return {
+  "nvim-lualine/lualine.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  opts = {
+    options = {
+      theme = "codedark",
+      component_separators = "",
+      section_separators = { left = "", right = "" },
+      icons_enabled = true,
+    },
+    sections = {
+      lualine_a = { "mode" }, -- 左端: モード表示
+      lualine_b = { "branch", "diff" }, -- 左: Gitブランチ、変更差分
+      lualine_c = {
+        {
+          "filename",
+          path = 1,
+          file_status = true,
+          shorting_target = 40,
+          symbols = {
+            modified = " [+]",
+            readonly = " [RO]",
+            unnamed = "Untitled",
+          },
+        },
+      },
+      lualine_x = {
+        { "searchcount" },
+        { selectionCount },
+        {
+          "diagnostics",
+          sources = {
+            "nvim_diagnostic",
+          },
+
+          sections = { "error", "warn", "info", "hint" },
+
+          diagnostics_color = {
+            error = "DiagnosticError",
+            warn = "DiagnosticWarn",
+            info = "DiagnosticInfo",
+            hint = "DiagnosticHint",
+          },
+          symbols = { error = "E", warn = "W", info = "I", hint = "H" },
+          colored = true,
+          update_in_insert = false,
+          always_visible = true,
+        },
+      },
+      lualine_y = {
+           {
+                            -- skkeletonの状態表示
+                            cond = function()
+                                return vim.fn['skkeleton#is_enabled']()
+                            end,
+                            function()
+                                return vim.fn['skkeleton#mode']()
+                            end,
+                            color = { fg = '#ff9e64', gui = 'bold' }, -- オレンジ色で目立たせる
+                        },
+      "filetype", "progress" , },
+      lualine_z = { { "location", separator = { right = "" }, left_padding = 2 } },
+    },
+    inactive_sections = {
+      lualine_a = {},
+      lualine_b = {},
+      lualine_c = { { "filename", path = 2 } },
+      lualine_x = { "location" },
+      lualine_y = {},
+      lualine_z = {},
+    },
+    tabline = {
+      lualine_a = {
+        {
+          "buffers",
+          mode = 4,
+          icons_enabled = true,
+          show_filename_only = true,
+          hide_filename_extensions = false,
+        },
+      },
+      lualine_b = {},
+      lualine_c = {},
+      lualine_x = {},
+      lualine_y = {},
+      lualine_z = { "tabs" },
+    },
+    extensions = {},
+  },
+}

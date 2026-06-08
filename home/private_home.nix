@@ -23,6 +23,7 @@
     lazydocker
     devcontainer
     eza
+    vim-startuptime
 
     # dev
     git

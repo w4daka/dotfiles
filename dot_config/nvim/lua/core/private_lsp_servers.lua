@@ -81,9 +81,32 @@ vim.lsp.config("denols", {
       },
     },
   },
+  "ts_ls",
+  {
+    cmd = { "typescript-language-server" },
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
+    root_maekers = {
+      "package-lock.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lockb",
+      "bun.lock",
+    },
+    settings = {
+      enable = true,
+    },
+  },
 })
 vim.lsp.enable({
   "lua_ls",
   "pyright",
   "denols",
+  "ts_ls",
 })

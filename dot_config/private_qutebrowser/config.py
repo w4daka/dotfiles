@@ -15,6 +15,15 @@ c.url.default_page = 'https://github.com/w4daka'
 
 c.url.start_pages = 'https://github.com/w4daka'
 
+
+# UIのデフォルトフォント設定
+c.fonts.default_family = 'Noto Sans CJK JP'
+
+# Webコンテンツのフォント設定
+c.fonts.web.family.standard = 'Noto Sans CJK JP'
+c.fonts.web.family.sans_serif = 'Noto Sans CJK JP'
+c.fonts.web.family.serif = 'Noto Serif CJK JP'
+c.fonts.web.family.fixed = 'Noto Sans Mono CJK JP'
 c.scrolling.bar = "always"
 # Enable smooth scrolling for web pages. Note smooth scrolling does not
 # work with the `:scroll-px` command.

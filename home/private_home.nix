@@ -39,6 +39,7 @@
     repomix
     uv
     tree-sitter
+    typescript-language-server
 
     # runtime
     deno

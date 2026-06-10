@@ -45,6 +45,19 @@ vim.lsp.config("html", {
 vim.lsp.config("cssls", {
   capabilities = capabilities,
 })
+vim.lsp.config("eslint", {
+  on_attach = function(client, bufnr)
+    if not base_on_attach then
+      return
+    end
+
+    base_on_attach(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "LspEslintFixAll",
+    })
+  end,
+})
 vim.lsp.config("denols", {
   cmd = { "deno", "lsp" },
   filetypes = {
@@ -121,4 +134,5 @@ vim.lsp.enable({
   "ts_ls",
   "html",
   "cssls",
+  "eslint",
 })

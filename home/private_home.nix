@@ -40,6 +40,10 @@
     uv
     tree-sitter
     typescript-language-server
+    prettier
+    prettied
+    eslint
+    eslint_d
 
     # runtime
     deno

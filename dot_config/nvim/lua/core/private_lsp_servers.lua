@@ -35,7 +35,29 @@
 --   ocamllsp = {},
 --   ts_ls = {},
 --   clangd = {},
+-- Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+vim.lsp.config("html", {
+  capabilities = capabilities,
+})
+vim.lsp.config("cssls", {
+  capabilities = capabilities,
+})
+vim.lsp.config("eslint", {
+  on_attach = function(client, bufnr)
+    if not base_on_attach then
+      return
+    end
+
+    base_on_attach(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "LspEslintFixAll",
+    })
+  end,
+})
 vim.lsp.config("denols", {
   cmd = { "deno", "lsp" },
   filetypes = {
@@ -110,4 +132,7 @@ vim.lsp.enable({
   "denols",
   "nixd",
   "ts_ls",
+  "html",
+  "cssls",
+  "eslint",
 })

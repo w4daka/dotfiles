@@ -73,7 +73,15 @@ return {
         ocaml = { "ocamlformat" },
 
         javascript = { { "prettierd", "prettier" }, stop_after_first = true },
+        javascriptreact = {
+          "prettier",
+          "prettierd",
+        },
         typescript = { { "prettierd", "prettier" }, stop_after_first = true },
+        typescriptreact = {
+          "prettier",
+          "prettierd",
+        },
 
         -- markdown = { "prettier", "markdownlint-cli2", "markdown-toc" },
         -- ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },

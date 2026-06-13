@@ -71,6 +71,7 @@ return {
         go = { "gofumpt" },
         python = { "ruff_format" },
         ocaml = { "ocamlformat" },
+        cpp = { "clang-format" },
 
         javascript = { { "prettierd", "prettier" }, stop_after_first = true },
         javascriptreact = {

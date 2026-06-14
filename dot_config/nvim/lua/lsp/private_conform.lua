@@ -43,12 +43,6 @@ return {
           return nil
         end
 
-        -- c/cpp は LSP に任せる
-        local disable_filetypes = { c = true, cpp = true }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        end
-
         -- Zenn 記事だけ別設定
         if vim.bo[bufnr].filetype == "markdown" and is_zenn_article(bufnr) then
           return {

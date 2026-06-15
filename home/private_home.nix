@@ -41,9 +41,11 @@
     tree-sitter
     typescript-language-server
     prettier
-    prettied
+    prettierd
     eslint
     eslint_d
+    vscode-langservers-extracted
+    clang-tools
 
     # runtime
     deno

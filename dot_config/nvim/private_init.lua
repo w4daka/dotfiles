@@ -35,7 +35,18 @@ vim.bool_fn = setmetatable({}, {
     end
   end,
 })
-
+local ok, coreui2 = pcall(require, "vim._core.ui2")
+if ok then
+  coreui2.enable({
+    enable = true, -- core.ui2を有効化
+    msg = {
+      pos = "box", -- 'box'か'cmd'だがcmdheight=0だとどっちでも良い？（記事後述）
+      box = {
+        timeout = 5000, -- boxメッセージの表示時間 ミリ秒
+      },
+    },
+  })
+end
 -- mermaid を有効化（デフォルトで true のことが多いが念のため）
 vim.g.mkdp_preview_options = {
   mmarkdown = 1,

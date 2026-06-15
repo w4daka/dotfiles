@@ -135,4 +135,5 @@ vim.lsp.enable({
   "html",
   "cssls",
   "eslint",
+  "clangd",
 })

@@ -89,6 +89,24 @@ return { -- Collection of various small independent plugins/modules
       require("mini.surround").setup()
       require("mini.pairs").setup()
       require("mini.indentscope").setup()
+      require("mini.trailspace").setup()
+      require("mini.cursorword").setup()
+      vim.api.nvim_create_user_command("Trim", function()
+        MiniTrailspace.trim()
+        MiniTrailspace.trim_last_lines()
+      end, { desc = "Trim trailing space and last blank lines" })
+      local gen_ai_spec = require("mini.extra").gen_ai_spec
+      require("mini.ai").setup({
+        custom_textobjects = {
+          B = gen_ai_spec.buffer(),
+          D = gen_ai_spec.diagnostic(),
+          I = gen_ai_spec.indent(),
+          L = gen_ai_spec.line(),
+          N = gen_ai_spec.number(),
+          J = { { "()%d%d%d%d%-%d%d%-%d%d()", "()%d%d%d%d%/%d%d%/%d%d()" } },
+        },
+      })
+
       require("mini.diff").setup({
         view = { style = "sign", signs = { add = "│", change = "│", delete = "-" } },
         -- デフォルトの sign スタイルで十分な場合が多い
@@ -97,12 +115,14 @@ return { -- Collection of various small independent plugins/modules
         tabline_use_icons = vim.g.have_nerd_font, -- Nerd Font があればアイコン表示
         -- format = nil, -- デフォルトでファイル名 + アイコン + 変更マーク
       })
-      -- local statusline = require("mini.statusline")
-      -- statusline.setup({ use_icons = vim.g.have_nerd_font })
-      -- ---@diagnostic disable-next-line: duplicate-set-field
-      -- statusline.section_location = function()
-      --   return "%2l:%-2v"
-      -- end
+      require("mini.notify").setup()
+
+      vim.notify = require("mini.notify").make_notify({})
+
+      vim.api.nvim_create_user_command("NotifyHistory", function()
+        MiniNotify.show_history()
+      end, { desc = "Show notify history" })
+      require("mini.statusline").setup({ set_vim_settings = false })
       -- mini.files の設定と <leader>e キー割り当て
       require("mini.files").setup({
         -- 必要に応じてカスタマイズ（デフォルトでほぼ問題なし）
@@ -122,6 +142,25 @@ return { -- Collection of various small independent plugins/modules
           MiniFiles.open(path, true)
         end
       end, { desc = "Toggle mini.files (current dir)" })
+      local hipatterns = require("mini.hipatterns")
+      local hi_words = require("mini.extra").gen_highlighter.words
+      hipatterns.setup({
+        highlighters = {
+          -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+          fixme = hi_words({ "FIXME", "Fixme", "fixme" }, "MiniHipatternsFixme"),
+          hack = hi_words({ "HACK", "Hack", "hack" }, "MiniHipatternsHack"),
+          todo = hi_words({ "TODO", "Todo", "todo" }, "MiniHipatternsTodo"),
+          note = hi_words({ "NOTE", "Note", "note" }, "MiniHipatternsNote"),
+          -- Highlight hex color strings (`#rrggbb`) using that color
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+      })
+      require("mini.operators").setup({
+        replace = { prefix = "R" },
+        exchange = { prefix = "/" },
+      })
+
+      vim.keymap.set("n", "RR", "R", { desc = "Replace mode" })
     end,
   },
   { -- Icon provider

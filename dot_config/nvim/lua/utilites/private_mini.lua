@@ -163,15 +163,31 @@ return { -- Collection of various small independent plugins/modules
 
       vim.ui.select = MiniPick.ui_select
 
-      vim.keymap.set("n", "<space>sf", function()
+      vim.keymap.set("n", "<space>sfg", function()
         MiniPick.builtin.files({ tool = "git" })
       end, { desc = ".gitignoreを参照してのmini.pick.files" })
 
+      vim.keymap.set("n", "<space>sfng", function()
+        MiniPick.builtin.files({ tool = "rg" })
+      end, { desc = ".gitignoreを参照しない上でのmini.pick.files" })
       vim.keymap.set("n", "<space>sg", function()
         MiniPick.builtin.grep_live({ tool = "rg" })
-      end, { desc = "rgでのmini.pick.files" })
+      end, { desc = "rgでのmini.pick.grep_live" })
+      vim.keymap.set("n", "<space>shv", function()
+        MiniPick.builtin.help({ default_split = "vertical" })
+      end, { desc = "縦分割でmini.pick.help" })
 
-      vim.keymap.set("n", "<space>b", function()
+      vim.keymap.set("n", "<space>shh", function()
+        MiniPick.builtin.help()
+      end, { desc = "横分割でmini.pick.help" })
+
+      vim.keymap.set("n", "<space>sr", function()
+        MiniPick.builtin.resume()
+      end, { desc = "mini.pick.resume" })
+      vim.keymap.set("n", "<space>sht", function()
+        MiniPick.builtin.help({ default_split = "tab" })
+      end, { desc = "横分割でmini.pick.help" })
+      vim.keymap.set("n", "<space>sb", function()
         local wipeout_cur = function()
           vim.api.nvim_buf_delete(MiniPick.get_picker_matches().current.bufnr, {})
         end

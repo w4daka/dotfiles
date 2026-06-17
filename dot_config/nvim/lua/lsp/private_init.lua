@@ -51,11 +51,11 @@ return {
           -- 既存設定のキーマップを完全移植
           map("grn", vim.lsp.buf.rename, "Rename")
           map("gra", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
-          map("grr", require("telescope.builtin").lsp_references, "References")
-          map("gri", require("telescope.builtin").lsp_implementations, "Implementation")
-          map("grd", require("telescope.builtin").lsp_definitions, "Definition")
-          map("grD", vim.lsp.buf.declaration, "Declaration")
-          map("gO", require("telescope.builtin").lsp_document_symbols, "Symbols")
+          -- map("grr", require("telescope.builtin").lsp_references, "References")
+          -- map("gri", require("telescope.builtin").lsp_implementations, "Implementation")
+          -- map("grd", require("telescope.builtin").lsp_definitions, "Definition")
+          -- map("grD", vim.lsp.buf.declaration, "Declaration")
+          -- map("gO", require("telescope.builtin").lsp_document_symbols, "Symbols")
           map("K", vim.lsp.buf.hover, "Hover")
 
           -- 言語固有の動的フック (gopls organize imports)

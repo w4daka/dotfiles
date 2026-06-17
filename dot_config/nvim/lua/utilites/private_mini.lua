@@ -1,6 +1,6 @@
 return { -- Collection of various small independent plugins/modules
   {
-    "echasnovski/mini.nvim",
+    "nvim-mini/mini.nvim",
     version = false, -- 'false' (文字列) ではなく false (ブール値)
     config = function()
       -- MiniSessionsの設定
@@ -48,15 +48,15 @@ return { -- Collection of various small independent plugins/modules
       local starter = require("mini.starter")
       starter.setup({
         header = [[
-███▄▄▄▄      ▄████████  ▄██████▄   ▄█    █▄   ▄█    ▄▄▄▄███▄▄▄▄   
-███▀▀▀██▄   ███    ███ ███    ███ ███    ███ ███  ▄██▀▀▀███▀▀▀██▄ 
-███   ███   ███    █▀  ███    ███ ███    ███ ███▌ ███   ███   ███ 
-███   ███  ▄███▄▄▄     ███    ███ ███    ███ ███▌ ███   ███   ███ 
-███   ███ ▀▀███▀▀▀     ███    ███ ███    ███ ███▌ ███   ███   ███ 
-███   ███   ███    █▄  ███    ███ ███    ███ ███  ███   ███   ███ 
-███   ███   ███    ███ ███    ███ ███    ███ ███  ███   ███   ███ 
- ▀█   █▀    ██████████  ▀██████▀   ▀██████▀  █▀    ▀█   ███   █▀  
-                                                                  
+███▄▄▄▄      ▄████████  ▄██████▄   ▄█    █▄   ▄█    ▄▄▄▄███▄▄▄▄
+███▀▀▀██▄   ███    ███ ███    ███ ███    ███ ███  ▄██▀▀▀███▀▀▀██▄
+███   ███   ███    █▀  ███    ███ ███    ███ ███▌ ███   ███   ███
+███   ███  ▄███▄▄▄     ███    ███ ███    ███ ███▌ ███   ███   ███
+███   ███ ▀▀███▀▀▀     ███    ███ ███    ███ ███▌ ███   ███   ███
+███   ███   ███    █▄  ███    ███ ███    ███ ███  ███   ███   ███
+███   ███   ███    ███ ███    ███ ███    ███ ███  ███   ███   ███
+ ▀█   █▀    ██████████  ▀██████▀   ▀██████▀  █▀    ▀█   ███   █▀
+
         ]],
 
         items = {
@@ -159,12 +159,88 @@ return { -- Collection of various small independent plugins/modules
         replace = { prefix = "R" },
         exchange = { prefix = "/" },
       })
+      require("mini.pick").setup()
+      require("mini.extra").setup()
+
+      vim.ui.select = MiniPick.ui_select
+
+      vim.keymap.set("n", "<space>sfg", function()
+        MiniPick.builtin.files({ tool = "git" })
+      end, { desc = ".gitignoreを参照してのmini.pick.files" })
+
+      vim.keymap.set("n", "<space>sfng", function()
+        MiniPick.builtin.files({ tool = "rg" })
+      end, { desc = ".gitignoreを参照しない上でのmini.pick.files" })
+      vim.keymap.set("n", "<space>sg", function()
+        MiniPick.builtin.grep_live({ tool = "rg" })
+      end, { desc = "rgでのmini.pick.grep_live" })
+      vim.keymap.set("n", "<space>shv", function()
+        MiniPick.builtin.help({ default_split = "vertical" })
+      end, { desc = "縦分割でmini.pick.help" })
+
+      vim.keymap.set("n", "<space>shh", function()
+        MiniPick.builtin.help()
+      end, { desc = "横分割でmini.pick.help" })
+
+      vim.keymap.set("n", "<space>sht", function()
+        MiniPick.builtin.help({ default_split = "tab" })
+      end, { desc = "tab分割でmini.pick.help" })
+
+      vim.keymap.set("n", "<space>sr", function()
+        MiniPick.builtin.resume()
+      end, { desc = "mini.pick.resume" })
+
+      vim.keymap.set("n", "<space>/", function()
+        MiniExtra.pickers.buf_lines()
+      end, { desc = "MiniExtra.pickers.buf_lines" })
+      vim.keymap.set("n", "<space>scs", function()
+        MiniExtra.pickers.colorschemes()
+      end, { desc = "MiniExtra.pickers.colorschemes" })
+      vim.keymap.set("n", "<space>scc", function()
+        MiniExtra.pickers.commands()
+      end, { desc = "MiniExtra.pickers.commands" })
+      vim.keymap.set("n", "<space>sdg", function()
+        MiniExtra.pickers.diagnostic()
+      end, { desc = "MiniExtra.pickers.diagnostic" })
+      vim.keymap.set("n", "<space>se", function()
+        MiniExtra.pickers.explorer()
+      end, { desc = "MiniExtra.pickers.explorer" })
+      vim.keymap.set("n", "<space>scg", function()
+        MiniExtra.pickers.git_commits()
+      end, { desc = "MiniExtra.pickers.git_commits" })
+      vim.keymap.set("n", "<space>sn", function()
+        MiniPick.builtin.files({ tool = "rg" }, {
+          source = {
+            cwd = vim.fn.stdpath("config"),
+            name = "neovim config dir",
+          },
+        })
+      end, { desc = "neovimの設定ファイルのディレクトリを開く" })
+      vim.keymap.set("n", "<space>sb", function()
+        local wipeout_cur = function()
+          vim.api.nvim_buf_delete(MiniPick.get_picker_matches().current.bufnr, {})
+        end
+        local buffer_mappings = { wipeout = { char = "<c-d>", func = wipeout_cur } }
+        MiniPick.builtin.buffers({ include_current = false }, { mappings = buffer_mappings })
+      end, { desc = "mini.pick.buffers" })
+
+      require("mini.visits").setup()
+      vim.keymap.set("n", "<space>h", function()
+        require("mini.extra").pickers.visit_paths()
+      end, { desc = "mini.extra.visit_paths" })
+
+      vim.keymap.set("c", "h", function()
+        if vim.fn.getcmdtype() .. vim.fn.getcmdline() == ":h" then
+          return "<c-u>Pick help<cr>"
+        end
+        return "h"
+      end, { expr = true, desc = "mini.pick.help" })
 
       vim.keymap.set("n", "RR", "R", { desc = "Replace mode" })
     end,
   },
   { -- Icon provider
-    "echasnovski/mini.icons",
+    "nvim-mini/mini.icons",
     opts = {},
     lazy = true,
     specs = {

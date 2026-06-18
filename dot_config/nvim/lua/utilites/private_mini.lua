@@ -208,6 +208,13 @@ return { -- Collection of various small independent plugins/modules
       vim.keymap.set("n", "<space>scg", function()
         MiniExtra.pickers.git_commits()
       end, { desc = "MiniExtra.pickers.git_commits" })
+      vim.keymap.set("n", "<space>shs", function()
+        MiniExtra.pickers.history()
+      end, { desc = "MiniExtra.pickers.history" })
+      vim.keymap.set("n", "<space>sk", function()
+        MiniExtra.pickers.keymaps()
+      end, { desc = "MiniExtra.pickers.keymap" })
+
       vim.keymap.set("n", "<space>sn", function()
         MiniPick.builtin.files({ tool = "rg" }, {
           source = {

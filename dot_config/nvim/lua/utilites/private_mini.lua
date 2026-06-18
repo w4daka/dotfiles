@@ -90,6 +90,7 @@ return { -- Collection of various small independent plugins/modules
       require("mini.pairs").setup()
       require("mini.indentscope").setup()
       require("mini.trailspace").setup()
+      require("mini.jump2d").setup()
       require("mini.cursorword").setup()
       vim.api.nvim_create_user_command("Trim", function()
         MiniTrailspace.trim()

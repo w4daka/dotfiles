@@ -62,7 +62,7 @@ return {
       formatters_by_ft = {
         lua = { "stylua" },
         rust = { "rustfmt" },
-        go = { "gofumpt" },
+        go = { "golangci-lint" },
         python = { "ruff_format" },
         ocaml = { "ocamlformat" },
         cpp = { "clang-format" },

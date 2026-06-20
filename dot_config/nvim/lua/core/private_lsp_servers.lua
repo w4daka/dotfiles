@@ -58,6 +58,13 @@ vim.lsp.config("eslint", {
     })
   end,
 })
+vim.lsp.config("gopls", {
+  settings = {
+    gopls = {
+      semanticTokens = false,
+    },
+  },
+})
 vim.lsp.config("denols", {
   cmd = { "deno", "lsp" },
   filetypes = {
@@ -136,4 +143,5 @@ vim.lsp.enable({
   "cssls",
   "eslint",
   "clangd",
+  "gopls",
 })

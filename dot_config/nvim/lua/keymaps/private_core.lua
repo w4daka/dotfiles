@@ -99,3 +99,11 @@ vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
     return "<S-Tab>"
   end
 end, { expr = true, silent = true })
+
+vim.keymap.set("n", "<leader>bd", function()
+  vim.cmd("!~/projects/github.com/w4daka/competitive/sh/build.sh")
+end)
+
+vim.keymap.set("n", "<leader>io", function()
+  vim.cmd("!~/projects/github.com/w4daka/competitive/sh/io.sh")
+end)

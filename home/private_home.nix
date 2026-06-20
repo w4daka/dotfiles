@@ -46,6 +46,8 @@
     eslint_d
     vscode-langservers-extracted
     clang-tools
+    golangci-lint
+    gopls
 
     # runtime
     deno

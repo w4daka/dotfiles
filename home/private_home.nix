@@ -48,6 +48,8 @@
     clang-tools
     golangci-lint
     gopls
+    ruff
+    basedpyright
 
     # runtime
     deno

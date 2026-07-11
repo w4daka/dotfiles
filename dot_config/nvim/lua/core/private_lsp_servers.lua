@@ -135,7 +135,7 @@ vim.lsp.config("denols", {
 })
 vim.lsp.enable({
   "lua_ls",
-  "pyright",
+  "basedpyright",
   "denols",
   "nixd",
   "ts_ls",

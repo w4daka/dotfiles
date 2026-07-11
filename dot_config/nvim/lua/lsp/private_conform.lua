@@ -16,10 +16,6 @@ return {
         }
 
         -- Zenn の articles/*.md だけは prettier / markdown-toc を避ける
-        if vim.bo[bufnr].filetype == "markdown" and filename:match("/articles/[^/]+%.md$") then
-          opts.lsp_format = "never"
-          opts.formatters = { "markdownlint-cli2" }
-        end
 
         require("conform").format(opts)
       end,
@@ -37,28 +33,6 @@ return {
     return {
       notify_on_error = false,
 
-      format_on_save = function(bufnr)
-        -- 大規模ファイルは自動整形しない
-        if vim.api.nvim_buf_line_count(bufnr) > 5000 then
-          return nil
-        end
-
-        -- Zenn 記事だけ別設定
-        if vim.bo[bufnr].filetype == "markdown" and is_zenn_article(bufnr) then
-          return {
-            timeout_ms = 2000,
-            lsp_format = "never",
-            formatters = { "markdownlint-cli2" },
-          }
-        end
-
-        -- それ以外は従来どおり
-        return {
-          timeout_ms = 2000,
-          lsp_format = "fallback",
-        }
-      end,
-
       formatters_by_ft = {
         lua = { "stylua" },
         rust = { "rustfmt" },
@@ -67,12 +41,12 @@ return {
         ocaml = { "ocamlformat" },
         cpp = { "clang-format" },
 
-        javascript = { { "prettierd", "prettier" }, stop_after_first = true },
+        javascript =  { "prettierd", "prettier" }, 
         javascriptreact = {
           "prettier",
           "prettierd",
         },
-        typescript = { { "prettierd", "prettier" }, stop_after_first = true },
+        typescript = { "prettierd", "prettier" },
         typescriptreact = {
           "prettier",
           "prettierd",

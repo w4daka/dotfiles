@@ -21,6 +21,7 @@ path=(
   "$HOME/go/bin"
   "/usr/local/go/bin"
   "$HOME/.luarocks/bin"
+  "$HOME/.bun/bin"
   $path
 )
 
@@ -80,6 +81,7 @@ alias lg='lazygit'
 alias md='mkdir -p'
 alias pacbak='tar -cjf /home/w4daka/.local/share/chezmoi/packages/pacman_database.tar.bz2 /var/lib/pacman/local'
 alias tailscaleup='sudo systemctl start tailscaled && sudo tailscale up'
+alias claudegm='ollama launch claude --model gemma4:31b-cloud'
 
 # ghq + fzf function
 function ghq-fzf() {
@@ -142,3 +144,10 @@ export PATH=/home/w4daka/.opencode/bin:$PATH
 
 # Added by Antigravity CLI installer
 export PATH="/home/w4daka/.local/bin:$PATH"
+
+# bun completions
+[ -s "/home/w4daka/.bun/_bun" ] && source "/home/w4daka/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

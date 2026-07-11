@@ -12,5 +12,6 @@
       "webfetch" : "allow",
       "websearch" : "allow",
       "question" : "allow"
-  }
+  },
+  "plugin": ["opencode-agent-skills"]
 }

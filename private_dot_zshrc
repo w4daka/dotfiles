@@ -13,6 +13,7 @@ export ARCHFLAGS="-arch $(uname -m)"
 export GOPATH="$HOME/go"
 export GHQ_ROOT="$HOME/projects"
 export NVM_DIR="$HOME/.nvm"
+export PATH=~/bin:$PATH
 
 # パスの重複登録を防ぎ、存在しないパスを無視する設定
 typeset -U path PATH

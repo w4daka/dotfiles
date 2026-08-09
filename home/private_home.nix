@@ -54,6 +54,7 @@
     # runtime
     deno
     go
+    python313
 
     #markdown
     markdown-toc

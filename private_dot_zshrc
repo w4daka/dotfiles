@@ -71,15 +71,8 @@ fi
 # =============================================================================
 # 6. Aliases & Functions
 # =============================================================================
-alias g='git'
-alias gcmsg='git commit -m'
-alias gp='git push'
-alias gst='git status'
-alias ga='git add'
 alias nvim-ks='NVIM_APPNAME=nvim-kickstart nvim'
 alias nv-dpp='NVIM_APPNAME=nvim-dpp nvim'
-alias lg='lazygit'
-alias md='mkdir -p'
 alias pacbak='tar -cjf /home/w4daka/.local/share/chezmoi/packages/pacman_database.tar.bz2 /var/lib/pacman/local'
 alias tailscaleup='sudo systemctl start tailscaled && sudo tailscale up'
 alias claudegm='ollama launch claude --model gemma4:31b-cloud'
@@ -156,3 +149,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 if [[ -f "$HOME/.config/secrets/api_keys.zsh" ]]; then
     source "$HOME/.config/secrets/api_keys.zsh"
 fi
+
+# 「展開カーソル」の配置をする(zsh-abbr)
+ABBR_SET_EXPANSION_CURSOR=1
+# zsh-abbr は、略語を展開していないときでもカーソルの位置を変更することができます。これにより、「テンプレート」略語が利用可能になります。
+ABBR_SET_LINE_CURSOR=1

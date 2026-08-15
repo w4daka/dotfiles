@@ -22,7 +22,7 @@ local function create_autocmd(event, opts)
 end
 
 -- https://vim-jp.org/vim-users-jp/2011/02/20/Hack-202.html
-create_autocmd("BufWritePre", {
+vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = function(event)
     local dir = vim.fs.dirname(event.file)
@@ -65,3 +65,39 @@ vim.api.nvim_create_autocmd({
 }, {
   callback = fcitx_off,
 })
+-- 空のテーブルを定義
+local M = {}
+
+function M.open()
+  -- Markdownファイルでない場合は警告
+  if vim.bo.filetype ~= "markdown" then
+    -- 警告レベルでlogを出力
+    vim.notify("Current buffer is not Markdown", vim.log.levels.WARN)
+    return
+  end
+
+  -- 絶対パスを取得
+  local path = vim.fn.expand("%:p")
+
+  -- 空ファイルを開いたらエラー
+  if path == "" then
+    vim.notify("Current buffer has no file path", vim.log.levels.ERROR)
+    return
+  end
+  -- URIを展開
+  local uri = "obsidian://open?path=" .. vim.uri_encode(path)
+
+  -- command を直接(「シェル」内ではなく直接実行
+  vim.system({
+    "xdg-open",
+    uri,
+  })
+end
+
+-- user_commandに登録
+vim.api.nvim_create_user_command("MarkdownObsidian", function()
+  M.open()
+end, {})
+
+-- Mを返す
+return M

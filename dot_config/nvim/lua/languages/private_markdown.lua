@@ -22,6 +22,7 @@ return {
     ---@type render.md.UserConfig
     opts = {},
   },
+  -- ref https://github.com/selimacerbas/markdown-preview.nvim
   {
     "selimacerbas/markdown-preview.nvim",
     dependencies = { "selimacerbas/live-server.nvim" },
@@ -32,6 +33,7 @@ return {
         port = 0, -- 0 = auto (8421 for takeover, OS-assigned for multi)
         open_browser = true,
         debounce_ms = 300,
+        default_theme = "light"
       })
       vim.keymap.set(
         "n",

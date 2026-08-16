@@ -8,18 +8,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.hl.hl_op()
   end,
 })
--- augroup for this config file
-local augroup = vim.api.nvim_create_augroup('init.lua', {})
-
--- wrapper function to use internal augroup
-local function create_autocmd(event, opts)
-  vim.api.nvim_create_autocmd(
-    event,
-    vim.tbl_extend('force', {
-      group = augroup,
-    }, opts)
-  )
-end
 
 -- https://vim-jp.org/vim-users-jp/2011/02/20/Hack-202.html
 vim.api.nvim_create_autocmd('BufWritePre', {

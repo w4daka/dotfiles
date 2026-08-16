@@ -1,70 +1,70 @@
 return {
-  "stevearc/conform.nvim",
-  event = { "BufWritePre" },
-  cmd = { "ConformInfo" },
+  'stevearc/conform.nvim',
+  event = { 'BufWritePre' },
+  cmd = { 'ConformInfo' },
 
   keys = {
     {
-      "<leader>f",
+      '<leader>f',
       function()
         local bufnr = vim.api.nvim_get_current_buf()
-        local filename = vim.api.nvim_buf_get_name(bufnr):gsub("\\", "/")
+        local filename = vim.api.nvim_buf_get_name(bufnr):gsub('\\', '/')
 
         local opts = {
           async = true,
-          lsp_format = "fallback",
+          lsp_format = 'fallback',
         }
 
         -- Zenn の articles/*.md だけは prettier / markdown-toc を避ける
 
-        require("conform").format(opts)
+        require('conform').format(opts)
       end,
-      mode = "",
-      desc = "[F]ormat buffer",
+      mode = '',
+      desc = '[F]ormat buffer',
     },
   },
 
   opts = function()
     local function is_zenn_article(bufnr)
-      local filename = vim.api.nvim_buf_get_name(bufnr):gsub("\\", "/")
-      return filename:match("/articles/[^/]+%.md$") ~= nil
+      local filename = vim.api.nvim_buf_get_name(bufnr):gsub('\\', '/')
+      return filename:match('/articles/[^/]+%.md$') ~= nil
     end
 
     return {
       notify_on_error = false,
 
       formatters_by_ft = {
-        lua = { "stylua" },
-        rust = { "rustfmt" },
-        go = { "golangci-lint" },
-        python = { "ruff_format" },
-        ocaml = { "ocamlformat" },
-        cpp = { "clang-format" },
+        lua = { 'stylua' },
+        rust = { 'rustfmt' },
+        go = { 'golangci-lint' },
+        python = { 'ruff_format' },
+        ocaml = { 'ocamlformat' },
+        cpp = { 'clang-format' },
 
-        javascript =  { "prettierd", "prettier" }, 
+        javascript = { 'prettierd', 'prettier' },
         javascriptreact = {
-          "prettier",
-          "prettierd",
+          'prettier',
+          'prettierd',
         },
-        typescript = { "prettierd", "prettier" },
+        typescript = { 'prettierd', 'prettier' },
         typescriptreact = {
-          "prettier",
-          "prettierd",
+          'prettier',
+          'prettierd',
         },
 
         -- markdown = { "prettier", "markdownlint-cli2", "markdown-toc" },
         -- ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
 
-        json = { "prettier" },
-        yaml = { "prettier" },
+        json = { 'prettier' },
+        yaml = { 'prettier' },
       },
 
       formatters = {
         gofumpt = {
-          prepend_args = { "--lang-version=go1.23" },
+          prepend_args = { '--lang-version=go1.23' },
         },
         ruff_format = {
-          prepend_args = { "--line-length=88" },
+          prepend_args = { '--line-length=88' },
         },
       },
     }

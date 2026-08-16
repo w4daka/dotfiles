@@ -1,7 +1,7 @@
 return {
-  "hat0uma/csvview.nvim",
-  ft = "csv",
+  'hat0uma/csvview.nvim',
+  ft = 'csv',
   config = function()
-    require("csvview").setup()
+    require('csvview').setup()
   end,
 }

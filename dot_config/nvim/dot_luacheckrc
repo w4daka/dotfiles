@@ -32,6 +32,7 @@ read_globals = {
 }
 
 globals = {
+  -- vim
   "vim.g",
   "vim.b",
   "vim.w",
@@ -41,5 +42,12 @@ globals = {
   "vim.go",
   "vim.env",
   "_",
+
+    -- mini.nvim
+  'MiniTrailspace',
+  'MiniNotify',
+  'MiniFiles',
+  'MiniPick',
+  'MiniExtra',
 }
 

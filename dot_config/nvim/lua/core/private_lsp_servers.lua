@@ -9,7 +9,7 @@ vim.lsp.config('cssls', {
 })
 
 vim.lsp.config('eslint', {
-  on_attach = function(bufnr)
+  on_attach = function(_, bufnr)
     vim.api.nvim_create_autocmd('BufWritePre', {
       buffer = bufnr,
       command = 'LspEslintFixAll',

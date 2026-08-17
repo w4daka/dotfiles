@@ -1,9 +1,9 @@
 return {
   {
-    "fredrikaverpil/neotest-golang",
+    'fredrikaverpil/neotest-golang',
   },
   {
-    "leoluz/nvim-dap-go",
+    'leoluz/nvim-dap-go',
     opts = {},
   },
 }

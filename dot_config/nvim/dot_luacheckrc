@@ -1,3 +1,4 @@
+-- ref https://github.com/neovim/neovim/blob/master/.luacheckrc
 -- vim: ft=lua tw=80
 
 stds.nvim = {
@@ -31,6 +32,7 @@ read_globals = {
 }
 
 globals = {
+  -- vim
   "vim.g",
   "vim.b",
   "vim.w",
@@ -40,5 +42,12 @@ globals = {
   "vim.go",
   "vim.env",
   "_",
+
+    -- mini.nvim
+  'MiniTrailspace',
+  'MiniNotify',
+  'MiniFiles',
+  'MiniPick',
+  'MiniExtra',
 }
 

@@ -1,33 +1,33 @@
 return {
-  "monaqa/dial.nvim",
+  'monaqa/dial.nvim',
   keys = {
     {
-      "<C-a>",
+      '<C-a>',
       function()
-        return require("dial.map").inc_normal()
+        return require('dial.map').inc_normal()
       end,
       expr = true,
-      desc = "Increment",
+      desc = 'Increment',
     },
     {
-      "<C-x>",
+      '<C-x>',
       function()
-        return require("dial.map").dec_normal()
+        return require('dial.map').dec_normal()
       end,
       expr = true,
-      desc = "Decrement",
+      desc = 'Decrement',
     },
   },
   config = function()
-    local augend = require("dial.augend")
-    require("dial.config").augends:register_group({
+    local augend = require('dial.augend')
+    require('dial.config').augends:register_group({
       default = {
         augend.integer.alias.decimal, -- 普通の整数
         augend.integer.alias.hex, -- 16進数
-        augend.date.alias["%Y/%m/%d"], -- 日付
+        augend.date.alias['%Y/%m/%d'], -- 日付
         augend.constant.alias.bool, -- true/false
         augend.constant.new({
-          elements = { "and", "or" },
+          elements = { 'and', 'or' },
           word = true,
           cyclic = true,
         }),

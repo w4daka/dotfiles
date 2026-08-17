@@ -34,27 +34,19 @@
     nix-direnv
     gh
     llama-cpp
-    lua-language-server
-    stylua
     repomix
     uv
     tree-sitter
-    typescript-language-server
-    prettier
-    prettierd
-    eslint
-    eslint_d
-    vscode-langservers-extracted
     clang-tools
-    golangci-lint
-    gopls
-    ruff
-    basedpyright
+
+    # lua
+    lua-language-server
+    stylua
+    luaPackages.luacheck
 
     # runtime
     deno
     go
-    python313
 
     #markdown
     markdown-toc

@@ -8,6 +8,12 @@ vim.api.nvim_create_user_command('SayHello', 'echo "Hello!"', { desc = 'say hell
 vim.api.nvim_create_user_command('Greet', function(args)
   print('Hello, ' .. args.args)
 end, { nargs = 1, desc = 'greet command' })
+vim.api.nvim_create_user_command('Scratch', function()
+  vim.cmd('enew')
+  vim.bo.buftype = 'nofile'
+  vim.bo.bufhidden = 'hide'
+  vim.bo.swapfile = false
+end, { desc = 'Open scratch buffer' })
 -- モジュールとして公開する関数や値を入れるためのテーブルを作っている
 local M = {}
 

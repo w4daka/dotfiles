@@ -112,6 +112,8 @@ return { -- Collection of various small independent plugins/modules
         view = { style = 'sign', signs = { add = '│', change = '│', delete = '-' } },
         -- デフォルトの sign スタイルで十分な場合が多い
       })
+
+      require('mini.git').setup()
       require('mini.tabline').setup({
         tabline_use_icons = vim.g.have_nerd_font, -- Nerd Font があればアイコン表示
         -- format = nil, -- デフォルトでファイル名 + アイコン + 変更マーク

@@ -49,8 +49,10 @@
     go
 
     #markdown
-    markdown-toc
     markdownlint-cli2
+
+    # formatter
+    prettierd
 
   ];
 

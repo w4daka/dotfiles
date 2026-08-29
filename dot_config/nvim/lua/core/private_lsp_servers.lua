@@ -103,4 +103,5 @@ vim.lsp.enable({
   'eslint',
   'clangd',
   'gopls',
+  'ruff',
 })

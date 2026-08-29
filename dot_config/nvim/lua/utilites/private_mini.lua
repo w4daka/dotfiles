@@ -160,7 +160,7 @@ return { -- Collection of various small independent plugins/modules
       })
       require('mini.operators').setup({
         replace = { prefix = 'R' },
-        exchange = { prefix = '/' },
+        exchange = { prefix = 'g/' },
       })
       require('mini.pick').setup()
       require('mini.extra').setup()

@@ -40,40 +40,68 @@ return {
       -- 2. LspAttach (自動コマンド・キーマップ)
       -------------------------------------------------
       vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('user-lsp-attach', { clear = true }),
-        callback = function(event)
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if not client then
-            return
-          end
+        callback = function(args)
+          -- LSP navigation
+          vim.keymap.set(
+            'n',
+            'gd',
+            vim.lsp.buf.definition,
+            { buffer = args.buf, silent = true, desc = 'move to definition' }
+          )
+          vim.keymap.set(
+            'n',
+            'gr',
+            vim.lsp.buf.references,
+            { buffer = args.buf, silent = true, desc = 'move to references' }
+          )
+          vim.keymap.set(
+            'n',
+            'gI',
+            vim.lsp.buf.implementation,
+            { buffer = args.buf, silent = true, desc = 'move to implementation' }
+          )
+          vim.keymap.set(
+            'n',
+            'K',
+            vim.lsp.buf.hover,
+            { buffer = args.buf, silent = true, desc = 'hover lsp navigation' }
+          )
 
-          -- Rustは rustaceanvim に任せるため除外
-          if client.name == 'rust-analyzer' or client.name == 'rust_analyzer' then
-            return
-          end
+          -- LSP actions
+          vim.keymap.set(
+            'n',
+            '<leader>caa',
+            vim.lsp.buf.code_action,
+            { buffer = args.buf, silent = true, desc = 'LSP Code action' }
+          )
+          vim.keymap.set(
+            'n',
+            '<leader>rn',
+            vim.lsp.buf.rename,
+            { buffer = args.buf, silent = true, desc = 'LSP Rename action' }
+          )
 
-          -- キーマップ登録用ヘルパー
-          local map = function(keys, func, desc, mode)
-            vim.keymap.set(mode or 'n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-          end
+          -- Diagnostics
+          vim.keymap.set('n', '<leader>dn', function()
+            vim.diagnostic.jump({ count = 1 })
+          end, { buffer = args.buf, silent = true, desc = 'jump next diagnostic' })
 
-          -- 既存設定のキーマップを完全移植
-          map('grn', vim.lsp.buf.rename, 'Rename')
-          map('gra', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
-          -- map("grr", require("telescope.builtin").lsp_references, "References")
-          -- map("gri", require("telescope.builtin").lsp_implementations, "Implementation")
-          -- map("grd", require("telescope.builtin").lsp_definitions, "Definition")
-          -- map("grD", vim.lsp.buf.declaration, "Declaration")
-          -- map("gO", require("telescope.builtin").lsp_document_symbols, "Symbols")
-          map('K', vim.lsp.buf.hover, 'Hover')
+          vim.keymap.set('n', '<leader>dp', function()
+            vim.diagnostic.jump({ count = -1 })
+          end, { buffer = args.buf, silent = true, desc = 'jump previous diagnostic' })
+          vim.keymap.set('n', '<leader>ss', vim.lsp.buf.document_symbol, {
+            buffer = args.buf,
+            silent = true,
+            desc = 'document symbols',
+          })
 
-          -- Ruffのホバー無効化
-          if client.name == 'ruff' then
-            client.server_capabilities.hoverProvider = false
-          end
+          vim.keymap.set('n', '<leader>sS', vim.lsp.buf.workspace_symbol, {
+            buffer = args.buf,
+            silent = true,
+            desc = 'workspace symbols',
+          })
         end,
       })
-
       -------------------------------------------------
       -- 3. 各サーバーの個別設定をロード
       -------------------------------------------------

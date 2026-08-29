@@ -99,11 +99,5 @@ return {
       }
     end,
     -- fomatter固有の設定
-    formatters = {
-      -- ruffは1行の最大文字数が88字でformatする(自分の仮説) => Conformがruff_formatを実行するときの引数として--line-length=88を追加する。
-      ruff_format = {
-        prepend_args = { '--line-length=88' },
-      },
-    },
   },
 }

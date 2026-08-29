@@ -37,7 +37,7 @@ vim.o.signcolumn = 'yes'
 vim.o.updatetime = 250
 
 -- Decrease mapped sequence wait time
-vim.o.timeoutlen = 300
+vim.o.timeoutlen = 500
 
 -- Configure how new splits should be opened
 vim.o.splitright = true
@@ -72,4 +72,5 @@ vim.o.expandtab = true -- Use spaces instead of tabs
 vim.o.shiftwidth = 2 -- Shift 2 spaces when tab
 vim.o.tabstop = 2 -- 1 tab == 2 spaces
 vim.o.laststatus = 3
-vim.o.cmdheight = 0
+-- ref https://zenn.dev/kawarimidoll/articles/4da7458c102c1f
+vim.o.cmdheight = 1

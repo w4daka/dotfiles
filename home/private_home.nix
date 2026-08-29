@@ -26,17 +26,14 @@
     vim-startuptime
 
     # dev
-    git
     nixd
     nixfmt
     bat
     direnv
     nix-direnv
     gh
-    llama-cpp
     repomix
     uv
-    tree-sitter
     clang-tools
 
     # lua

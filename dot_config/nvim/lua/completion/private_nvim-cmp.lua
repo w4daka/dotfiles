@@ -67,15 +67,19 @@ return {
           end, { 'i', 's' }),
 
           -- choice node 選択（${1|one,two,three|} の切り替え）
-          ['<C-l>'] = cmp.mapping(function()
+          ['<C-l>'] = cmp.mapping(function(fallback)
             if luasnip.choice_active() then
               luasnip.change_choice(1)
+            else
+              fallback()
             end
           end, { 'i', 's' }),
 
-          ['<C-h>'] = cmp.mapping(function()
+          ['<C-h>'] = cmp.mapping(function(fallback)
             if luasnip.choice_active() then
               luasnip.change_choice(-1)
+            else
+              fallback()
             end
           end, { 'i', 's' }),
         }),

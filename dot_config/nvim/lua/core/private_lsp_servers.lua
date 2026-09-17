@@ -71,22 +71,25 @@ vim.lsp.config('ts_ls', {
     enable = true,
   },
 })
+-- ref https://github.com/nix-community/nixd/issues/744?utm_source=chatgpt.com
+local flake_root = vim.fs.root(0, { 'flake.nix' })
 vim.lsp.config('nixd', {
-  {
-    settings = {
-      nixd = {
-        nixpkgs = {
-          -- 補完を有効にするための設定
-          expr = 'import <nixpkgs> { }',
-        },
-        formatting = {
-          command = { 'nixfmt' }, -- 先ほど flake.nix に入れた nixfmt-rfc-style を使う
-        },
-        options = {
-          -- NixOSの設定やFlakeのオプションも補完したい場合はここに追加
-          nixos = {
-            expr = '(attributes)._module.args.options',
-          },
+  settings = {
+    nixd = {
+      nixpkgs = {
+        -- 補完を有効にするための設定
+        expr = string.format('import (builtins.getFlake "%s")input.nixpkgs{ }', flake_root),
+      },
+      formatting = {
+        command = { 'nixfmt' }, -- 先ほど flake.nix に入れた nixfmt-rfc-style を使う
+      },
+      options = {
+        -- NixOSの設定やFlakeのオプションも補完したい場合はここに追加
+        nixos = {
+          expr = string.format(
+            'builtins.getFlake (builtins.toString "%s")).homeConfigurations."w4daka".options',
+            flake_root
+          ),
         },
       },
     },

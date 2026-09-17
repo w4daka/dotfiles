@@ -1,7 +1,7 @@
 return {
   {
     'voldikss/vim-translator',
-    cmd = { 'TranslateW', 'TranslateW --target_lang=en' },
+    cmd = { 'TranslateW', 'TranslateR' },
     keys = {
       -- Popup
       { '<leader>t', '', desc = 'Translate' },

@@ -119,7 +119,7 @@ require('lazy').setup({
 
 -- init.lua
 require('luasnip.loaders.from_lua').load({
-  paths = '~/.config/nvim/lua/snippets',
+  paths = vim.fn.stdpath('config') .. '/lua/snippets',
 })
 
 -- vim.opt.helplang = { "ja", "en" }

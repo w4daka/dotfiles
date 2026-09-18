@@ -1,3 +1,5 @@
+abbr "ccd"="chezmoi cd"
+abbr "cradd"="chezmoi re-add"
 abbr "g"="git"
 abbr "ga"="git add"
 abbr "gb"="git branch"

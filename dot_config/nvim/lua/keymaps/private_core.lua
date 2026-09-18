@@ -113,3 +113,7 @@ vim.keymap.set(
   '<cmd>MarkdownObsidian<cr>',
   { desc = 'Markdown file is perveiwed by obsidian desktop' }
 )
+
+vim.keymap.set('n', '<leader>y', '<cmd>%yank<cr>', { desc = 'Yank the entire buffer' })
+
+vim.keymap.set('n', '<leader>ld', vim.diagnostic.open_float, { desc = 'show diagnostic' })

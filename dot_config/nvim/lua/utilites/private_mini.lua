@@ -10,12 +10,15 @@ return { -- Collection of various small independent plugins/modules
         return arg == nil or arg == ''
       end
       local function get_sessions(lead)
-        local dir = session.config.dir
+        local dir = MiniSessions.config.directory
         if not dir then
           return {}
         end
         return vim
-          .iter(vim.fs.dir(session.config.dir))
+          .iter(vim.fs.dir(MiniSessions.config.directory))
+          :filter(function(_, type)
+            return type ~= 'directory'
+          end)
           :map(function(v)
             local name = vim.fs.basename(v)
             return vim.startswith(name, lead) and name or nil
@@ -23,13 +26,15 @@ return { -- Collection of various small independent plugins/modules
           :totable()
       end
       vim.api.nvim_create_user_command('SessionWrite', function(arg)
-        local session_name = is_blank(arg.args) and vim.v.this_session or arg.args
-        if is_blank(session_name) then
+        if is_blank(arg.args) ~= nil then
+          session.write(arg.args)
+          return
+        elseif is_blank(vim.v.this_session) == nil then
           vim.notify('Session name is required', vim.log.levels.WARN)
           return
+        else
+          session.write(nil)
         end
-        vim.cmd('%argdelete')
-        session.write(session_name)
       end, { desc = 'Write session', nargs = '?', complete = get_sessions })
       vim.api.nvim_create_user_command('SessionRead', function()
         session.select('read', { verbose = true })
@@ -85,7 +90,6 @@ return { -- Collection of various small independent plugins/modules
       end, { desc = 'Zoom current buffer' })
       vim.keymap.set('n', 'mz', '<cmd>Zoom<cr>', { desc = '[Z]oom current buffer' })
       -- 2. その他の mini モジュールの設定
-      require('mini.ai').setup({ n_lines = 500 })
       require('mini.surround').setup()
       require('mini.pairs').setup()
       require('mini.indentscope').setup()
@@ -98,6 +102,7 @@ return { -- Collection of various small independent plugins/modules
       end, { desc = 'Trim trailing space and last blank lines' })
       local gen_ai_spec = require('mini.extra').gen_ai_spec
       require('mini.ai').setup({
+        n_lines = 500,
         custom_textobjects = {
           B = gen_ai_spec.buffer(),
           D = gen_ai_spec.diagnostic(),
@@ -112,6 +117,8 @@ return { -- Collection of various small independent plugins/modules
         view = { style = 'sign', signs = { add = '│', change = '│', delete = '-' } },
         -- デフォルトの sign スタイルで十分な場合が多い
       })
+
+      require('mini.git').setup()
       require('mini.tabline').setup({
         tabline_use_icons = vim.g.have_nerd_font, -- Nerd Font があればアイコン表示
         -- format = nil, -- デフォルトでファイル名 + アイコン + 変更マーク
@@ -158,7 +165,7 @@ return { -- Collection of various small independent plugins/modules
       })
       require('mini.operators').setup({
         replace = { prefix = 'R' },
-        exchange = { prefix = '/' },
+        exchange = { prefix = 'g/' },
       })
       require('mini.pick').setup()
       require('mini.extra').setup()

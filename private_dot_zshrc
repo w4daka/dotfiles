@@ -159,3 +159,6 @@ ABBR_SET_LINE_CURSOR=1
 export PATH="$PATH:/home/w4daka/.lmstudio/bin"
 # End of LM Studio CLI section
 
+gitac () {
+    git commit -m "${1}_$(date +%Y%m%d_%H-%M)"
+}

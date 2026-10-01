@@ -162,3 +162,4 @@ export PATH="$PATH:/home/w4daka/.lmstudio/bin"
 gitac () {
     git commit -m "${1}_$(date +%Y%m%d_%H-%M)"
 }
+

@@ -5,37 +5,39 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' }, -- if you use the mini.nvim suite
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
-    opts = {},
+    opts = { latex = { enabled = false } },
   },
-  -- ref https://github.com/selimacerbas/markdown-preview.nvim
   {
-    'selimacerbas/markdown-preview.nvim',
-    dependencies = { 'selimacerbas/live-server.nvim' },
+    'selimacerbas/mdkite.nvim',
+    -- a kitehost.nvim checkout under another dir name needs its spec to
+    -- say name = "kitehost.nvim", or lazy.nvim clones upstream beside it
+    dependencies = { 'selimacerbas/kitehost.nvim' },
+    -- kitehost.nvim v2.0.0 or newer, the first release with its Host check
     config = function()
-      require('markdown_preview').setup({
+      require('mdkite').setup({
         -- all optional; sane defaults shown
         instance_mode = 'takeover', -- "takeover" (one tab) or "multi" (tab per instance)
         port = 0, -- 0 = auto (8421 for takeover, OS-assigned for multi)
         open_browser = true,
+        default_theme = 'dark', -- "dark" or "light"; initial preview theme
         debounce_ms = 300,
-        default_theme = 'light',
       })
       vim.keymap.set(
         'n',
         '<leader>mps',
-        '<cmd>MarkdownPreview<cr>',
+        '<cmd>MdKite start<cr>',
         { desc = 'Markdown: Start preview' }
       )
       vim.keymap.set(
         'n',
         '<leader>mpS',
-        '<cmd>MarkdownPreviewStop<cr>',
+        '<cmd>MdKite stop<cr>',
         { desc = 'Markdown: Stop preview' }
       )
       vim.keymap.set(
         'n',
         '<leader>mpr',
-        '<cmd>MarkdownPreviewRefresh<cr>',
+        '<cmd>MdKite  refresh<cr>',
         { desc = 'Markdown: Refresh preview' }
       )
     end,

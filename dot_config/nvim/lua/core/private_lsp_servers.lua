@@ -51,7 +51,7 @@ vim.lsp.config('denols', {
 })
 
 vim.lsp.config('ts_ls', {
-  cmd = { 'typescript-language-server' },
+  cmd = { 'typescript-language-server', '--stdio' },
   filetypes = {
     'javascript',
     'javascriptreact',
@@ -61,11 +61,15 @@ vim.lsp.config('ts_ls', {
     'typescript.tsx',
   },
   root_markers = {
+    '.git',
     'package-lock.json',
     'yarn.lock',
     'pnpm-lock.yaml',
     'bun.lockb',
     'bun.lock',
+    'package.json',
+    'tsconfig.json',
+    'jsconfig.json',
   },
   settings = {
     enable = true,

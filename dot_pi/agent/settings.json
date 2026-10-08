@@ -1,0 +1,28 @@
+{
+  "lastChangelogVersion": "1.1.0",
+  "theme": "dark",
+  "defaultProvider": "opencode-go",
+  "defaultModel": "deepseek-v4.1-flash",
+  "defaultThinkingLevel": "medium",
+  "packages": [
+    "npm:@gotgenes/pi-permission-system",
+    {
+      "source": "npm:@demigodmode/pi-web-agent",
+      "extensions": ["-dist/extension.js"]
+    },
+    "npm:pi-lens",
+    {
+      "source": "npm:pi-hermes-memory",
+      "extensions": ["-src/index.ts"]
+    },
+    {
+      "source": "npm:pi-provider-opencode-console",
+      "extensions": ["-src/index.ts"]
+    },
+    "npm:donsetch",
+    "npm:pi-extended-teams"
+  ],
+  "tuiMode": "regular",
+  "quietStartup": false,
+  "extensions": ["+extensions/gondolin/index.ts"]
+}

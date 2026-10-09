@@ -8,21 +8,17 @@
     "npm:@gotgenes/pi-permission-system",
     {
       "source": "npm:@demigodmode/pi-web-agent",
-      "extensions": ["-dist/extension.js"]
+      "extensions": [
+        "-dist/extension.js"
+      ]
     },
     "npm:pi-lens",
-    {
-      "source": "npm:pi-hermes-memory",
-      "extensions": ["-src/index.ts"]
-    },
-    {
-      "source": "npm:pi-provider-opencode-console",
-      "extensions": ["-src/index.ts"]
-    },
     "npm:donsetch",
-    "npm:pi-extended-teams"
+    "git:github.com/HazAT/pi-interactive-subagents"
   ],
   "tuiMode": "regular",
   "quietStartup": false,
-  "extensions": ["+extensions/gondolin/index.ts"]
+  "extensions": [
+    "-extensions/gondolin/index.ts"
+  ]
 }

@@ -1,0 +1,20 @@
+{
+  "lastChangelogVersion": "1.1.0",
+  "theme": "dark",
+  "defaultProvider": "opencode-go",
+  "defaultModel": "minimax-m3",
+  "defaultThinkingLevel": "medium",
+  "packages": [
+    "npm:@gotgenes/pi-permission-system",
+    {
+      "source": "npm:@demigodmode/pi-web-agent",
+      "extensions": ["-dist/extension.js"]
+    },
+    "npm:pi-lens",
+    "npm:donsetch",
+    "git:github.com/HazAT/pi-interactive-subagents"
+  ],
+  "tuiMode": "regular",
+  "quietStartup": false,
+  "extensions": ["-extensions/gondolin/index.ts"]
+}

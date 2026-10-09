@@ -167,3 +167,4 @@ cheatsh() {
     curl cheat.sh/"$1" | bat -plman
 }
 
+export MANPAGER="bat -plman"

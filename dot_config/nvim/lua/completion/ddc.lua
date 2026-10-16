@@ -44,7 +44,7 @@ return {
       'skkeleton',
       'skkeleton_okuri',
       'lsp',
-      'copilot',
+      -- 'copilot',
       'vsnip',
       'file',
       'buffer',
@@ -87,11 +87,11 @@ return {
       dictionary = {
         mark = '[d]',
       },
-      copilot = {
-        mark = '[C]',
-        matchers = {},
-        minAutoCompleteLength = 0,
-      },
+      -- copilot = {
+      --   mark = '[C]',
+      --   matchers = {},
+      --   minAutoCompleteLength = 0,
+      -- },
     })
     vim.fn['ddc#custom#patch_global']('sourceParams', {
       around = { maxSize = 500 },
@@ -100,9 +100,9 @@ return {
         smartCase = true,
         isVolatile = true,
       },
-      copilot = {
-        copilot = 'lua',
-      },
+      -- copilot = {
+      --   copilot = 'lua',
+      -- },
     })
 
     vim.keymap.set('i', '<C-n>', '<Cmd>call pum#map#insert_relative(+1)<CR>')

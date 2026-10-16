@@ -14,12 +14,18 @@
     },
     "npm:pi-lens",
     "npm:donsetch",
-    "git:github.com/HazAT/pi-interactive-subagents",
+    {
+      "source": "git:github.com/HazAT/pi-interactive-subagents",
+      "extensions": [
+        "-pi-extension/subagents/index.ts"
+      ]
+    },
     "npm:pi-ask-user",
     "npm:@dietrichgebert/ponytail",
     "npm:@ff-labs/pi-fff",
     "npm:pi-context-view",
-    "npm:@narumitw/pi-btw"
+    "npm:@narumitw/pi-btw",
+    "npm:pi-subagents"
   ],
   "tuiMode": "regular",
   "quietStartup": false,

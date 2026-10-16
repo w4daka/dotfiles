@@ -1,6 +1,7 @@
 {
   "FixCursorHold.nvim": { "branch": "master", "commit": "1900f89dc17c603eec29960f57c00bd9ae696495" },
   "LuaSnip": { "branch": "master", "commit": "0abc8f390b278c3b4aabc4c004ac8a088b65cf24" },
+  "budoux.lua": { "branch": "main", "commit": "7f23658b127b9a74aae5b388fefcd997be30cbfc" },
   "conform.nvim": { "branch": "master", "commit": "016802de402556da54c36bd7359b441266b01cdd" },
   "copilot.lua": { "branch": "master", "commit": "84c129a0fe6841743ad7180fb714d4018e132f1e" },
   "copy-file-path.nvim": { "branch": "main", "commit": "591ccc47d6386f12502c7797b26e0c01f13c0a79" },
@@ -29,6 +30,7 @@
   "kitehost.nvim": { "branch": "main", "commit": "4cb5c94a84cc653e0b32e0c9aed95465a36fc94d" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "lazygit.nvim": { "branch": "main", "commit": "9ffc6103926718f7070fb4017694543cd7dc9718" },
+  "md-render.nvim": { "branch": "main", "commit": "39c731abe5bf4cfa69c754968a7228299dcbdc69" },
   "mdkite.nvim": { "branch": "main", "commit": "dded03dc6cce87364b48260b2ffbace575a6add7" },
   "mini.icons": { "branch": "main", "commit": "f642e3ba8c12afbc8f32f6d77ef6597eac56786f" },
   "mini.nvim": { "branch": "main", "commit": "9ee72c26ac1440ee6c95ce708c1d739684be316a" },
@@ -47,7 +49,6 @@
   "omega.nvim": { "branch": "main", "commit": "518a35374182ee928306dbd79c54162b3cde7d5e" },
   "plenary.nvim": { "branch": "master", "commit": "74b06c6c75e4eeb3108ec01852001636d85a932b" },
   "pum.vim": { "branch": "main", "commit": "4ed3576e3399fa65611be00670a084702f110acb" },
-  "render-markdown.nvim": { "branch": "main", "commit": "8e8795368391036643b622875a6da6a51bcd33f4" },
   "rustaceanvim": { "branch": "main", "commit": "9cb125de42c0256ed1bc1f9ded8d8f0381317a17" },
   "skkeleton": { "branch": "main", "commit": "b322ded0e3264536342e0c6766d97c52452af570" },
   "skkeleton-azik-kanatable": { "branch": "main", "commit": "e73e49b147163d204b41aff9a65d34e2c5a75190" },

@@ -49,7 +49,7 @@ local function open_scratch()
   })
 end
 vim.api.nvim_create_user_command('CScratch', open_scratch, { desc = 'scratch open' })
-vim.keymap.set('n', '<leader>sc', open_scratch, { desc = 'scratch open' })
+vim.keymap.set('n', '<leader>soc', open_scratch, { desc = 'scratch open' })
 -- -- モジュールとして公開する関数や値を入れるためのテーブルを作っている
 -- local M = {}
 --

@@ -26,7 +26,7 @@ return { -- You can easily change to a different colorscheme.
       require('kanagawa').setup({
         transparent = true,
       })
-      vim.cmd.colorscheme('kanagawa')
+      vim.cmd.colorscheme('tokyonight-moon')
     end,
   },
 }

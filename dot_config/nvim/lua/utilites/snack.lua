@@ -122,5 +122,12 @@ return {
       end,
       desc = 'search visit_paths代替',
     },
+    {
+      '<leader>sgs',
+      function()
+        Snacks.picker.git_stash()
+      end,
+      desc = 'search git stash',
+    },
   },
 }

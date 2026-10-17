@@ -53,8 +53,9 @@ return {
     })
     vim.fn['ddc#custom#patch_global']('sourceOptions', {
       _ = {
-        matchers = { 'matcher_head' },
-        sorters = { 'sorter_rank' },
+        matchers = { 'matcher_fuzzy' },
+        sorters = { 'sorter_fuzzy' },
+        converters = { 'converter_fuzzy' },
       },
       skkeleton = {
         mark = '[SKK]',

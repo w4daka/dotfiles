@@ -39,7 +39,7 @@ return {
       desc = 'search help',
     },
     {
-      '<leader>sr',
+      '<leader>srs',
       function()
         Snacks.picker.resume()
       end,
@@ -128,6 +128,13 @@ return {
         Snacks.picker.git_stash()
       end,
       desc = 'search git stash',
+    },
+    {
+      '<leader>srg',
+      function()
+        Snacks.picker.registers()
+      end,
+      desc = 'search registers',
     },
   },
 }

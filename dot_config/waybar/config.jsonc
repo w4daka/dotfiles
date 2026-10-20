@@ -1,253 +1,65 @@
-// Waybar config for niri
-// Place at: ~/.config/waybar/config.jsonc
-// Requires: niri >= 0.1.9 for niri/workspaces, niri/window, niri/language
-
 {
-    // ── Bar geometry ──────────────────────────────────────────
     "layer": "top",
     "position": "top",
-    "mod": "dock",
-    "exclusive": true,
-    "passthrough": false,
-    "gtk-layer-shell": true,
     "height": 36,
-    "margin-right": 5,
-    "margin-left": 5,
-
-    // ── Module layout ─────────────────────────────────────────
-    "modules-left": [
-        "custom/fuzzel",
-        "custom/weather",
-        "custom/khorshididate",
-        "custom/clock",
-        "wlr/taskbar"
-    ],
-
-    "modules-center": [
-        "niri/workspaces"
-    ],
-
-    "modules-right": [
-        "tray",
-        "battery",
-        "wireplumber",
-        "wireplumber#source",
-        "backlight",
-        "cpu",
-        "memory",
-        "disk",
-        "temperature",
-        "custom/updates",
-        "network",
-        "niri/language",
-        "custom/lock_screen",
-        "custom/power"
-    ],
-
-    // ── Left modules ──────────────────────────────────────────
-
-    "custom/fuzzel": {
-        "format": "  ",
-        "on-click": "fuzzel",
-        "tooltip": false
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["tray", "battery", "wireplumber", "cpu", "memory", "network", "clock"],
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "sort-by": "number"
     },
-
-    "custom/weather": {
-        // Shows current weather and forecast via wttr.in
-        "tooltip": true,
-        "format": "{}",
-        "interval": 3600,
-        "exec": "~/.config/waybar/scripts/wttr.py",
-        "return-type": "json"
+    "hyprland/window": {
+        "separate-outputs": true
     },
-
-    "custom/khorshididate": {
-        // Persian (Jalali/Shamsi) calendar date
-        "tooltip": true,
-        "format": " {}",
-        "format-alt": " {alt}",
-        "format-alt-click": "click-right",
-        "interval": 3600,
-        "exec": "~/.config/waybar/scripts/khorshidi-date",
-        "return-type": "json"
-    },
-
-    "custom/clock": {
-        "exec": "~/.config/waybar/scripts/clock-tooltip",
-        "return-type": "json",
-        "interval": 60,
-        "tooltip": true,
-        "on-click": "setbg"
-    },
-
-    "wlr/taskbar": {
-        // Works with niri via standard Wayland foreign-toplevel protocol
-        "format": "{icon}",
-        "icon-size": 12,
-        "all-outputs": true,
-        "tooltip-format": "{name}: {title}",
-        "on-click": "activate",
-        "on-click-middle": "close",
-        "ignore-list": [
-            "rofi"
-        ]
-    },
-
-    // ── Center modules ────────────────────────────────────────
-
-    "niri/workspaces": {
-        // Dynamic workspaces — only browser and obs are named/persistent.
-        // Shows dynamic workspace indices plus named workspaces by name.
-        "all-outputs": true,
-        "format": "{value}"
-    },
-
-    // ── Right modules ─────────────────────────────────────────
-
     "tray": {
         "icon-size": 12,
         "spacing": 10
     },
-
     "battery": {
         "format": "{icon}",
-        "format-icons": {
-            "default": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-            "charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-            "plugged": ""
-        },
         "format-alt-click": "click-right",
         "format-alt": "{icon} {capacity}%",
-        "states": {
-            "good": 95,
-            "warning": 20,
-            "critical": 10
-        }
+        "format-icons": {
+            "default": ["\udb80\udc8e", "\udb80\udc7a", "\udb80\udc7b", "\udb80\udc7c", "\udb80\udc7d", "\udb80\udc7e", "\udb80\udc7f", "\udb80\udc80", "\udb80\udc81", "\udb80\udc82", "\udb80\udc79"],
+            "charging": ["\udb82\udc9f", "\udb82\udc9c", "\udb80\udc86", "\udb80\udc87", "\udb80\udc88", "\udb82\udc9d", "\udb80\udc89", "\udb82\udc9e", "\udb80\udc8a", "\udb80\udc8b", "\udb80\udc85"],
+            "plugged": "\uf1e6"
+        },
+        "states": { "good": 95, "warning": 20, "critical": 10 }
     },
-
     "wireplumber": {
         "format": " {icon} ",
-        "format-muted": "   ",
+        "format-muted": " \uf466  ",
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+",
         "on-scroll-down": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-",
-        "scroll-step": 5,
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "tooltip": true,
+        "format-icons": { "default": ["\uf026", "\uf027", "\uf028"] },
         "tooltip-format": "{icon}  at {volume}%"
     },
-
-    "wireplumber#source": {
-        "format": " {format_source}",
-        "format-source": "",
-        "format-source-muted": "",
-        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
-        "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SOURCE@ 5%+",
-        "on-scroll-down": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SOURCE@ 5%-",
-        "scroll-step": 5,
-        "tooltip": true,
-        "tooltip-format": "  at {volume}%"
-    },
-
-    "backlight": {
-        "device": "intel_backlight",
-        "format": "{icon}",
-        "format-alt-click": "click-right",
-        "format-alt": "{icon} {percent}%",
-        "format-icons": ["󰃞", "󰃟", "󰃠"],
-        "on-scroll-up": "brightness -i",
-        "on-scroll-down": "brightness -d"
-    },
-
     "cpu": {
         "interval": 10,
-        "format": "",
-        "max-length": 10,
+        "format": "\uf2db",
         "format-alt-click": "click-right",
-        "format-alt": " {usage}%"
+        "format-alt": "\uf2db {usage}%"
     },
-
     "memory": {
         "interval": 30,
-        "format": "",
+        "format": "\uf0c9",
         "format-alt-click": "click-right",
-        "format-alt": " {}%",
-        "max-length": 10,
-        "tooltip": true,
+        "format-alt": "\uf0c9 {}%",
         "tooltip-format": "Memory - {used:0.1f}GB used"
     },
-
-    "disk": {
-        "interval": 600,
-        "format": "󰋊",
-        "path": "/",
-        "format-alt-click": "click-right",
-        "format-alt": "󰋊 {percentage_used}%",
-        "tooltip": true,
-        "tooltip-format": "HDD - {used} used out of {total} on {path} ({percentage_used}%)",
-        "states": {
-            "warning": 85,
-            "critical": 90
-        }
-    },
-
-    "temperature": {
-        "thermal-zone": 1,
-        "format": "",
-        "format-alt-click": "click-right",
-        "format-alt": " {temperatureC}°C",
-        "critical-threshold": 70,
-        "format-critical": "  {temperatureC}°C"
-    },
-
-    "custom/updates": {
-        // Send signal 8 to waybar after running updates to refresh: killall -SIGUSR1 waybar
-        "format": "{}",
-        "exec": "~/.config/waybar/scripts/update-sys",
-        "on-click": "~/.config/waybar/scripts/update-sys update",
-        "interval": 3600,
-        "tooltip": true,
-        "signal": 8,
-        "return-type": "json"
-    },
-
     "network": {
         "format": "{ifname}",
-
-        "format-wifi": " ",
-        "format-ethernet": " ",
-        "format-disconnected": " ", //An empty format will hide the module.
-        "tooltip-format": " {ifname} via {gwaddr}",
-        "tooltip-format-wifi": " {essid} ({signalStrength}%)",
-        "tooltip-format-ethernet": " {ifname} {ipaddr}/{cidr}",
-        "tooltip-format-disconnected": "Disconnected",
-        "max-length": 50
+        "format-wifi": "\uf1eb ",
+        "format-ethernet": "\uf796 ",
+        "format-disconnected": "\uf127 ",
+        "tooltip-format-wifi": "\uf1eb {essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "\uf0c1 {ifname} {ipaddr}/{cidr}",
+        "tooltip-format-disconnected": "Disconnected"
     },
-
-    "niri/language": {
-        // niri reports the layout name from xkb; map display labels here
-        "format": "󰛓 {}",
-        "format-en": "EN",
-        "format-": "FA"
-    },
-
-    "custom/lock_screen": {
-        "format": "",
-        "on-click": "sh -c '(sleep 0.5s; swaylock -eFfki ~/Pictures/lockscreen.png)' & disown",
-        "tooltip": false
-    },
-
-    "custom/power": {
-        "format": " ",
-        "on-click": "sysact",
-        "tooltip": false
+    "clock": {
+        "format": "{:%m/%d %H:%M}",
+        "tooltip-format": "{:%Y\u5e74%m\u6708%d\u65e5 %A}"
     }
 }

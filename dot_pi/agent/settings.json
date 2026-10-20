@@ -25,7 +25,8 @@
     "npm:@ff-labs/pi-fff",
     "npm:pi-context-view",
     "npm:@narumitw/pi-btw",
-    "npm:pi-subagents"
+    "npm:pi-subagents",
+    "npm:pi-cc-extensions"
   ],
   "tuiMode": "regular",
   "quietStartup": false,

@@ -3,7 +3,17 @@
 	email = 213398204+w4daka@users.noreply.github.com
 [core]
 	editor = nvim
+  pager = delta
 [color]
 	ui = true
 [ghq]
 	root = /home/w4daka/projects
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
+
+[merge]
+    conflictStyle = zdiff3

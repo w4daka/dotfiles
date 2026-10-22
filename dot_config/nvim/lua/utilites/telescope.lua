@@ -6,6 +6,7 @@ return {
     -- optional but recommended
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   },
+  enabled = false,
   config = function()
     local builtin = require('telescope.builtin')
     local previewer = require('md-render.telescope').previewer()

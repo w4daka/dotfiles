@@ -2,12 +2,24 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
-  ---@type snacks.Config
-  opts = {
-    picker = { enabled = true },
-    image = { enabled = true }, -- picker内画像プレビューはこれ。image.nvim不要
-    explorer = { enabled = true },
+  dependencies = {
+    {
+      'delphinus/md-render.nvim',
+      version = '*',
+      dependencies = {
+        { 'nvim-tree/nvim-web-devicons', version = '*' }, --optional
+        { 'delphinus/budoux.lua', version = '*' }, -- optional: CJKフレーズ分割
+      },
+    },
   },
+  opts = function()
+    return {
+      picker = { enabled = true, preview = require('md-render.snacks').preview() },
+      image = { enabled = true }, -- picker内画像プレビューはこれ。image.nvim不要
+      explorer = { enabled = true },
+    }
+  end,
+
   keys = {
     {
       '<leader>sfg',

@@ -16,7 +16,7 @@ return {
     return {
       picker = { enabled = true, preview = require('md-render.snacks').preview() },
       image = { enabled = true }, -- picker内画像プレビューはこれ。image.nvim不要
-      explorer = { enabled = true },
+      explorer = { enabled = false },
     }
   end,
 

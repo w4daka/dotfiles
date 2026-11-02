@@ -101,11 +101,11 @@ vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
 end, { expr = true, silent = true })
 
 vim.keymap.set('n', '<leader>bd', function()
-  vim.cmd('!~/projects/github.com/w4daka/competitive/sh/build.sh')
+  vim.cmd('!~/projects/github.com/w4daka/atcoder-w4d/sh/build.sh')
 end)
 
 vim.keymap.set('n', '<leader>io', function()
-  vim.cmd('!~/projects/github.com/w4daka/competitive/sh/io.sh')
+  vim.cmd('!~/projects/github.com/w4daka/atcoder-w4d/sh/io.sh')
 end)
 vim.keymap.set(
   'n',

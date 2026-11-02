@@ -17,3 +17,5 @@
 
 [merge]
     conflictStyle = zdiff3
+[safe]
+	directory = /home/w4daka/share/hermes/work

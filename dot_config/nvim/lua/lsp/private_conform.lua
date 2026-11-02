@@ -40,8 +40,7 @@ return {
       lua = { 'stylua' },
       -- rustはrustfmt。mrcjkb/rustaceanvimの設定と衝突しない？
       rust = { 'rustfmt' },
-      -- goのフォーマッターはgolangci-lint=>この設定ではGoのformatterとしてgolangci-lintを指定している.Goにはgofmt等もある。
-      go = { 'golangci-lint' },
+      go = { 'gofmt' },
       -- pythonはruff_format
       python = { 'ruff_format' },
       -- ocamlはocamlformat

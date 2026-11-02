@@ -44,6 +44,7 @@ setopt append_history inc_append_history share_history
 # nvm: 既存の設定を維持
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+eval "$(mise activate zsh)"
 
 # =============================================================================
 # 4. Plugin Manager (Sheldon)
@@ -163,6 +164,7 @@ cheatsh() {
 
 export MANPAGER="bat -plman"
 
+export PATH="$HOME/.npm-global/bin:$PATH"
 alias gia='create_gitignore'
 
 # giboで.gitignoreを作成
@@ -192,3 +194,25 @@ create_gitignore() {
     bat "$input_file"
 }
 
+
+WT_ROOT="${WT_ROOT:-$HOME/.omp/wt}"
+wt() {
+  local root="${WT_ROOT:-$HOME/.omp/wt}"
+  [[ -d "$root" ]] || { print -u2 "wt: no such dir: $root"; return 1; }
+  command -v fzf >/dev/null || { print -u2 "wt: fzf not found"; ls -t "$root"; return 1; }
+  local -a ds; ds=( "$root"/*(/omN) ) # newest first (verified: om=newest-first on zsh 5.9.2)
+  (( ${#ds} )) || { print -u2 "wt: empty: $root"; return 1; }
+  local sel q="$*"
+  if (( $# )); then
+    local -a hits; hits=()
+    local d
+    for d in "${ds[@]}"; do [[ "$d" == *"$q"* ]] && hits+=( "$d" ); done
+    if (( ${#hits} == 1 )); then sel="${hits[1]}";
+    elif (( ${#hits} > 1 )); then sel="$(printf '%s\n' "${hits[@]}" | fzf --query="$q" --select-1 --exit-0)" || return 1;
+    else sel="$(printf '%s\n' "${ds[@]}" | fzf --query="$q")" || return 1; fi
+  else
+    sel="$(printf '%s\n' "${ds[@]}" | fzf --height=40% --reverse)" || return 1
+  fi
+  [[ -n "$sel" && -d "$sel" ]] || { print -u2 "wt: no selection"; return 1; }
+  cd -- "$sel" || return 1
+}

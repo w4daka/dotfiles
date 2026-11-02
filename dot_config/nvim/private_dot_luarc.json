@@ -8,8 +8,7 @@
       "lua",
       "$VIMRUNTIME",
       "${3rd}/luv/library",
-      "${3rd}/busted/library",
-      "$HOME/.local/share/nvim/lazy"
+      "${3rd}/busted/library"
     ],
     "checkThirdParty": false
   }

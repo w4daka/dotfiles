@@ -8,20 +8,6 @@ require('keymaps.core')
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
--- [[ Setting options ]]
--- See `:help vim.o`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
-
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- vim.opt.runtimepath:append '~/denops-getting-started'
-
--- https://scrapbox.io/vim-jp/boolean%E3%81%AA%E5%80%A4%E3%82%92%E8%BF%94%E3%81%99vim.fn%E3%81%AEwrapper_function
 vim.bool_fn = setmetatable({}, {
   __index = function(_, key)
     return function(...)
@@ -119,4 +105,14 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
+})
+
+vim.g.t0 = vim.uv.hrtime()
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(a)
+    local c = vim.lsp.get_client_by_id(a.data.client_id)
+    if c and c.name == 'lua_ls' then
+      print(('[lua_ls] %.0f ms'):format((vim.uv.hrtime() - vim.g.t0) / 1e6))
+    end
+  end,
 })

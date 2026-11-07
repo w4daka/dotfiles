@@ -415,3 +415,6 @@ hl.window_rule({
 	move = "20 monitor_h-120",
 	float = true,
 })
+
+-- 差分はここだけ
+require("custom")

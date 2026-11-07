@@ -1,3 +1,6 @@
+vim.lsp.config('lua_ls', {
+  cmd = { 'lua-language-server', '--logpath=/tmp/luals', '--loglevel=trace' },
+})
 local capabilities = require('ddc_source_lsp').make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 

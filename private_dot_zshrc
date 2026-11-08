@@ -216,3 +216,4 @@ wt() {
   [[ -n "$sel" && -d "$sel" ]] || { print -u2 "wt: no selection"; return 1; }
   cd -- "$sel" || return 1
 }
+[ -f /opt/intel/oneapi/setvars.sh ] && source /opt/intel/oneapi/setvars.sh --force > /dev/null 2>&1

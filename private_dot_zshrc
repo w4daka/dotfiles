@@ -217,3 +217,11 @@ wt() {
   cd -- "$sel" || return 1
 }
 [ -f /opt/intel/oneapi/setvars.sh ] && source /opt/intel/oneapi/setvars.sh --force > /dev/null 2>&1
+
+# pnpm
+export PNPM_HOME='/home/w4daka/.local/share/pnpm'
+case ":$PATH:" in
+  ":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end

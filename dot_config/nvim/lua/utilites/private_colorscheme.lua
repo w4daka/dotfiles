@@ -20,13 +20,4 @@ return { -- You can easily change to a different colorscheme.
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
     end,
   },
-  {
-    'rebelot/kanagawa.nvim',
-    config = function()
-      require('kanagawa').setup({
-        transparent = true,
-      })
-      vim.cmd.colorscheme('tokyonight-moon')
-    end,
-  },
 }

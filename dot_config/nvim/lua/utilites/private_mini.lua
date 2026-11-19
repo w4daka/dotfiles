@@ -258,6 +258,50 @@ return { -- Collection of various small independent plugins/modules
       end, { expr = true, desc = 'mini.pick.help' })
 
       vim.keymap.set('n', 'RR', 'R', { desc = 'Replace mode' })
+      -- カラースキームのreferenceは https://zenn.dev/kawarimidoll/articles/8e58296f5b8118 を参考
+      local base16_kawarimidoll = {
+        base00 = '#1f1d24',
+        base01 = '#3f3e43',
+        base02 = '#636267',
+        base03 = '#89888d',
+        base04 = '#7ddcc9',
+        base05 = '#8fecd9',
+        base06 = '#a1fde9',
+        base07 = '#b2fffa',
+        base08 = '#ffcc8a',
+        base09 = '#bc7a21',
+        base0A = '#009e41',
+        base0B = '#82f29b',
+        base0C = '#ca61be',
+        base0D = '#5aebff',
+        base0E = '#ffb9ff',
+        base0F = '#0099c6',
+      }
+      require('mini.base16').setup({
+        palette = base16_kawarimidoll,
+        use_cterm = true,
+      })
+
+      -- 背景を透過させる（既存の色を保ったまま bg だけ消す）
+      for _, group in ipairs({
+        'Normal',
+        'NormalNC',
+        'NormalFloat',
+        'FloatBorder',
+        'SignColumn',
+        'EndOfBuffer',
+      }) do
+        local hl = vim.api.nvim_get_hl(0, { name = group })
+        hl.bg = nil
+        hl.ctermbg = nil
+        vim.api.nvim_set_hl(0, group, hl)
+      end
+      -- 例: コメントをイタリックに、カーソル行を少し明るく
+      local comment = vim.api.nvim_get_hl(0, { name = 'Comment' })
+      comment.italic = true
+      vim.api.nvim_set_hl(0, 'Comment', comment)
+      vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#2a2733' })
+      vim.api.nvim_set_hl(0, 'Visual', { fg = '#1f1d24', bg = '#8fecd9' })
     end,
   },
   { -- Icon provider

@@ -30,11 +30,12 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 -- Set programs that you use
 local terminal = "kitty"
 local fileManager = "thunar"
-local menu = "rofi -show drun"
 
 hl.on("hyprland.start", function()
-	hl.exec_cmd("copyq & hyprpaper & hypridle &waybar & mako")
+	hl.exec_cmd("hypridle")
+	hl.exec_cmd("dms run")
 	hl.exec_cmd("systemctl --user start hyprpolkitagent")
+	-- hl.exec_cmd("nwg-dock-hyprland -p bottom -i 44 -lp start -c 'rofi -show drun'")
 end)
 -------------------
 ---- AUTOSTART ----
@@ -288,7 +289,9 @@ hl.bind(
 )
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + space", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("dms ipc call spotlight toggle"))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("dms ipc call controlcenter toggle"))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("dms ipc call notifications toggle"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + semicolon", hl.dsp.layout("togglesplit")) -- dwindle only
 
@@ -349,13 +352,16 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-hl.bind(mainMod .. "+ SHIFT + X", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. "+ SHIFT + X", hl.dsp.exec_cmd("dms ipc call lock lock"))
 hl.bind("ALT + V", hl.dsp.exec_cmd("copyq toggle"))
 hl.bind("ALT + W", hl.dsp.exec_cmd("qutebrowser"))
 hl.bind(mainMod .. "+ SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
 hl.bind(mainMod .. "+ W", hl.dsp.exec_cmd("rofi -show window"))
 hl.bind(mainMod .. "+ V", hl.dsp.exec_cmd("vivaldi"))
 hl.bind(mainMod .. "+ A", hl.dsp.exec_cmd("anki"))
+hl.bind("ALT + H", hl.dsp.exec_cmd("hyprctl dispatch movetoworkspace special:min"))
+hl.bind("ALT + SHIFT + H", hl.dsp.exec_cmd("hyprctl dispatch togglespecialworkspace min"))
+
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------

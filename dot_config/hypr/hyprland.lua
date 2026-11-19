@@ -13,21 +13,16 @@
 ---- MONITORS ----
 ---要確認:`hyprctl monitor`で実際の名前を確認すべし
 ------------------
+-- なぜscaleがautoではだめか？ー>auto はモニターが報告してくる物理サイズ（EDID）からPPIを計算して、自動で拡大率を決める仕組みだがこの物理サイズがメーカーによってはいい加減な値を返してくることがおおい.scale=1で問題ないならそのままでいい
+-- ref https://wiki.hypr.land/configuring/core/monitors/
+-- 内蔵ディスプレイ（左・メイン）※縦をフルに使うなら1200
+hl.monitor({ output = "eDP-1", mode = "1920x1200@60", position = "0x0", scale = 1 })
 
--- See https://wiki.hypr.land/Configuring/Basics/Monitors/
-hl.monitor({
-	output = "eDP-1",
-	mode = "1920x1080@60",
-	position = "0x0",
-	scale = 1,
-})
+-- 外部モニター（右）
+hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@60", position = "1920x0", scale = 1 })
 
-hl.monitor({
-	output = "HDMI-A-1",
-	mode = "1920x1080@60",
-	position = "1920x0",
-	scale = 1,
-})
+-- それ以外が繋がった時のフォールバック
+hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 ---------------------
 ---- MY PROGRAMS ----
 ---------------------
